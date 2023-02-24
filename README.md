@@ -10,6 +10,7 @@ Yağız Özkarahan
 Zeynep Naz Sevim  
 
 ## Project details
+
 ###Features
 
 * Login / Register (Student / Company)
@@ -29,6 +30,7 @@ Zeynep Naz Sevim
 
 
 ###Actors
+
 * Student
 * Company
 * Supervisor
