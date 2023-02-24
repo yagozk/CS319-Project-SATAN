@@ -11,7 +11,7 @@ Zeynep Naz Sevim
 
 ## Project details
 
-###Features
+### Features
 
 * Login / Register (Student / Company)
 * Edit Profile
@@ -29,7 +29,7 @@ Zeynep Naz Sevim
 * CV, Transcript, Cover Letter Upload
 
 
-###Actors
+### Actors
 
 * Student
 * Company
