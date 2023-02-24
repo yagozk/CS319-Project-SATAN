@@ -38,3 +38,5 @@ Zeynep Naz Sevim
 * Department Chair
 * Administrator
 * Advisor
+
+#### More details to be added/modified later.
