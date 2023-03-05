@@ -13,30 +13,27 @@ Zeynep Naz Sevim
 
 ### Features
 
-* Login / Register (Student / Company)
-* Edit Profile
-* List of Existing Companies and  Their Addresses
-* Add New Company (Admin Users)
-* Suggest New Company (Students)
-* View Existing Applications (Students)
-* Modify Existing Applications
+* Login (Student/Advisor/Admin)
+* State of the form (Downloaded/Approved/etc.)
+* A Profile Page For Each Student Where The Instructors Can View The Details Of The Student’s Internship Progress
 * Submit Internship Report (Student)
-* View Internship Report (Student, Admin)
-* View / Change Internship Insurance Status
+* View Internship Report (Student, Admin, TA)
 * Submit Student Internship Evaluation
 * Submit Internship Supervisor Information
-* Advanced Search (Filter, Sort)
-* CV, Transcript, Cover Letter Upload
+* Advanced Search (Filter, Sort) (According To Internship Progress, Name, ID)
+* Send Emails To Students/Advisors After Course Initialization With Login Info
+* Enter Student Report Evaluation/Give Feedback
 
 
 ### Actors
 
 * Student
-* Company
-* Supervisor
+* Supervisor (TBD)
 * Registrar’s Office
-* Department Chair
-* Administrator
-* Advisor
+* Administrator (Access Privileges To Be Assigned To Certain Advisors)
+* Advisor (Instructors Who Teach The Course)
+* TA
+* Super Admin (Initiator)
+
 
 #### More details to be added/modified later.
