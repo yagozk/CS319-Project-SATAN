@@ -10,17 +10,25 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping
 public class UserController {
 
-    // @Autowired
-    // private UserService repo; 
-
     @GetMapping(value = "/items")
+    public ResponseEntity<String> getAllItems() {
+
+        try {
+            return new ResponseEntity<>("Items", HttpStatus.OK);    
+
+        } catch (Exception ex) {
+            return new ResponseEntity<>("Items -- exception", HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    @GetMapping(value = "/users")
     public ResponseEntity<String> getAllUsers() {
 
         try {
-            return new ResponseEntity<>("ddddd", HttpStatus.OK);    
+            return new ResponseEntity<>("Users", HttpStatus.OK);    
 
         } catch (Exception ex) {
-            return new ResponseEntity<>("aaassssdd", HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>("Users -- exception", HttpStatus.UNAUTHORIZED);
         }
     }
 

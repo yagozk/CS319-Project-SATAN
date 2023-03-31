@@ -17,8 +17,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -46,7 +44,6 @@ public class SecurityConfig {
            .authenticationEntryPoint((request, response, authEx) -> {
                                        response.setHeader("WWW-Authenticate", "Basic realm=\"Access to /signin authentication endpoint\"");
                                        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                                    //    response.setHeader("Access-Control-Allow-Origin", "*");
                                        response.getWriter().write("{ \"Error\": \"" + authEx.getMessage() + " - You are not authenticated.\" }");
                                    })
           .and()
@@ -68,7 +65,6 @@ public class SecurityConfig {
       return http.build();
   } 
 
-  // Used by spring security if CORS is enabled.
   @Bean
   public CorsFilter corsFilter() {
     List<String> origins = new ArrayList<String>();
