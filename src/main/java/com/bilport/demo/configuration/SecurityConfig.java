@@ -1,5 +1,8 @@
 package com.bilport.demo.configuration;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +14,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
 import jakarta.servlet.http.HttpServletResponse;
 
 @Configuration
@@ -32,12 +41,12 @@ public class SecurityConfig {
 
   @Bean
   public SecurityFilterChain filterChain1(HttpSecurity http) throws Exception {
-      http
-          .csrf().disable()
+          http.cors().and().csrf().disable()
           .exceptionHandling()
            .authenticationEntryPoint((request, response, authEx) -> {
                                        response.setHeader("WWW-Authenticate", "Basic realm=\"Access to /signin authentication endpoint\"");
                                        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                                    //    response.setHeader("Access-Control-Allow-Origin", "*");
                                        response.getWriter().write("{ \"Error\": \"" + authEx.getMessage() + " - You are not authenticated.\" }");
                                    })
           .and()
@@ -58,4 +67,20 @@ public class SecurityConfig {
 
       return http.build();
   } 
+
+  // Used by spring security if CORS is enabled.
+  @Bean
+  public CorsFilter corsFilter() {
+    List<String> origins = new ArrayList<String>();
+    origins.add("http://localhost:3000");
+    origins.add("http://localhost:8080");
+    var source = new UrlBasedCorsConfigurationSource();
+    var config = new CorsConfiguration();
+    config.setAllowCredentials(true);
+    config.setAllowedOrigins(origins);
+    config.addAllowedHeader("*");
+    config.addAllowedMethod("*");
+    source.registerCorsConfiguration("/**", config);
+    return new CorsFilter(source);
+  }
 }
