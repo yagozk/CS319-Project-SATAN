@@ -1,0 +1,47 @@
+.StudentSideBar {
+    width: 250px;
+    height: 100vh;
+    background-color: rgb(56, 8, 83);
+    position: fixed;
+    left: 0;
+    top: 0;
+    color: white
+  }
+  
+  .student-sidebar-header {
+    margin-bottom: 40px;
+    margin-top: 20px;
+  }
+  
+  .student-sidebar-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .student-sidebar-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: large;
+    transition: background-color 0.2s ease;
+  }
+  
+  .student-sidebar-item i {
+    margin-right: 10px; 
+  }
+  
+  .student-sidebar-item:hover {
+    background-color: rgb(100, 31, 165);
+  }
+  
+  .student-sidebar-link{
+    color: white;
+    text-decoration: none;
+  }
+  
+  .student-sidebar-link:hover{
+    color: rgb(246, 14, 231);
+    text-decoration: none;
+  }
+  
