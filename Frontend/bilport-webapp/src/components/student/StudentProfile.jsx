@@ -1,5 +1,5 @@
 import { Row, Col, Card, Container } from "react-bootstrap";
-import ChangePassword from "./ChangePassword";
+import ChangePassword from "../commonComponents/ChangePassword";
 
 export default function StudentProfile(){
     { /* Instead of placeholder info, this component should take the student object, probably as a parameter */}

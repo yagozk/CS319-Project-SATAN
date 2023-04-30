@@ -1,7 +1,7 @@
 import { Outlet, Link } from "react-router-dom";
 import { Row, Col } from 'react-bootstrap';
 
-export default function StudentSideBar(){
+export default function EvaluatorSideBar(){
     return(
     <>
         <Row>
@@ -9,20 +9,16 @@ export default function StudentSideBar(){
             <h1 class = "sidebar-header">Bilport</h1>
             <ul class = "sidebar-list">
               <li class ="sidebar-item">
-              <i class="material-icons">book</i>
-                <Link to="/" class = "sidebar-link">Reports</Link>
+              <i class="material-icons">people</i>
+                <Link to="/evaluator" class = "sidebar-link">Assigned Students</Link>
               </li>
               <li class ="sidebar-item">
               <i class="material-icons">account_circle</i>
-                <Link to="/profile" class = "sidebar-link">Profile</Link>
+                <Link to="/evaluator/profile" class = "sidebar-link">Profile</Link>
               </li>
               <li class ="sidebar-item">
-              <i class="material-icons">group</i>
-                <Link to="/evaluator_ta_info" class = "sidebar-link">Evaluator/TA Info</Link>
-              </li>
-              <li class ="sidebar-item">
-              <i class="material-icons">assignment_ind</i>
-                <Link to="/supervisor_info" class = "sidebar-link">Supervisor Info</Link>
+              <i class="material-icons">contact_mail</i>
+                <Link to="/evaluator/course_ta_info" class = "sidebar-link">Course TA Info</Link>
               </li>
             </ul>
           </Col>

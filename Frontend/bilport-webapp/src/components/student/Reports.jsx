@@ -55,7 +55,7 @@ export default function Reports() {
 function ReportsDropdown({ reports }) {
     return (
         <Dropdown>
-            <Dropdown.Toggle variant="secondary" id="dropdown-basic" style={{ backgroundColor: "#521945" }}>
+            <Dropdown.Toggle variant="secondary" id="dropdown-basic" style={{ backgroundColor: "purple" }}>
                 Choose an uploaded report
             </Dropdown.Toggle>
             <Dropdown.Menu>

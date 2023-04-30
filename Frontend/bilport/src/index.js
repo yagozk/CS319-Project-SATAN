@@ -6,10 +6,15 @@ import Reports from './StudentComponents/Reports';
 import { Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Style/index.css';
-import './Style/studentSidebarStyle.css';
+import './Style/sideBarStyle.css';
 import StudentProfile from './StudentComponents/StudentProfile';
 import EvaluatorTAInfo from './StudentComponents/EvaluatorTAInfo';
 import SupervisorInfo from './StudentComponents/SupervisorInfo';
+import EvaluatorSideBar from './EvaluatorComponents/EvaluatorSideBar';
+import EvaluatorStudents from './EvaluatorComponents/EvaluatorStudents';
+import EvaluatorProfile from './EvaluatorComponents/EvaluatorProfile';
+import CourseTAInfo from './EvaluatorComponents/CourseTAInfo';
+import AssignedStudentPage from './EvaluatorComponents/AssignedStudentPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -22,6 +27,12 @@ export default function App(){
               <Route path = "profile" element = {<StudentProfile/>} />
               <Route path = "evaluator_ta_info" element = {<EvaluatorTAInfo/>} />
               <Route path = "supervisor_info" element = {<SupervisorInfo/>} />
+          </Route>
+          <Route path = "/evaluator" element={<EvaluatorSideBar/>}>
+              <Route index element={<EvaluatorStudents/>} />
+              <Route path = "students/:id" element ={<AssignedStudentPage/>} />
+              <Route path = "profile" element = {<EvaluatorProfile/>} />
+              <Route path = "course_ta_info" element = {<CourseTAInfo/>} />
           </Route>
       </Routes>
   </BrowserRouter>

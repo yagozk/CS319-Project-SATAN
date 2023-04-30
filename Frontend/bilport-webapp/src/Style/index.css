@@ -1,3 +1,17 @@
+.loginPage {
+  display: flex;
+  flex-direction:column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 1rem 0.5rem;
+  background-color: white;
+  /* font-family: 'Nunito', sans-serif; */
+  font-size: 22px;
+  /* color: #521945; */
+  color: #912F56;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -11,7 +25,7 @@ body {
   background-position: center;
   background-repeat: no-repeat;       
   height: 100vh;
-  background-attachment: fixed;   
+  background-attachment: fixed;
 }
 
 .bigPageTitle{
@@ -48,5 +62,10 @@ code {
   cursor: pointer;
   background-color: #8b59b7;
   transition: background-color 0.2s ease;
+}
+
+.offscreen {
+  position: absolute;
+  left: -9999px;
 }
 

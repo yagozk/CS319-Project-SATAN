@@ -10,6 +10,7 @@ import RequireAuth from './components/RequireAuth';
 import PersistLogin from './components/PersistLogin';
 import LoginRoute from './components/LoginRoute';
 import { Routes, Route } from 'react-router-dom';
+import Evaluator from './components/Evaluator';
 
 const ROLES = {
   'User': "ROLE_USER",
@@ -27,6 +28,9 @@ function App() {
         <Route element={<LoginRoute />}>
           <Route path="login" element={<Login />} />
         </Route>
+
+        {/* THIS IS NOT PUBLIC! CHANGE THIS WHEN YOU CREATE AN EVALUATOR TYPE IN THE DATABASE!!! */}
+        <Route path="evaluator/*" element={<Evaluator />} />
 
         <Route path="linkpage" element={<LinkPage />} />
         <Route path="unauthorized" element={<Unauthorized />} />
