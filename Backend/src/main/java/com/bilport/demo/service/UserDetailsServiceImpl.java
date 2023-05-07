@@ -15,7 +15,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     //private final Log logger = LogFactory.getLog(getClass());
 
     @Autowired
-    private UserService repo;
+    private UserService repoUser;
+
+    @Autowired
+    private StudentService repoStudent;
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
@@ -23,7 +26,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user;
         org.springframework.security.core.userdetails.User springUser = null;
 
-        user = repo.findByUserName(userName);
+        user = repoUser.findByUserName(userName);
+
+        if(user == null) {
+            user = repoStudent.findById(userName);
+        }
 
         if (user != null) {
             springUser = new org.springframework.security.core.userdetails.User(

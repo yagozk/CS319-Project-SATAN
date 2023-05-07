@@ -60,6 +60,7 @@ public class SecurityConfig {
 
           .authorizeHttpRequests(authorize -> authorize.requestMatchers("/users").hasRole("ADMIN")
           .requestMatchers(HttpMethod.GET, "/reports/*").hasAnyRole("ADMIN", "USER")
+          .requestMatchers(HttpMethod.GET, "/students/*").hasAnyRole("ADMIN", "USER")
                                                    //.requestMatchers("/items").hasAnyRole("ADMIN", "USER")
           .anyRequest().authenticated()
           )
