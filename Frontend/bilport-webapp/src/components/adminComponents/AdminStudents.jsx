@@ -1,23 +1,13 @@
-import { Button, Table } from "react-bootstrap";
-import {Stack} from "react-bootstrap";
-import { Link } from "react-router-dom";
-import { Card } from "react-bootstrap";
+import StudentsTable from "../commonComponents/StudentsTable";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Alert, Button, Card, Stack } from "react-bootstrap";
 import SearchBar from "../commonComponents/SearchBar";
 import SortDropdown from "../commonComponents/SortDropdown";
-import StudentsTable from "../commonComponents/StudentsTable";
 
-export default function EvaluatorStudents(){
+export default function AdminStudents(props){
 
-    // Obviously, this will be replaced with the actual students of the evaluator
-    const [students] = useState([
-        {id: 220000, course: "CS299", name: "Osman Osmanovic", last_submission_date: "2001-01-01", status: "Assigned to course", email: "temp@gmail.com"},
-        {id: 220001, course: "CS299", name: "Feridun Feridunovski", last_submission_date: "2001-01-02", status: "Waiting TA", email: "temp@gmail.com"},
-        {id: 220002, course: "CS399", name: "Bedük", last_submission_date: "2000-01-01", status: "Decision", email: "temp@gmail.com"},
-        {id: 220003, course: "CS399", name: "Jonathan Jonathan", last_submission_date: "2002-03-02", status: "Waiting evaluator", email: "temp@gmail.com"},
-        {id: 220004, course: "CS299", name: "Arda Yurdunuçokseven", last_submission_date: "1999-01-01", status: "Requested resubmission", email: "temp@gmail.com"}
-    ]);
+    // Obviously, replace this with actual students from the database
+    const [students] = useState(props.students)
 
     const [displayedStudents, setDisplayedStudents] = useState(students);
 
@@ -67,11 +57,14 @@ export default function EvaluatorStudents(){
         setDisplayedStudents(sortedStudents);
     };
 
-    return (
-        <div style={{ marginLeft: '250px', padding: '20px' }}>
-            <h1 class = "bigPageTitle">Your assigned students</h1>
+    return(
+        <div>
             <Card>
                 <Card.Body>
+                    <div className="standaloneCard">
+                        <Alert variant="success" dismissible> Green students are assigned to an evaluator. </Alert>
+                        <Alert variant="danger" dismissible> Red students are not assigned to an evaluator yet. </Alert>
+                    </div>
                     <Stack direction = "horizontal" gap = {4}>
                         <SearchBar onSearch={handleSearch} />
                         <div className="vr"/>
@@ -82,11 +75,13 @@ export default function EvaluatorStudents(){
                         <Button variant = "outline-secondary">Filter</Button> {/* this will be properly implemented */}
                     </Stack>
                     <div className="standaloneCard" id = "standartStudentsList">
-                        <StudentsTable students = {displayedStudents} userType = "evaluator"/>
+                        <StudentsTable students = {displayedStudents} userType = "admin"/>
                     </div>
+                    
+                    <br/>
+                    <Button variant="outline-primary"> Add Student </Button>
                 </Card.Body>
             </Card>
         </div>
-    );
+    )
 }
-
