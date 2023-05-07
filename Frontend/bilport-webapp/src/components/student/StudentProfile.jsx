@@ -1,8 +1,33 @@
 import { Row, Col, Card, Container } from "react-bootstrap";
 import ChangePassword from "../commonComponents/ChangePassword";
+import useAuth from '../../hooks/useAuth';
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { useState } from "react";
+import { useEffect } from "react";
+import axios from "../../api/axios";
 
+async function fetchUserStudent(axiosInstance, auth, setStudent) {
+    try {
+      const response = await axiosInstance.get(`/students/${auth.user}`);
+      setStudent(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 export default function StudentProfile(){
-    { /* Instead of placeholder info, this component should take the student object, probably as a parameter */}
+
+    const { auth } = useAuth();    
+    const [student, setStudent] = useState([]);
+    const axiosPrivate = useAxiosPrivate();
+    
+    useEffect(() => {
+        fetchUserStudent(axiosPrivate, auth, setStudent);
+    } , []);
+
+    useEffect(() => {
+        console.log(student);
+    } , [student]);
+
     return(
         <div style={{ marginLeft: '250px', padding: '20px' }}>
             <h1 className = "bigPageTitle"> Profile Page </h1>
