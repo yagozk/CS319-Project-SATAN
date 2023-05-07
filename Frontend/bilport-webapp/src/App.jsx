@@ -31,6 +31,8 @@ function App() {
 
         {/* THIS IS NOT PUBLIC! CHANGE THIS WHEN YOU CREATE AN EVALUATOR TYPE IN THE DATABASE!!! */}
         <Route path="evaluator/*" element={<Evaluator />} />
+        {/* THIS IS TEMPORARY. CHANGE THIS BEFORE PUSHING */}
+        <Route path="admin/*" element={<Admin />} />
 
         <Route path="linkpage" element={<LinkPage />} />
         <Route path="unauthorized" element={<Unauthorized />} />
@@ -46,9 +48,9 @@ function App() {
           </Route>
 
 
-          <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
-            <Route path="admin" element={<Admin />} />
-          </Route>
+          {/*<Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
+            <Route path="admin/*" element={<Admin />} />
+          </Route>*/}
         </Route>
 
         {/* catch all */}

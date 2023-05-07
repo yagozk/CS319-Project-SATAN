@@ -34,11 +34,15 @@ body {
 }
 
 .coloredTab{
-  color: white;
+  color: white !important;
 }
 
 .coloredTab:hover{
-  color: rgb(238, 161, 237);
+  color: rgb(231, 186, 244) !important;
+}
+
+.coloredTab.active{
+  color: rgb(68, 22, 83) !important;
 }
 
 code {
@@ -64,8 +68,21 @@ code {
   transition: background-color 0.2s ease;
 }
 
+.clickRowGreen {
+  background-color: rgba(153, 241, 194, 0.5);
+}
+
+.clickRowRed {
+  background-color: rgba(241, 144, 144, 0.5);
+}
+
+.clickRowGreen:hover, .clickRowRed:hover{
+  cursor: pointer;
+}
+
 .offscreen {
   position: absolute;
   left: -9999px;
 }
+
 
