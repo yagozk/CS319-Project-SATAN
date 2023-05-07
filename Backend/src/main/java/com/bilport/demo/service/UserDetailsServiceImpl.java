@@ -28,7 +28,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         user = repoUser.findByUserName(userName);
 
-        if(user == null) {
+        if (user == null) {
             user = repoStudent.findById(userName);
         }
 
