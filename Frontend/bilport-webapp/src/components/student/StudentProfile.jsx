@@ -6,27 +6,30 @@ import { useState } from "react";
 import { useEffect } from "react";
 import axios from "../../api/axios";
 
+
 async function fetchUserStudent(axiosInstance, auth, setStudent) {
     try {
-      const response = await axiosInstance.get(`/students/${auth.user}`);
-      setStudent(response.data);
+        const response = await axiosInstance.get(`/students/${auth.user}`);
+        setStudent(response.data);
     } catch (error) {
-      console.error(error);
+        console.error(error);
     }
-  }
-export default function StudentProfile(){
+}
 
-    const { auth } = useAuth();    
+export default function StudentProfile() {
+
+    const { auth } = useAuth();
     const [student, setStudent] = useState([]);
     const axiosPrivate = useAxiosPrivate();
-    
-    useEffect(() => {
-        fetchUserStudent(axiosPrivate, auth, setStudent);
-    } , []);
+
+    useEffect(() => { fetchUserStudent(axiosPrivate, auth, setStudent); }, []);
+    console.log(student);
 
     useEffect(() => {
         console.log(student);
-    } , [student]);
+    }, [student]);
+
+
 
     return(
         <div style={{ marginLeft: '250px', padding: '20px' }}>
@@ -36,17 +39,17 @@ export default function StudentProfile(){
                     <Container fluid>
                         <Row>
                             <Col lg = {2} style={{ color: "purple"}}>Full name:</Col>
-                            <Col lg = {10}><div className = "text-secondary">Jonathan Jonathanoğlu</div></Col>
+                            <Col lg = {10}><div className = "text-secondary">{student.studentName+" "+ student.studentSurname}</div></Col>
                         </Row>
                         <hr/>
                         <Row>
                             <Col lg = {2} style={{ color: "purple"}}>Student ID:</Col>
-                            <Col lg = {10} ><div className = "text-secondary">00000000000</div></Col>
+                            <Col lg = {10} ><div className = "text-secondary">{auth.user}</div></Col>
                         </Row>
                         <hr/>
                         <Row>
                             <Col lg = {2} style={{ color: "purple"}}>Email:</Col>
-                            <Col lg = {10}><div className = "text-secondary">jonathan.jonathanoglu@ug.bilkent.edu.tr</div></Col>
+                            <Col lg={10}><div className="text-secondary">{student.studentEmail}</div></Col> {/*JSON.stringify(student.email)*/}
                         </Row>
                     </Container>
                 </Card.Body>
