@@ -1,8 +1,8 @@
-import { Card, Container, Row, Col, Tab, Tabs } from "react-bootstrap";
+import { Card, Container, Row, Col, Tab, Tabs, CloseButton } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 import { Form, Button, Stack } from "react-bootstrap";
 import { useEffect, useState } from "react";
-
+import { Link } from "react-router-dom";
 
 export default function SingularStudentPage(){
     const { state } = useLocation();
@@ -27,6 +27,7 @@ export default function SingularStudentPage(){
 function SingularStudentInfo(props){
 
     const [studentsEvaluator, setStudentsEvaluator] = useState({});
+    const [isChooseEvaluatorDisplayed, setChooseEvaluatorDisplay] = useState(false);
 
     useEffect(() => {
         if (props.student.evaluatorID != -1 ){
@@ -36,8 +37,50 @@ function SingularStudentInfo(props){
     }, [props.evaluators, props.student.evaluatorID]);
     console.log(studentsEvaluator);
     
+    function AssignStudentToEvaluator(){
+        return(
+            <Card>
+                <Card.Header>
+                    <Card.Title>Choose an evaluator</Card.Title>
+                </Card.Header>
+                <Card.Body>
+                    {
+                        props.evaluators.map( (evaluator) => (
+                            <Form.Check
+                            type= "radio" 
+                            id="assign-evaluator-radio"
+                            name="assign-evaluator-radio-group"
+                            label={`${evaluator.name} (Remaining Quota: ${evaluator.student_limit - evaluator.num_of_students})`}/>
+                        ))
+                    }
+                    <br/>
+                    <Button variant="warning">Submit Change</Button>
+                </Card.Body>
+            </Card>
+        );
+    }
+
+    // When the "assing student to evaluator" button is clikced, set the component's display to its opposite boolean value
+    function handleAssignStudentButtonClick(){
+        setChooseEvaluatorDisplay(!isChooseEvaluatorDisplayed)
+    }
+
+    // When the "isChooseEvaluatorDisplayed" boolean changes according to "handleAssignStudentButtonClick" function, set display accordingly
+    useEffect( () => {
+        if(isChooseEvaluatorDisplayed){
+            document.getElementById("assignStudentToEvaluatorDisplay").style.display = "block";
+        }
+        else{
+            document.getElementById("assignStudentToEvaluatorDisplay").style.display = "none";
+        }
+    }
+    , [isChooseEvaluatorDisplayed])
+
     return(
         <Card class = "standaloneCard">
+            <Card.Header>
+                <Link to="/admin" ><i class="material-icons" style= {{"font-size":"30px"}}>arrow_back</i></Link>
+            </Card.Header>
             <Card.Body>
                 <Container fluid>
                     <Card.Title><b>{props.student.name}</b></Card.Title>
@@ -64,7 +107,18 @@ function SingularStudentInfo(props){
                     <hr/>
                     <Row>
                         <Col lg = {2}>Evaluator: </Col>
-                        <Col lg = {10}><div class = "text-secondary">{studentsEvaluator.name}</div></Col>
+                        {studentsEvaluator.name && 
+                        <Col lg = {10}><div class = "text-primary">{studentsEvaluator.name}</div></Col>}
+                        {!studentsEvaluator.name &&
+                        <Col lg = {10}><div class = "text-danger">Not assigned to an evaluator yet</div></Col>}
+                    </Row>
+                    <br/>
+                    <Row>
+                        <Button id = "assignButton" variant="outline-primary" onClick={handleAssignStudentButtonClick}>Assign student to an evaluator</Button>
+                        <div id = "assignStudentToEvaluatorDisplay">
+                            <br/>
+                            <AssignStudentToEvaluator/>
+                        </div>
                     </Row>
                 </Container>
             </Card.Body>

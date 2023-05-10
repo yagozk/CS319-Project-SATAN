@@ -4,6 +4,7 @@ import useAuth from '../../hooks/useAuth';
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useState } from "react";
 import { useEffect } from "react";
+import {Spinner} from "react-bootstrap";
 import axios from "../../api/axios";
 
 
@@ -30,7 +31,7 @@ export default function StudentProfile() {
     }, [student]);
 
 
-
+    if ( student && student.length != 0 ){
     return(
         <div style={{ marginLeft: '250px', padding: '20px' }}>
             <h1 className = "bigPageTitle"> Profile Page </h1>
@@ -61,4 +62,14 @@ export default function StudentProfile() {
 
         </div>
     );
+    }
+    else{
+        return(
+        <div style={{ marginLeft: '250px', padding: '20px' }}>
+            <Spinner animation="border" role="status" variant = "light">
+                <span className="visually-hidden">Loading...</span>
+            </Spinner>
+        </div>
+        );
+    }
 }

@@ -1,6 +1,6 @@
 import StudentsTable from "../commonComponents/StudentsTable";
 import { useState } from "react";
-import { Alert, Button, Card, Stack } from "react-bootstrap";
+import { Alert, Button, Card, Row, Stack } from "react-bootstrap";
 import SearchBar from "../commonComponents/SearchBar";
 import SortDropdown from "../commonComponents/SortDropdown";
 
@@ -74,12 +74,13 @@ export default function AdminStudents(props){
                         <div className="vr"/>
                         <Button variant = "outline-secondary">Filter</Button> {/* this will be properly implemented */}
                     </Stack>
+                    <br/>
+                    <div className="d-grid gap-2">
+                    <Button variant="outline-primary"> Add New Student </Button>
+                    </div>
                     <div className="standaloneCard" id = "standartStudentsList">
                         <StudentsTable students = {displayedStudents} userType = "admin"/>
                     </div>
-                    
-                    <br/>
-                    <Button variant="outline-primary"> Add Student </Button>
                 </Card.Body>
             </Card>
         </div>

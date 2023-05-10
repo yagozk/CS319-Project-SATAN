@@ -1,8 +1,8 @@
-import { Card, Container, Row, Col, Tab, Tabs } from "react-bootstrap";
+import { Card, Container, Row, Col, Tab, Tabs, Nav } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 import { Form, Button, Stack } from "react-bootstrap";
 import { useEffect, useState } from "react";
-
+import { Link } from "react-router-dom";
 
 export default function AssignedStudentPage(){
     const { state } = useLocation();
@@ -10,14 +10,19 @@ export default function AssignedStudentPage(){
 
     return(
         <div style={{ marginLeft: '250px', padding: '20px' }}>
-            <Tabs defaultActiveKey="info" className="mb-3" fill>
-                <Tab eventKey="info" title = "Student Info" tabClassName='coloredTab'>
-                    <AssignedStudentInfo student = {assignedStudent}/>
-                </Tab>
-                <Tab eventKey="report" title = "Report" tabClassName='coloredTab'>
-                    <AssignedStudentReport student = {assignedStudent}/>
-                </Tab>
-            </Tabs>
+            <Card>
+                <Card.Header>
+                    <Link to="/evaluator" ><i class="material-icons" style= {{"font-size":"30px"}}>arrow_back</i></Link>
+                </Card.Header>
+                <Tabs defaultActiveKey="info" className="mb-3" fill>
+                    <Tab eventKey="info" title = "Student Info">
+                        <AssignedStudentInfo student = {assignedStudent}/>
+                    </Tab>
+                    <Tab eventKey="report" title = "Report">
+                        <AssignedStudentReport student = {assignedStudent}/>
+                    </Tab>
+                </Tabs>
+            </Card>
         </div>
     );
 }
@@ -25,10 +30,11 @@ export default function AssignedStudentPage(){
 function AssignedStudentInfo(props){
     return(
         <Card class = "standaloneCard">
-            <Card.Body>
+                <Card.Header>
+                    <Card.Title>{props.student.name}</Card.Title>
+                </Card.Header>
+                <Card.Body>
                 <Container fluid>
-                    <Card.Title><b>{props.student.name}</b></Card.Title>
-                    <hr/>
                     <Row>
                         <Col lg = {2}>ID: </Col>
                         <Col lg = {10}><div class = "text-secondary">{props.student.id}</div></Col>
