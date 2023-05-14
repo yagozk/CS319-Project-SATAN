@@ -1,7 +1,5 @@
 package com.bilport.demo.domain.model;
 
-import java.util.Date;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -12,13 +10,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Document(collection = "reports")
-public class Report {
+@Document(collection = "reportFiles")
+public class ReportFile {
     @Id
-    public String reportId;
-    public String reportOwner;
     public String reportFileId;
-    public Date reportDate;
-    public String reportStatus;
-    public int version;
+    public byte[] reportFile;
+    private String type;
 }

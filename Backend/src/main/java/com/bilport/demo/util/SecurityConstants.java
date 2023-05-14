@@ -7,7 +7,7 @@ public class SecurityConstants {
     //public static final long EXPIRATION_TIME = 864_000_000; // 10 days
     public static final long REFRESH_EXPIRATION_TIME = 6_000_000; // 100 mins
     //public static final long EXPIRATION_TIME = 3_600_000;// 1 hour
-    public static final long ACCESS_EXPIRATION_TIME = 15_000; // 15 sec
+    public static final long ACCESS_EXPIRATION_TIME = 15_000_000; // 15 sec
     public static final String BEARER_TOKEN_PREFIX = "Bearer ";
     public static final String BASIC_TOKEN_PREFIX =  "Basic ";
     public static final String AUTH_HEADER = "Authorization";

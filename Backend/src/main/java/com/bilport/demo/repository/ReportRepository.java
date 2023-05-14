@@ -11,4 +11,5 @@ import com.bilport.demo.domain.model.Report;
 @Repository
 public interface ReportRepository extends MongoRepository<Report, String> {
     Optional<List<Report>> findByReportOwner(String reportOwner);
+    Optional<Report> findByReportOwnerAndVersion(String reportOwner, int version);
 }
