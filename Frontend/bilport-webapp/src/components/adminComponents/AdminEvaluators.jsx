@@ -18,7 +18,8 @@ export default function AdminEvaluators(props){
                     <Button variant="outline-primary"> Add New Evaluator </Button>
                 </Card.Body>
             </Card>
-            <EvaluatorCard style = {{display: "none"}} id = "chosenEvaluatorCard" evaluator = {chosenEvaluator}/>
+            <EvaluatorCard style = {{display: "none"}} id = "chosenEvaluatorCard" evaluator = {chosenEvaluator} 
+            userType = {props.userType}/>
         </div>
     )
 
@@ -70,25 +71,29 @@ export default function AdminEvaluators(props){
                             <CloseButton onClick={() => handleCloseClicked()} />
                         </Card.Header>
                         <Card.Body>
-                            <Container fluid>                                
-                                <Row>
-                                    <Col lg = {8}>
-                                        <Form>
-                                            <Stack direction="horizontal" gap = {4}>
-                                                <Form.Label>Change Student Limit: </Form.Label>
-                                                <Form.Control size = "sm" style={{width: "100px"}}/>
-                                                <Button variant="outline-secondary"> Change </Button>
-                                            </Stack>
-                                        </Form>
-                                    </Col>
-                                    <Col lg = {4}>
-                                        {/* This will be tricky to implement! */}
-                                        <Form>
-                                            <Form.Check type = "switch" label = "Enable Admin Privilege" id = "admin-switch"/>
-                                        </Form>
-                                    </Col>
-                                </Row>
-                                <hr/>
+                            <Container fluid>
+                                { props.userType == "admin" && // Only displays the forms if the user is admin, not a superadmin                                 
+                                <div>
+                                    <Row>
+                                        <Col lg = {8}>
+                                            <Form>
+                                                <Stack direction="horizontal" gap = {4}>
+                                                    <Form.Label>Change Student Limit: </Form.Label>
+                                                    <Form.Control size = "sm" style={{width: "100px"}}/>
+                                                    <Button variant="outline-secondary"> Change </Button>
+                                                </Stack>
+                                            </Form>
+                                        </Col>
+                                        <Col lg = {4}>
+                                            {/* This will be tricky to implement! */}
+                                            <Form>
+                                                <Form.Check type = "switch" label = "Enable Admin Privilege" id = "admin-switch"/>
+                                            </Form>
+                                        </Col>
+                                    </Row>
+                                    <hr/>
+                                </div>
+                                }
                                 <Row>
                                     <Col lg = {2} style={{ color: "purple"}}>Full name:</Col>
                                     <Col lg = {10}><div class = "text-secondary">{props.evaluator.name}</div></Col>

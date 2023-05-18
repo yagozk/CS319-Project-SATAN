@@ -20,7 +20,7 @@ export default function StudentsTable(props){
             <th>Course</th>
         </thead>
         {(() => {
-        if (props.userType == "evaluator"){
+        if (props.userType == "evaluator" || props.userType == "superadmin"){
             return(<tbody>
                 {   
                     props.students.map( (student) => 

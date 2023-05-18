@@ -22,7 +22,7 @@
   .sidebar-item {
     display: flex;
     align-items: center;
-    margin-bottom: 0px;
+    margin-bottom: 0;
     padding: 10px;
     font-size: large;
     transition: background-color 0.2s ease;

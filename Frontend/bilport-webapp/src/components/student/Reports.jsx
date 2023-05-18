@@ -1,7 +1,7 @@
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { Button, Form, Card } from "react-bootstrap";
+import { Button, Form, Card, Alert } from "react-bootstrap";
 import { useRef, useState, useEffect, useLayoutEffect, version } from 'react';
 import useAuth from '../../hooks/useAuth';
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
@@ -28,7 +28,7 @@ export default function Reports() {
     useEffect(() => {
         fetchReports(axiosPrivate, auth, setReports);
     }
-        , []);
+        , [reports]);
 
     useEffect(() => {
         console.log(reports);
@@ -60,8 +60,6 @@ function ReportsDropdown({ reports, report, setReport }) {
                 {report?.reportId ? report?.reportId : "Select a report"}
             </Dropdown.Toggle>
             <Dropdown.Menu>
-                {/*In real implementation, this will be handled by a loop with reports taken from database*/}
-                {/*Implement "onSelect()" to get the input from the dropdown */}
                 {reports.map((report, i) => <Dropdown.Item key={i} onClick={() => { setReport(report); }}>{report?.reportId}</Dropdown.Item>)}
             </Dropdown.Menu>
         </Dropdown>
@@ -146,6 +144,9 @@ function ReportSubmit() {
 
     const [file, setFile] = useState();
 
+    const [showAlert, setShowAlert] = useState(false);
+    const [showSuccessfulAlert, setShowSuccessfulAlert] = useState(false);
+
     const handleFileChange = (e) => {
         if (e.target.files) {
             setFile(e.target.files[0]);
@@ -153,7 +154,15 @@ function ReportSubmit() {
         }
     };
 
+    const handleAlertDismiss = () => {
+        setShowAlert(false);
+    }
+
     const handleUploadReport = () => {
+        if (!reportTmp || !reportId || !file){
+            setShowAlert(true);
+            return;
+        }
         const uploadReport = async () => {
             try {
                 const response = await axiosPrivate.post('/reports/' + auth.user,
@@ -192,22 +201,44 @@ function ReportSubmit() {
         if (reportId != undefined) {
             uploadReport();
             uploadReportFile();
+            console.log(reportId);
+            setShowSuccessfulAlert(true);
+            document.getElementById("formReportName").value = "";    
         }
 
-        console.log(reportId);
     }
 
     return (
         <div className="standaloneCard">
-            <Form.Group controlId="formFileLg" className="mb-3">
-                <Form.Label>Report ID:</Form.Label>
-                <Form.Control type="text" onChange={(e) => setReportTmp({...reportTmp, reportId: e.target.value})} placeholder="Enter the name of report" />
-
-                <Form.Control type="file" size="lg" onChange={handleFileChange}/>
-            </Form.Group>
-            <Button variant="primary" onClick={handleUploadReport} size="lg">
-                Upload Report
-            </Button>
+            <Card>
+                <Card.Body>
+                    <Form.Group controlId="formFileLg" className="mb-3">
+                        <Form.Label> Report name:</Form.Label>
+                        <Form.Control id = "formReportName" type="text" onChange={(e) => setReportTmp({...reportTmp, reportId: e.target.value})} 
+                        placeholder="Enter a name for your report" />
+                        <br/>
+                        <Form.Label> Upload your report: </Form.Label>
+                        <Form.Control type="file" accept='.pdf' onChange={handleFileChange}/>
+                    </Form.Group>
+                    <Button variant="primary" onClick={handleUploadReport} size="lg">
+                        Upload Report
+                    </Button>
+                    <div>
+                        <br/>
+                        { showAlert &&
+                        <Alert variant='warning' dismissible onClose={handleAlertDismiss}>
+                            Please enter both a file name and choose a file before submitting your report!
+                        </Alert> }
+                    </div>
+                    <div>
+                        <br/>
+                        { showSuccessfulAlert &&
+                        <Alert variant='success' dismissible onClose={() => {setShowSuccessfulAlert(false)}}>
+                            Report uploaded successfully.
+                        </Alert> }
+                    </div>
+                </Card.Body>
+            </Card>
         </div>
     );
 }

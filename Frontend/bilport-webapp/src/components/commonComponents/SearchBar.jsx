@@ -14,7 +14,7 @@ export default function SearchBar( {onSearch} ){
             <Form.Group>
                 <Form.Control
                     type = "text"
-                    placeholder = "Search"
+                    placeholder = "Search and enter"
                     value = {searchQuery}
                     onChange = {
                         (event) => setSearchQuery(event.target.value)

@@ -1,9 +1,9 @@
 import { Tab, Tabs } from "react-bootstrap";
-import AdminStudents from "./AdminStudents";
 import { useState } from "react";
-import AdminEvaluators from "./AdminEvaluators";
+import SuperAdminStudents from "./SuperAdminStudents";
+import SuperAdminEvaluators from "./SuperAdminEvaluators";
 
-export default function AdminManagement(){
+export default function SuperAdminManagement(){
 
     // Need an API call in this endpoint for list of all students and list of all evaluators.
     const [students] = useState([
@@ -25,13 +25,16 @@ export default function AdminManagement(){
 
     return ( 
         <div style={{ marginLeft: '250px', padding: '20px' }}>
-            <Tabs defaultActiveKey="adminStudents" className="mb-3" fill>
-                <Tab eventKey="adminStudents" title = "Students" tabClassName='coloredTab'>
-                    <AdminStudents students = {students} userType = "admin" />
+            <Tabs defaultActiveKey="superAdminStudents" className="mb-3" fill>
+                <Tab eventKey="superAdminStudents" title = "Students" tabClassName='coloredTab'>
+                    <SuperAdminStudents students = {students} />
                 </Tab>
-                <Tab eventKey="adminEvaluators" title = "Evaluators" tabClassName='coloredTab'>
-                    <AdminEvaluators evaluators = {evaluators} userType = "admin" />
+                <Tab eventKey="superAdminEvaluators" title = "Evaluators" tabClassName='coloredTab'>
+                    <SuperAdminEvaluators evaluators = {evaluators} /> 
                 </Tab>
+                <Tab eventKey="superAdminTA" title = "Teaching Assistants" tabClassName='coloredTab'>
+                    
+                </Tab>    
             </Tabs>
         </div>
     );

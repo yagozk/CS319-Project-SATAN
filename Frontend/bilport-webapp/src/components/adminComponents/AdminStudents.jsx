@@ -61,10 +61,15 @@ export default function AdminStudents(props){
         <div>
             <Card>
                 <Card.Body>
-                    <div className="standaloneCard">
-                        <Alert variant="success" dismissible> Green students are assigned to an evaluator. </Alert>
-                        <Alert variant="danger" dismissible> Red students are not assigned to an evaluator yet. </Alert>
-                    </div>
+                    {(()=> {
+                    if (props.userType == "admin") //This is necessary because this is not rendered in superadmin
+                        return(
+                            <div className="standaloneCard">
+                                <Alert variant="success" dismissible> Green students are assigned to an evaluator. </Alert>
+                                <Alert variant="danger" dismissible> Red students are not assigned to an evaluator yet. </Alert>
+                            </div>
+                        )
+                    })()}
                     <Stack direction = "horizontal" gap = {4}>
                         <SearchBar onSearch={handleSearch} />
                         <div className="vr"/>
@@ -79,7 +84,7 @@ export default function AdminStudents(props){
                     <Button variant="outline-primary"> Add New Student </Button>
                     </div>
                     <div className="standaloneCard" id = "standartStudentsList">
-                        <StudentsTable students = {displayedStudents} userType = "admin"/>
+                        <StudentsTable students = {displayedStudents} userType = {props.userType}/>
                     </div>
                 </Card.Body>
             </Card>
