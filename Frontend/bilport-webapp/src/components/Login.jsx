@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect, useLayoutEffect } from 'react';
 import useAuth from '../hooks/useAuth';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Button, Alert, Form } from 'react-bootstrap';
+import { Button, Alert, Form, Card } from 'react-bootstrap';
 
 import axios from '../api/axios';
 
@@ -65,43 +65,48 @@ const Login = () => {
 
     return (
         <section className='loginPage'>
+            <Card style={{padding: "100px"}}>
+                <Card.Body className="d-flex flex-column align-items-center">
+                    <Alert ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</Alert>
+                    <h1>Bilport</h1>
+                    <Form onSubmit={handleSubmit}>
+                        <Form.Label htmlFor="username">Username:</Form.Label>
+                        <Form.Control
+                            as="input"
+                            type="text"
+                            id="username"
+                            ref={userRef}
+                            autoComplete="off"
+                            onChange={(e) => setUser(e.target.value)}
+                            value={user}
+                            required
+                        />
 
-            <Alert ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</Alert>
-            <h1>Bilport</h1>
-            <Form onSubmit={handleSubmit}>
-                <Form.Label htmlFor="username">Username:</Form.Label>
-                <Form.Control
-                    as="input"
-                    type="text"
-                    id="username"
-                    ref={userRef}
-                    autoComplete="off"
-                    onChange={(e) => setUser(e.target.value)}
-                    value={user}
-                    required
-                />
+                        <Form.Label htmlFor="password">Password:</Form.Label>
+                        <Form.Control
+                            as="input"
+                            type="password"
+                            id="password"
+                            onChange={(e) => setPwd(e.target.value)}
+                            value={pwd}
+                            required
+                        />
 
-                <Form.Label htmlFor="password">Password:</Form.Label>
-                <Form.Control
-                    as="input"
-                    type="password"
-                    id="password"
-                    onChange={(e) => setPwd(e.target.value)}
-                    value={pwd}
-                    required
-                />
-
-                <style type="text/css">
-                    {`
-    .btn-flat {
-      background-color: #912F56;
-      color: white;
-    }
-    `}
-                </style>
-
-                <Button variant="flat" type="submit">Sign In</Button>
-            </Form>
+                        <style type="text/css">
+                            {`
+            .btn-flat {
+            background-color: purple;
+            color: white;
+            }
+            `}
+                        </style>
+                        <br/>
+                        <div style={{ display: 'flex', justifyContent: 'center' }}>
+                        <Button variant="flat" type="submit" size='lg'>Sign In</Button>
+                        </div>
+                    </Form>
+                </Card.Body>
+            </Card>
         </section>
     )
 }
