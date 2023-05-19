@@ -1,9 +1,9 @@
 import { Row, Col, Card, Container, Button } from "react-bootstrap";
 
-export default function CourseTAInfo(){
-    { /* Instead of placeholder info, this component should take the evaluator object, probably as a parameter */}
+export default function CourseTAInfo({ customStyle }){
+    { /* Instead of placeholder info, this component should take the TA object, probably as a parameter */}
     return (
-        <div style={{ marginLeft: '250px', padding: '20px' }}>
+        <div style={{ ...{ marginLeft: '250px', padding: '20px' }, ...customStyle }}>
             <h1 class = "bigPageTitle"> Course TA Info </h1>
             <Card>
                 <Card.Body>

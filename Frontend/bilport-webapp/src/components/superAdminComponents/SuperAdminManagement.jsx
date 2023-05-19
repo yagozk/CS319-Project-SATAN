@@ -2,6 +2,7 @@ import { Tab, Tabs } from "react-bootstrap";
 import { useState } from "react";
 import SuperAdminStudents from "./SuperAdminStudents";
 import SuperAdminEvaluators from "./SuperAdminEvaluators";
+import SuperAdminTA from "./SuperAdminTA";
 
 export default function SuperAdminManagement(){
 
@@ -32,8 +33,8 @@ export default function SuperAdminManagement(){
                 <Tab eventKey="superAdminEvaluators" title = "Evaluators" tabClassName='coloredTab'>
                     <SuperAdminEvaluators evaluators = {evaluators} /> 
                 </Tab>
-                <Tab eventKey="superAdminTA" title = "Teaching Assistants" tabClassName='coloredTab'>
-                    
+                <Tab eventKey="superAdminTA" title = "Teaching Assistant" tabClassName='coloredTab'>
+                    <SuperAdminTA/>
                 </Tab>    
             </Tabs>
         </div>

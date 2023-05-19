@@ -7,6 +7,7 @@ import AdminProfile from "./adminComponents/AdminProfile";
 import SuperAdminSidebar from "./superAdminComponents/SuperAdminSidebar";
 import SuperAdminManagement from "./superAdminComponents/SuperAdminManagement";
 import SuperAdminSingularStudentPage from "./superAdminComponents/SuperAdminSingularStudentPage";
+import SuperAdminProfile from "./superAdminComponents/SuperAdminProfile";
 
 const Superadmin = () => {
     return (
@@ -14,6 +15,7 @@ const Superadmin = () => {
             <Route path = "/" element={<SuperAdminSidebar/>}>
                 <Route index element={<SuperAdminManagement/>} />
                 <Route path = "students/:id" element ={<SuperAdminSingularStudentPage/>} />
+                <Route path = "profile" element = {<SuperAdminProfile/>} />
             </Route>
         </Routes>
       )
