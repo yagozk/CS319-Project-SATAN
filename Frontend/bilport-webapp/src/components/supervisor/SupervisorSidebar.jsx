@@ -1,7 +1,7 @@
 import { Outlet, Link } from "react-router-dom";
 import { Row, Col } from 'react-bootstrap';
 
-export default function AdminSideBar(){
+export default function SupervisorSidebar(){
     return(
     <>
         <Row>
@@ -9,16 +9,16 @@ export default function AdminSideBar(){
             <h1 class = "sidebar-header"><i class="fa-solid fa-shield-cat" style={{color: "#bf69ed"}}></i> Bilport</h1>
             <ul class = "sidebar-list">
               <li class ="sidebar-item">
-              <i class="material-icons">insert_chart</i>
-                <Link to="/admin" class = "sidebar-link">Management</Link>
+              <i class="material-icons">assignment_turned_in</i>
+                <Link to="/supervisor" class = "sidebar-link">Evaluation Form</Link>
               </li>
               <li class ="sidebar-item">
-              <i class="material-icons">account_circle</i>
-                <Link to="/admin/profile" class = "sidebar-link">Profile</Link>
+              <i class="fa-solid fa-pen-nib fa-lg"></i>
+                <Link to="/supervisor/seal_stamp" class = "sidebar-link">Seal/Stamp</Link>
               </li>
               <li class ="sidebar-item">
-              <i class="material-icons">gavel</i>
-                <Link to="/admin" class = "sidebar-link">Evaluator Mode</Link>
+              <i class="fa-solid fa-circle-user fa-lg"></i>
+                <Link to="/supervisor/profile" class = "sidebar-link">Profile</Link>
               </li>
             </ul>
           </Col>
