@@ -10,18 +10,24 @@ export default function AssignedStudentPage(){
 
     return(
         <div style={{ marginLeft: '250px', padding: '20px' }}>
-            <Card>
+            <Card style={{backgroundColor: "rgb(100, 34, 140, 0.2)" , paddingBottom: "10px"}}>
                 <Card.Header>
-                    <Link to="/evaluator" ><i class="material-icons" style= {{"font-size":"30px"}}>arrow_back</i></Link>
-                </Card.Header>
-                <Tabs defaultActiveKey="info" className="mb-3" fill>
-                    <Tab eventKey="info" title = "Student Info">
+                    <Link to="/evaluator" >
+                        <i class="material-icons" style= {{"font-size":"30px", color:"white"}}
+                          onMouseEnter={(e) => (e.target.style.color = '#E6E6FA')}
+                          onMouseLeave={(e) => (e.target.style.color = 'white')}>
+                            arrow_back
+                        </i>
+                    </Link>
+                    <Tabs defaultActiveKey="info" className="mb-3" fill>
+                    <Tab eventKey="info" title = "Student Info" tabClassName="coloredTab">
                         <AssignedStudentInfo student = {assignedStudent}/>
                     </Tab>
-                    <Tab eventKey="report" title = "Report">
+                    <Tab eventKey="report" title = "Report" tabClassName="coloredTab">
                         <AssignedStudentReport student = {assignedStudent}/>
                     </Tab>
                 </Tabs>
+                </Card.Header>
             </Card>
         </div>
     );

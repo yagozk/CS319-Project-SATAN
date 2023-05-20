@@ -2,7 +2,6 @@ import { Row, Col, Card, Container } from "react-bootstrap";
 import ChangePassword from "../commonComponents/ChangePassword";
 
 export default function SupervisorProfile(){
-    { /* Instead of placeholder info, this component should take the evaluator object, probably as a parameter */}
     return (
         <div style={{ marginLeft: '250px', padding: '20px' }}>
             <h1 class = "bigPageTitle"> Profile Page </h1>
