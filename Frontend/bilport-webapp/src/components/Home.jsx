@@ -21,9 +21,15 @@ const Home = () => {
             <br />
             <Link to="/admin">Go to the Admin page</Link>
             <br />
-            <Link to="/user">Go to the User</Link>
+            <Link to="/user">Go to the Student page</Link>
             <br />
-            <Link to="/evaluator">Go to the Evaluator</Link>
+            <Link to="/evaluator">Go to the Evaluator page</Link>
+            <br />
+            <Link to="/supervisor">Go to the Supervisor page</Link>
+            <br />
+            <Link to="/ta">Go to the TA page</Link>
+            <br />
+            <Link to="/superadmin">Go to the Superadmin page</Link>
             <br />
             <Link to="/linkpage">Go to the link page</Link>
             <div className="flexGrow">

@@ -13,6 +13,7 @@ import { Routes, Route } from 'react-router-dom';
 import Evaluator from './components/Evaluator';
 import Superadmin from './components/Superadmin';
 import Supervisor from './components/Supervisor';
+import TeachingAssistant from './components/TeachingAssistant';
 
 const ROLES = {
   'User': "ROLE_USER",
@@ -38,7 +39,11 @@ function App() {
         {/* THIS IS TEMPORARY. CHANGE THIS. */}
         <Route path="superadmin/*" element={<Superadmin />} />
         {/* THIS IS TEMPORARY. CHANGE THIS */}
-        <Route path="supervisor/*" element={<Supervisor />} />
+        <Route path="supervisor/*" element={<Supervisor />} />        
+        {/* THIS IS TEMPORARY. CHANGE THIS */}
+        <Route path="ta/*" element={<TeachingAssistant />} />
+
+        
 
         <Route path="linkpage" element={<LinkPage />} />
         <Route path="unauthorized" element={<Unauthorized />} />
