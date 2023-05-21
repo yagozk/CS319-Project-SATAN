@@ -6,7 +6,8 @@ export default function AdminSideBar(){
     <>
         <Row>
           <Col sm={3} md={2} className="Sidebar">
-            <h1 class = "sidebar-header">Bilport</h1>
+            <h1 class = "sidebar-header"><i class="fa-solid fa-shield-cat" style={{color: "#bf69ed"}}></i> Bilport</h1>
+            <hr/>
             <ul class = "sidebar-list">
               <li class ="sidebar-item">
               <i class="material-icons">insert_chart</i>

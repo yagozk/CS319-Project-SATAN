@@ -1,22 +1,12 @@
-import { Button, Table } from "react-bootstrap";
-import {Stack} from "react-bootstrap";
-import { Link } from "react-router-dom";
-import { Card } from "react-bootstrap";
+import StudentsTable from "../commonComponents/StudentsTable";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import SearchBar from "../CommonComponents/SearchBar";
-import SortDropdown from "../CommonComponents/SortDropdown";
+import { Alert, Button, Card, Row, Stack } from "react-bootstrap";
+import SearchBar from "../commonComponents/SearchBar";
+import SortDropdown from "../commonComponents/SortDropdown";
 
-export default function EvaluatorStudents(){
+export default function StudentsPage(props){
 
-    // Obviously, this will be replaced with the actual students of the evaluator
-    const [students] = useState([
-        {id: 220000, course: "CS299", name: "Osman Osmanovic", last_submission_date: "2001-01-01", status: "Assigned to course", email: "temp@gmail.com"},
-        {id: 220001, course: "CS299", name: "Feridun Feridunovski", last_submission_date: "2001-01-02", status: "Waiting TA", email: "temp@gmail.com"},
-        {id: 220002, course: "CS399", name: "Bedük", last_submission_date: "2000-01-01", status: "Decision", email: "temp@gmail.com"},
-        {id: 220003, course: "CS399", name: "Jonathan Jonathan", last_submission_date: "2002-03-02", status: "Waiting evaluator", email: "temp@gmail.com"},
-        {id: 220004, course: "CS299", name: "Arda Yurdunuçokseven", last_submission_date: "1999-01-01", status: "Requested resubmission", email: "temp@gmail.com"}
-    ]);
+    const [students] = useState(props.students)
 
     const [displayedStudents, setDisplayedStudents] = useState(students);
 
@@ -66,11 +56,19 @@ export default function EvaluatorStudents(){
         setDisplayedStudents(sortedStudents);
     };
 
-    return (
-        <div style={{ marginLeft: '250px', padding: '20px' }}>
-            <h1 class = "bigPageTitle">Your assigned students</h1>
+    return(
+        <div>
             <Card>
                 <Card.Body>
+                    {(()=> {
+                    if (props.userType == "admin") //This is necessary because this is only rendered in admin
+                        return(
+                            <div className="standaloneCard">
+                                <Alert variant="success" dismissible> Green students are assigned to an evaluator. </Alert>
+                                <Alert variant="danger" dismissible> Red students are not assigned to an evaluator yet. </Alert>
+                            </div>
+                        )
+                    })()}
                     <Stack direction = "horizontal" gap = {4}>
                         <SearchBar onSearch={handleSearch} />
                         <div className="vr"/>
@@ -80,42 +78,18 @@ export default function EvaluatorStudents(){
                         <div className="vr"/>
                         <Button variant = "outline-secondary">Filter</Button> {/* this will be properly implemented */}
                     </Stack>
+                    <br/>
+                    {(()=> {
+                    if (props.userType == "admin" || props.userType == "superadmin") return( 
+                        <div className="d-grid gap-2">
+                            <Button variant="outline-primary"> Add New Student </Button>
+                        </div>
+                    )})()}
                     <div className="standaloneCard" id = "standartStudentsList">
-                        <StudentsTable students = {displayedStudents} />
+                        <StudentsTable students = {displayedStudents} userType = {props.userType}/>
                     </div>
                 </Card.Body>
             </Card>
         </div>
-    );
-}
-
-function StudentsTable(props){
-    const navigate = useNavigate();
-
-    function handleRowClicked(id){
-        const assignedStudent = props.students.find(obj => obj.id === id);
-        navigate(`/evaluator/students/${id}`, { state: {assignedStudent} } );
-    };
-    
-    return(
-    <Table striped bordered hover>
-        <thead>
-            <th>Name</th>
-            <th>Last Submission Date</th>
-            <th>Status</th>
-            <th>Course</th>
-        </thead>
-        <tbody>
-            {
-                props.students.map( (student) => 
-                <tr class = "clickRow" key = {student.id} onClick = { () => handleRowClicked(student.id) } >
-                    <td>{student.name}</td>
-                    <td>{student.last_submission_date}</td>
-                    <td>{student.status}</td>
-                    <td>{student.course}</td>
-                </tr>)
-            }
-        </tbody>
-    </Table>
-    );
+    )
 }

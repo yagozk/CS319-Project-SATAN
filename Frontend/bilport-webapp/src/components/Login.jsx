@@ -65,12 +65,13 @@ const Login = () => {
 
     return (
         <section className='loginPage'>
-            <Card style={{padding: "100px"}}>
+            <Card style={{padding: "50px"}}>
                 <Card.Body className="d-flex flex-column align-items-center">
                     <Alert ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</Alert>
+                    <h1><i class="fa-solid fa-shield-cat fa-xl" style={{color: "#801ba7"}}></i></h1>
                     <h1>Bilport</h1>
                     <Form onSubmit={handleSubmit}>
-                        <Form.Label htmlFor="username">Username:</Form.Label>
+                        <Form.Label htmlFor="username">Username (ID):</Form.Label>
                         <Form.Control
                             as="input"
                             type="text"

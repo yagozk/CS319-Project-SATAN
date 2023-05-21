@@ -7,8 +7,9 @@ export default function StudentSideBar() {
       <Row>
         <Col sm={3} md={2} className="Sidebar">
           <h1 className="sidebar-header">
-            <Link to="/" className="sidebar-link">Bilport</Link>
+            <Link to="/" className="sidebar-link"><i class="fa-solid fa-shield-cat" style={{color: "#bf69ed"}}></i> Bilport</Link>
           </h1>
+          <hr/>
           <ul className="sidebar-list">
             <li className="sidebar-item">
             <i className="material-icons">book</i>
@@ -19,7 +20,7 @@ export default function StudentSideBar() {
               <Link to="/user/profile" className="sidebar-link">Profile</Link>
             </li>
             <li className="sidebar-item">
-              <i className="material-icons">group</i>
+              <i class="fa-solid fa-person-chalkboard"></i>
               <Link to="/user/evaluator_ta_info" className="sidebar-link">Evaluator/TA Info</Link>
             </li>
             <li className="sidebar-item">
