@@ -7,6 +7,7 @@ export default function SupervisorSidebar(){
         <Row>
           <Col sm={3} md={2} className="Sidebar">
             <h1 class = "sidebar-header"><i class="fa-solid fa-shield-cat" style={{color: "#bf69ed"}}></i> Bilport</h1>
+            <hr/>
             <ul class = "sidebar-list">
               <li class ="sidebar-item">
               <i class="material-icons">assignment_turned_in</i>

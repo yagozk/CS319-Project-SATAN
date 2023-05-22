@@ -1,9 +1,8 @@
 import { Row, Col, Card, Container } from "react-bootstrap";
-import ChangePassword from "../CommonComponents/ChangePassword";
+import ChangePassword from "../commonComponents/ChangePassword";
 
-export default function StudentProfile(){
-    { /* Instead of placeholder info, this component should take the student object, probably as a parameter */}
-    return(
+export default function TAProfile(){
+    return (
         <div style={{ marginLeft: '250px', padding: '20px' }}>
             <h1 class = "bigPageTitle"> Profile Page </h1>
             <Card>
@@ -11,17 +10,17 @@ export default function StudentProfile(){
                     <Container fluid>
                         <Row>
                             <Col lg = {2} style={{ color: "purple"}}>Full name:</Col>
-                            <Col lg = {10}><div class = "text-secondary">Jonathan Jonathanoğlu</div></Col>
-                        </Row>
-                        <hr/>
-                        <Row>
-                            <Col lg = {2} style={{ color: "purple"}}>Student ID:</Col>
-                            <Col lg = {10} ><div class = "text-secondary">00000000000</div></Col>
+                            <Col lg = {10}><div class = "text-secondary">Teaching Assistant</div></Col>
                         </Row>
                         <hr/>
                         <Row>
                             <Col lg = {2} style={{ color: "purple"}}>Email:</Col>
-                            <Col lg = {10}><div class = "text-secondary">jonathan.jonathanoglu@ug.bilkent.edu.tr</div></Col>
+                            <Col lg = {10}><div class = "text-secondary">teaching.assistant@ug.bilkent.edu.tr</div></Col>
+                        </Row>
+                        <hr/>
+                        <Row>
+                            <Col lg = {2} style={{ color: "purple"}}>ID:</Col>
+                            <Col lg = {10}><div class = "text-secondary">123456789</div></Col>
                         </Row>
                     </Container>
                 </Card.Body>
@@ -30,7 +29,6 @@ export default function StudentProfile(){
             <div style={{ marginTop: '50px  ' }}>
                 <ChangePassword/>
             </div>
-
         </div>
     );
 }

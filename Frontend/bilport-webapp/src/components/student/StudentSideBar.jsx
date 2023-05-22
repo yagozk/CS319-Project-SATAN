@@ -9,6 +9,7 @@ export default function StudentSideBar() {
           <h1 className="sidebar-header">
             <Link to="/" className="sidebar-link"><i class="fa-solid fa-shield-cat" style={{color: "#bf69ed"}}></i> Bilport</Link>
           </h1>
+          <hr/>
           <ul className="sidebar-list">
             <li className="sidebar-item">
             <i className="material-icons">book</i>

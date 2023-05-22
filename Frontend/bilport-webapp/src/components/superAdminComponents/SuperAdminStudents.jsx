@@ -1,4 +1,4 @@
-import AdminStudents from "../adminComponents/AdminStudents";
+import StudentsPage from "../commonComponents/StudentsPage";
 import SuperAdminImportCard from "./SuperAdminImportCard";
 
 export default function SuperAdminStudents(props){
@@ -6,7 +6,7 @@ export default function SuperAdminStudents(props){
         <div>
             <SuperAdminImportCard importUserType = "students"/>
             <br/>
-            <AdminStudents students = {props.students} userType = "superadmin"/>
+            <StudentsPage students = {props.students} userType = "superadmin"/>
         </div>
     )
 }
