@@ -1,9 +1,11 @@
 // package com.bilport.demo.util;
 // import com.bilport.demo.domain.model.Report;
 // import com.bilport.demo.domain.model.Student;
+// import com.bilport.demo.domain.model.Supervisor;
 // import com.bilport.demo.domain.model.User;
 // import com.bilport.demo.repository.ReportRepository;
 // import com.bilport.demo.repository.StudentRepository;
+// import com.bilport.demo.repository.SupervisorRepository;
 // import com.bilport.demo.repository.UserRepository;
 
 // import java.util.ArrayList;
@@ -11,6 +13,7 @@
 // import java.util.Date;
 // import java.util.List;
 
+// import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.boot.CommandLineRunner;
 // import org.springframework.security.core.GrantedAuthority;
 // import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,23 +22,19 @@
 // @Component
 // public class DbInit implements CommandLineRunner {
 
-//     private final ReportRepository repository;
+//     @Autowired
+//     private final SupervisorRepository repository;
 
-//     public DbInit(ReportRepository repository) {
+//     public DbInit(SupervisorRepository repository) {
 //         this.repository = repository;
 //     }
 
 //     @Override
 //     public void run(String... args) throws Exception {
 //         //repository.save(new Report("heee5e", "adminBoy"));
-//         repository.save(new Report("osuruk", "22003131", new Date(), "Waiting" ));
-//         repository.save(new Report("osuruk2", "22003131", new Date(), "Waiting" ));
+//         repository.save(new Supervisor("00223131", "pass1", getAuthorities(new ArrayList<String>( Arrays.asList( new String[]{"ROLE_USER"}))),
+//         "NameOfVisor", "pipi@at.com", "partTimeBitch", "Bilkent", "CS", "22003131"));
 
-//         repository.save(new Report("aaaaa", "userBoy", new Date(), "Waiting" ));
-//         repository.save(new Report("aaaaa2", "userBoy", new Date(), "Waiting" ));
-
-//         repository.save(new Report("bb", "adminBoy", new Date(), "Waiting" ));
-//         repository.save(new Report("bb2", "adminBoy", new Date(), "Waiting" ));
 //     }
 
 //     // @Override
@@ -50,11 +49,11 @@
 //     //     , "Haktan", "Götten", "gotten@mail.com", "SiktenEvaluator", "SiktenTa", "SiktenSupervisor"));
 //     //     }
 
-//     // private List<GrantedAuthority> getAuthorities(List<String> roles) {
+//     private List<GrantedAuthority> getAuthorities(List<String> roles) {
         
-//     //     List<GrantedAuthority> authorities = new ArrayList<>();
-//     //     roles.forEach(role -> authorities.add(new SimpleGrantedAuthority(role)));
-//     //     return authorities;
+//         List<GrantedAuthority> authorities = new ArrayList<>();
+//         roles.forEach(role -> authorities.add(new SimpleGrantedAuthority(role)));
+//         return authorities;
 
-//     // }
+//     }
 // }

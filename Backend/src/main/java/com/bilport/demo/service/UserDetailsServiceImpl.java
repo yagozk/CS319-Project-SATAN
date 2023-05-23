@@ -20,6 +20,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private StudentService repoStudent;
 
+    @Autowired
+    private EvaluatorService repoEvaluator;
+
+    @Autowired
+    private SupervisorService repoSupervisor;
+
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         
@@ -30,6 +36,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         if (user == null) {
             user = repoStudent.findById(userName);
+        }
+
+        if (user == null) {
+            user = repoEvaluator.findById(userName);
+        }
+
+        if (user == null) {
+            user = repoSupervisor.findById(userName);
         }
 
         if (user != null) {

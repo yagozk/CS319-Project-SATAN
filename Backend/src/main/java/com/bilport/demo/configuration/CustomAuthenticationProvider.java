@@ -44,7 +44,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     
         if (user.getPassword().equals(upassw)) {
             authToken = new UsernamePasswordAuthenticationToken(user.getUsername(), null, user.getAuthorities());
-        }    
+        }
+        
         logger.info(user.getPassword() + " " + upassw);
         return authToken;
     }
