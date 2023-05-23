@@ -7,26 +7,6 @@ import { useEffect } from "react";
 import {Spinner} from "react-bootstrap";
 import axios from "../../api/axios";
 
-/*
-async function fetchUserStudent(axiosInstance, auth, setStudent) {
-    try {
-        const response = await axiosInstance.get(`/students/${auth.user}`);
-        setStudent(response.data);
-    } catch (error) {
-        console.error(error);
-    }
-}
-
-async function fetchUserTA(axiosInstance, id, setTA) {
-    console.log(id);
-    try {
-        const response = await axiosInstance.get(`/TAs/`+id);
-        setTA(response.data);
-    } catch (error) {
-        console.error(error);
-    }
-}*/
-
 
 export default function EvaluatorTAInfo() {
 const { auth } = useAuth();
@@ -54,7 +34,6 @@ const { auth } = useAuth();
 
   useEffect(() => {
     const fetchUserTA = async () => {
-      console.log(student.assignedTaId);
       try {
         const response = await axiosPrivate.get(`/TAs/${student.assignedTaId}`);
         setTA(response.data);
@@ -70,7 +49,6 @@ const { auth } = useAuth();
 
   useEffect(() => {
     const fetchUserEvaluator = async () => {
-      console.log(student.assignedEvaluatorId);
       try {
         const response = await axiosPrivate.get(`/evaluators/${student.assignedEvaluatorId}`);
         setEvaluator(response.data);
@@ -99,7 +77,7 @@ const { auth } = useAuth();
                         <Container fluid>
                                 <Row>
                                     <Col lg = {2} style={{ color: "purple"}}>Name: </Col>
-                                    <Col lg = {10}><div className = "text-secondary">{evaluator.evaluatorName + " " + evaluator.evaluatorSurname}</div></Col>
+                  <Col lg={10}><div className="text-secondary">{evaluator.evaluatorName} {evaluator.evaluatorSurname}</div></Col>
                                 </Row>
                                 <hr/>
                                 <Row>
