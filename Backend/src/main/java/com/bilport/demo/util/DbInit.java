@@ -9,6 +9,9 @@
 // import com.bilport.demo.repository.ReportRepository;
 // import com.bilport.demo.repository.StudentRepository;
 // import com.bilport.demo.repository.SupervisorRepository;
+// import com.bilport.demo.repository.TARepository;
+// import com.bilport.demo.repository.AdminRepository;
+// import com.bilport.demo.repository.SuperadminRepository;
 // import com.bilport.demo.repository.UserRepository;
 
 // import java.util.ArrayList;
