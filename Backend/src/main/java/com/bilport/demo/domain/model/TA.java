@@ -9,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 public class TA extends User {
     String taFullName;
     String taEmail;
+    String[] assignedStudents;
 
     public TA() {
     }
@@ -39,5 +40,13 @@ public class TA extends User {
 
     public void setTaEmail(String taEmail) {
         this.taEmail = taEmail;
+    }
+
+    public String[] getAssignedStudents() {
+        return assignedStudents;
+    }
+
+    public void setAssignedStudents(String[] assignedStudents) {
+        this.assignedStudents = assignedStudents;
     }
 }

@@ -38,9 +38,6 @@ function App() {
         <Route path="superadmin/*" element={<Superadmin />} />
         {/* THIS IS TEMPORARY. CHANGE THIS */}
         <Route path="supervisor/*" element={<Supervisor />} />        
-        {/* THIS IS TEMPORARY. CHANGE THIS */}
-        <Route path="ta/*" element={<TeachingAssistant />} />
-
         
 
         <Route path="linkpage" element={<LinkPage />} />
@@ -58,6 +55,10 @@ function App() {
 
           <Route element={<RequireAuth allowedRoles={[ROLES.User, ROLES.Admin]} />}>
             <Route path="evaluator/*" element={<Evaluator />}></Route>
+          </Route>
+
+          <Route element={<RequireAuth allowedRoles={[ROLES.User, ROLES.Admin]} />}>
+            <Route path="ta/*" element={<TeachingAssistant />}></Route>
           </Route>
 
 

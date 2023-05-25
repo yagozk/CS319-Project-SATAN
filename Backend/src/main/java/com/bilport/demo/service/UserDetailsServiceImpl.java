@@ -26,6 +26,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private SupervisorService repoSupervisor;
 
+    @Autowired
+    private TAService repoTa;
+    
+
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         
@@ -44,6 +48,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         if (user == null) {
             user = repoSupervisor.findById(userName);
+        }
+
+        if (user == null) {
+            user = repoTa.findById(userName);
         }
 
         if (user != null) {
