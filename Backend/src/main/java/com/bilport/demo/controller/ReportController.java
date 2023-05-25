@@ -71,7 +71,7 @@ public class ReportController {
              */
             byte[] file = reportService.downloadReportFile(reportId);
             HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.add("Content-Disposition", "attachment; filename=\"" + "ss$$1" + "\"");
+            httpHeaders.add("Content-Disposition", "attachment; filename=\"" + reportId + "\"");
             httpHeaders.setContentType(MediaType.APPLICATION_PDF);
             return new ResponseEntity<byte[]>(file, httpHeaders, HttpStatus.OK);
 

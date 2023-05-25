@@ -10,15 +10,18 @@ public class Evaluator extends User {
     String evaluatorName;
     String evaluatorSurname;
     String evaluatorEmail;
-    
+    String[] assignedStudents;
+
     public Evaluator() {
     }
 
-    public Evaluator(String userName, String userPassword, List<GrantedAuthority> userAuthorities, String evaluatorName, String evaluatorSurname, String evaluatorEmail) {
+    public Evaluator(String userName, String userPassword, List<GrantedAuthority> userAuthorities, String evaluatorName,
+            String evaluatorSurname, String evaluatorEmail, String[] assignedStudents) {
         super(userName, userPassword, userAuthorities);
         this.evaluatorName = evaluatorName;
         this.evaluatorSurname = evaluatorSurname;
         this.evaluatorEmail = evaluatorEmail;
+        this.assignedStudents = assignedStudents;
     }
 
     public String getEvaluatorName() {
@@ -31,6 +34,10 @@ public class Evaluator extends User {
 
     public String getEvaluatorSurname() {
         return evaluatorSurname;
+    }
+
+    public String[] getAssignedStudents() {
+        return assignedStudents;
     }
 
     public void setEvaluatorSurname(String surname) {

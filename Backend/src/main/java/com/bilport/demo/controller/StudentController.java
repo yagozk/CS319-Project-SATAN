@@ -33,6 +33,9 @@ public class StudentController {
             studentResponse.setAssignedEvaluatorId(studentModel.getAssignedEvaluatorId());
             studentResponse.setAssignedTaId(studentModel.getAssignedTaId());
             studentResponse.setAssignedSupervisorId(studentModel.getAssignedSupervisorId());
+            studentResponse.setReportVersionCS299(studentModel.getReportVersionCS299());
+            studentResponse.setReportVersionCS399(studentModel.getReportVersionCS399());
+            studentResponse.setStudentId(studentModel.getUserName());
 
 
             return new ResponseEntity<StudentResponse>(studentResponse, HttpStatus.OK);

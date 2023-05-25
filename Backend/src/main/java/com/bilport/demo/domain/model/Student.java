@@ -1,5 +1,6 @@
 package com.bilport.demo.domain.model;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -13,12 +14,16 @@ public class Student extends User {
     String assignedEvaluatorId;
     String assignedTaId;
     String assignedSupervisorId;
+    int reportVersionCS299;
+    int reportVersionCS399;
 
     public Student() {
     }
 
-    public Student(String userName, String userPassword, List<GrantedAuthority> userAuthorities, String studentName, String studentSurname, 
-    String studentEmail, String assignedEvaluatorId, String assignedTaId, String assignedSupervisorId) {
+    public Student(String userName, String userPassword, List<GrantedAuthority> userAuthorities, String studentName,
+            String studentSurname,
+            String studentEmail, String assignedEvaluatorId, String assignedTaId, String assignedSupervisorId,
+            int reportVersionCS299, int reportVersionC399) {
         super(userName, userPassword, userAuthorities);
         this.studentName = studentName;
         this.studentSurname = studentSurname;
@@ -26,6 +31,8 @@ public class Student extends User {
         this.assignedEvaluatorId = assignedEvaluatorId;
         this.assignedTaId = assignedTaId;
         this.assignedSupervisorId = assignedSupervisorId;
+        this.reportVersionCS299 = reportVersionCS299;
+        this.reportVersionCS399 = reportVersionC399;
     }
 
     public String getStudentName() {
@@ -74,6 +81,22 @@ public class Student extends User {
 
     public void setAssignedSupervisorId(String assignedSupervisorId) {
         this.assignedSupervisorId = assignedSupervisorId;
+    }
+
+    public int getReportVersionCS299() {
+        return reportVersionCS299;
+    }
+
+    public void setReportVersionCS299(int reportVersionCS299) {
+        this.reportVersionCS299 = reportVersionCS299;
+    }
+
+    public int getReportVersionCS399() {
+        return reportVersionCS399;
+    }
+
+    public void setReportVersionCS399(int reportVersionCS399) {
+        this.reportVersionCS399 = reportVersionCS399;
     }
 
 }

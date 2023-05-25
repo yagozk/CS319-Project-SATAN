@@ -9,8 +9,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.bilport.demo.domain.model.Report;
 import com.bilport.demo.domain.model.ReportFile;
+import com.bilport.demo.domain.model.Student;
 import com.bilport.demo.repository.ReportFileRepository;
 import com.bilport.demo.repository.ReportRepository;
+import com.bilport.demo.repository.StudentRepository;
 
 @Service
 public class ReportService {
@@ -20,6 +22,9 @@ public class ReportService {
 
     @Autowired
     ReportFileRepository reportFileRepository;
+
+    @Autowired
+    StudentRepository studentRepository;
 
     public List<Report> getReports() {
         return reportRepository.findAll();
@@ -35,6 +40,23 @@ public class ReportService {
 
     public void uploadStudentReport(Report report) {
         reportRepository.save(report);
+
+        incrementReportVersion(report.reportOwner, report.course);
+    }
+
+    public void incrementReportVersion(String studentId, String course) {
+        Student student = studentRepository.findById(studentId).orElse(null);
+        
+        if (course.equals("CS299")) {
+            student.setReportVersionCS299(student.getReportVersionCS299() + 1);
+        } else if (course.equals("CS399")) {
+            student.setReportVersionCS399(student.getReportVersionCS399() + 1);
+            System.out.println("KELLER");
+
+        }
+
+        System.out.println("INCCC" + student.getReportVersionCS299() + " " + student.getReportVersionCS399() + course);
+        studentRepository.save(student);
     }
 
     public void uploadFileToReport(MultipartFile reportFile, String name) {

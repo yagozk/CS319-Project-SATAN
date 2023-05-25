@@ -1,8 +1,11 @@
 // package com.bilport.demo.util;
+
+// import com.bilport.demo.domain.model.Evaluator;
 // import com.bilport.demo.domain.model.Report;
 // import com.bilport.demo.domain.model.Student;
 // import com.bilport.demo.domain.model.Supervisor;
 // import com.bilport.demo.domain.model.User;
+// import com.bilport.demo.repository.EvaluatorRepository;
 // import com.bilport.demo.repository.ReportRepository;
 // import com.bilport.demo.repository.StudentRepository;
 // import com.bilport.demo.repository.SupervisorRepository;
@@ -23,34 +26,46 @@
 // public class DbInit implements CommandLineRunner {
 
 //     @Autowired
-//     private final SupervisorRepository repository;
+//     private final StudentRepository repository;
 
-//     public DbInit(SupervisorRepository repository) {
+//     public DbInit(StudentRepository repository) {
 //         this.repository = repository;
-//     }
-
-//     @Override
-//     public void run(String... args) throws Exception {
-//         //repository.save(new Report("heee5e", "adminBoy"));
-//         repository.save(new Supervisor("00223131", "pass1", getAuthorities(new ArrayList<String>( Arrays.asList( new String[]{"ROLE_USER"}))),
-//         "NameOfVisor", "pipi@at.com", "partTimeBitch", "Bilkent", "CS", "22003131"));
-
 //     }
 
 //     // @Override
 //     // public void run(String... args) throws Exception {
-//     //     repository.save(new User("adminBoy", "pass1", getAuthorities(new ArrayList<String>( Arrays.asList( new String[]{"ROLE_ADMIN"})))));
-//     //     repository.save(new User("userBoy", "pass2", getAuthorities(new ArrayList<String>( Arrays.asList( new String[]{"ROLE_USER"})))));
+//     // repository.save(new Evaluator("20022002", "pass2", getAuthorities(new
+//     // ArrayList<String>( Arrays.asList( new String[]{"ROLE_USER"}))),
+//     // "Eray", "Tüzün", "tuzun.eray@gmail.com", new String[]{"22003131"}));
 //     // }
 
 //     // @Override
 //     // public void run(String... args) throws Exception {
-//     //     repository.save(new Student("22003131", "pass1", getAuthorities(new ArrayList<String>( Arrays.asList( new String[]{"ROLE_USER"})))
-//     //     , "Haktan", "Götten", "gotten@mail.com", "SiktenEvaluator", "SiktenTa", "SiktenSupervisor"));
-//     //     }
+//     // //repository.save(new Report("heee5e", "adminBoy"));
+//     // repository.save(new Supervisor("00223131", "pass1", getAuthorities(new
+//     // ArrayList<String>( Arrays.asList( new String[]{"ROLE_USER"}))),
+//     // "NameOfVisor", "pipi@at.com", "partTimeBitch", "Bilkent", "CS", "22003131"));
+
+//     // }
+
+//     // @Override
+//     // public void run(String... args) throws Exception {
+//     // repository.save(new User("adminBoy", "pass1", getAuthorities(new
+//     // ArrayList<String>( Arrays.asList( new String[]{"ROLE_ADMIN"})))));
+//     // repository.save(new User("userBoy", "pass2", getAuthorities(new
+//     // ArrayList<String>( Arrays.asList( new String[]{"ROLE_USER"})))));
+//     // }
+
+//     @Override
+//     public void run(String... args) throws Exception {
+//         repository.save(new Student("22003131", "pass1",
+//                 getAuthorities(new ArrayList<String>(Arrays.asList(new String[] { "ROLE_USER" }))), "Haktan", "Götten",
+//                 "gotten@mail.com", "20022002", "20012001",
+//                 "00223131", 0, 0));
+//     }
 
 //     private List<GrantedAuthority> getAuthorities(List<String> roles) {
-        
+
 //         List<GrantedAuthority> authorities = new ArrayList<>();
 //         roles.forEach(role -> authorities.add(new SimpleGrantedAuthority(role)));
 //         return authorities;
