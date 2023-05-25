@@ -42,9 +42,16 @@ public class EvaluatorController {
     }
 
     @ResponseBody
+    @GetMapping
+    public List<Evaluator> getEvaluators() {
+        return evaluatorService.getEvaluators();
+    }
+    
+    @ResponseBody
     @GetMapping(value = "/submissions/{id}")
     public List<SubmissionResponse> getSubmissions(@PathVariable("id") String id) {
         return evaluatorService.getSubmissions(id);
     }
+
 
 }

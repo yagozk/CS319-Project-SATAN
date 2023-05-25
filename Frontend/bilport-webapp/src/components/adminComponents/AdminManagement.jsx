@@ -3,7 +3,6 @@ import AdminStudents from "./AdminStudents";
 import { useState, useEffect } from "react";
 import AdminEvaluators from "./AdminEvaluators";
 import useAuth from '../../hooks/useAuth';
-import axios from "axios";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 async function fetchUserAdmin(axiosInstance, auth, setAdmin) {
@@ -17,7 +16,7 @@ async function fetchUserAdmin(axiosInstance, auth, setAdmin) {
 
 async function fetchAllStudents(axiosInstance, setStudents) {
     try {
-        const response = await axiosInstance.get(`/../students`);
+        const response = await axiosInstance.get(`/admins/submissions`);
         setStudents(response.data);
     } catch (error) {
         console.error(error);
@@ -26,54 +25,55 @@ async function fetchAllStudents(axiosInstance, setStudents) {
 
 async function fetchAllEvaluators(axiosInstance, setEvaluator) {
     try {
-        const response = await axiosInstance.all(`/../evaluators`);
+        const response = await axiosInstance.get(`/evaluators`);
         setEvaluator(response.data);
+        console.log(response.data);
     } catch (error) {
         console.error(error);
     }
 }
 
 export default function AdminManagement() {
-const { auth } = useAuth();
+    const { auth } = useAuth();
     const [admin, setAdmin] = useState([]);
     const axiosPrivate = useAxiosPrivate();
-
-    useEffect(() => { fetchUserAdmin(axiosPrivate, auth, setAdmin); }, []);
-    console.log(admin);
 
     useEffect(() => {
         console.log(admin);
     }, [admin]);
 
-  const [students, setStudents] = useState([]);
-    useEffect(() => { fetchAllStudents(axiosPrivate, setStudents); }, []);
+    const [evaluators, setEvaluators] = useState([]);
 
-/*
-  useEffect(() => {
-    // Fetch student data from MongoDB collection
-    axiosPrivate.get(`/../students`)
-      .then(response => {
-        setStudents(response.data);
-      })
-      .catch(error => {
-        console.error(`Error fetching student data:`, error);
-      });
-  }, []);*/
-
-  const [evaluators, setEvaluators] = useState([]);
-  useEffect(() => { fetchAllEvaluators(axiosPrivate, setEvaluators); }, []);
-
-/*
+    const [students, setStudents] = useState([]);
     useEffect(() => {
-    // Fetch student data from MongoDB collection
-    axiosPrivate.get(`/../evaluators`)
-      .then(response => {
-        setEvaluators(response.data);
-      })
-      .catch(error => {
-        console.error("Error fetching evaluator data:", error);
-      });
-  }, []);*/
+        fetchUserAdmin(axiosPrivate, auth, setAdmin);
+        fetchAllStudents(axiosPrivate, setStudents);
+        fetchAllEvaluators(axiosPrivate, setEvaluators);
+    }, []);
+
+    /*
+      useEffect(() => {
+        // Fetch student data from MongoDB collection
+        axiosPrivate.get(`/../students`)
+          .then(response => {
+            setStudents(response.data);
+          })
+          .catch(error => {
+            console.error(`Error fetching student data:`, error);
+          });
+      }, []);*/
+
+    /*
+        useEffect(() => {
+        // Fetch student data from MongoDB collection
+        axiosPrivate.get(`/../evaluators`)
+          .then(response => {
+            setEvaluators(response.data);
+          })
+          .catch(error => {
+            console.error("Error fetching evaluator data:", error);
+          });
+      }, []);*/
     /*
     // Need an API call in this endpoint for list of all students and list of all evaluators.
     const [students] = useState([
@@ -96,11 +96,11 @@ const { auth } = useAuth();
     return (
         <div style={{ marginLeft: '250px', padding: '20px' }}>
             <Tabs defaultActiveKey="adminStudents" className="mb-3" fill>
-                <Tab eventKey="adminStudents" title = "Students" tabClassName='coloredTab'>
-                    <AdminStudents students = {students} userType = "admin" />
+                <Tab eventKey="adminStudents" title="Students" tabClassName='coloredTab'>
+                    <AdminStudents students={students} userType="admin" />
                 </Tab>
-                <Tab eventKey="adminEvaluators" title = "Evaluators" tabClassName='coloredTab'>
-                    <AdminEvaluators evaluators = {evaluators} userType = "admin" />
+                <Tab eventKey="adminEvaluators" title="Evaluators" tabClassName='coloredTab'>
+                    <AdminEvaluators evaluators={evaluators} userType="admin" />
                 </Tab>
             </Tabs>
         </div>
