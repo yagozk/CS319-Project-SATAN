@@ -91,7 +91,7 @@ function SingularStudentInfo(props) {
     // When the "isChooseEvaluatorDisplayed" boolean changes according to "handleAssignStudentButtonClick" function, set display accordingly
     useEffect(() => {
         if(document.getElementById("assignStudentToEvaluatorDisplay") == null) return;
-        
+
         if (isChooseEvaluatorDisplayed) {
             document.getElementById("assignStudentToEvaluatorDisplay").style.display = "block";
         }
@@ -102,7 +102,7 @@ function SingularStudentInfo(props) {
         , [isChooseEvaluatorDisplayed])
 
 
-    if (studentsEvaluator != undefined && studentsEvaluator.name) {
+    if (studentsEvaluator != undefined || studentsEvaluator.name != undefined) {
         console.log(studentsEvaluator.name);
         return (
         <Card className="standaloneCard">
@@ -111,7 +111,7 @@ function SingularStudentInfo(props) {
             </Card.Header>
             <Card.Body>
                 <Container fluid>
-                    <Card.Title><b>{props.student.name}</b></Card.Title>
+                    <Card.Title><b>{student.studentName} {student.studentSurname}</b></Card.Title>
                     <hr />
                     <Row>
                         <Col lg={2}>ID: </Col>
