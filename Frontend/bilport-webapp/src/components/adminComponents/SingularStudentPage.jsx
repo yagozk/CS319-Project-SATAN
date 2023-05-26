@@ -1,4 +1,4 @@
-import { Card, Container, Row, Col, Tab, Tabs, CloseButton } from "react-bootstrap";
+import { Card, Container, Row, Col, Tab, Tabs, CloseButton, Spinner } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 import { Form, Button, Stack } from "react-bootstrap";
 import { useEffect, useState } from "react";
@@ -104,7 +104,8 @@ function SingularStudentInfo(props) {
 
     if (studentsEvaluator != undefined && studentsEvaluator.name) {
         console.log(studentsEvaluator.name);
-        return (<Card class="standaloneCard">
+        return (
+        <Card className="standaloneCard">
             <Card.Header>
                 <Link to="/admin" ><i class="material-icons" style={{ "font-size": "30px" }}>arrow_back</i></Link>
             </Card.Header>
@@ -154,7 +155,7 @@ function SingularStudentInfo(props) {
     else {
         return (<Card>
             <Card.Header>
-                LOADING
+                <Spinner variant="primary"></Spinner>
             </Card.Header>
             </Card>
             );

@@ -11,17 +11,31 @@ public class Evaluator extends User {
     String evaluatorSurname;
     String evaluatorEmail;
     String[] assignedStudents;
+    int studentLimit;
 
     public Evaluator() {
     }
 
     public Evaluator(String userName, String userPassword, List<GrantedAuthority> userAuthorities, String evaluatorName,
-            String evaluatorSurname, String evaluatorEmail, String[] assignedStudents) {
+            String evaluatorSurname, String evaluatorEmail, String[] assignedStudents, int studentLimit) {
         super(userName, userPassword, userAuthorities);
         this.evaluatorName = evaluatorName;
         this.evaluatorSurname = evaluatorSurname;
         this.evaluatorEmail = evaluatorEmail;
         this.assignedStudents = assignedStudents;
+        this.studentLimit = studentLimit;
+    }
+
+    public void setAssignedStudents(String[] assignedStudents) {
+        this.assignedStudents = assignedStudents;
+    }
+
+    public int getStudentLimit() {
+        return studentLimit;
+    }
+
+    public void setStudentLimit(int studentLimit) {
+        this.studentLimit = studentLimit;
     }
 
     public String getEvaluatorName() {

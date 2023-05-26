@@ -8,30 +8,33 @@ export default function AdminEvaluators(props) {
 
     //const [evaluators] = useState(props.evaluators);
     const [chosenEvaluator, setChosenEvaluator] = useState(); //Should be initially empty
-
+    
+    // Display the clicked evaluator's info card
+    function handleRowClicked(id) {
+      const clickedEvaluator = props.evaluators.find(obj => obj.userName === id);
+      setChosenEvaluator(clickedEvaluator);
+    };
+  
+    function handleCloseClicked() {
+      setChosenEvaluator(null); // Reset chosenEvaluator state to null
+    }
+  
     return (
         <div>
             <Card>
                 <Card.Body>
-                    <EvaluatorsTable evaluators={props.evaluators} />
+                    <EvaluatorsTable evaluators={props.evaluators} onRowClick={handleRowClicked}  />
                     <hr />
                     <Button variant="outline-primary"> Add New Evaluator </Button>
                 </Card.Body>
             </Card>
             <EvaluatorCard style={{ display: "none" }} id="chosenEvaluatorCard" evaluator={chosenEvaluator}
-                userType={props.userType} />
+                userType={props.userType} onCloseClick={handleCloseClicked} />
         </div>
     )
 
 
     function EvaluatorsTable(props) {
-
-        // Display the clicked evaluator's info card
-        function handleRowClicked(id) {
-            const clickedEvaluator = props.evaluators.find(obj => obj.userName === id);
-            setChosenEvaluator(clickedEvaluator);
-            document.getElementById("chosenEvaluatorCard").style.display = "block";
-        };
 
         console.log(props.evaluators);
 
@@ -45,10 +48,10 @@ export default function AdminEvaluators(props) {
                 <tbody>
                     {
                         props.evaluators.map((evaluator) =>
-                            <tr class="clickRow" key={evaluator.userName} onClick={() => handleRowClicked(evaluator.id)} >
-                                <td>{evaluator.evaluatorName}</td>
-                                <td>{evaluator.student_limit}</td>
-                                <td>{evaluator.num_of_students}</td>
+                            <tr class="clickRow" key={evaluator.userName} onClick={() => props.onRowClick(evaluator.userName)} >
+                                <td>{evaluator.evaluatorName} {evaluator.evaluatorSurname}</td>
+                                <td>{evaluator.studentLimit}</td>
+                                <td>{evaluator.assignedStudents.length}</td>
                             </tr>)
                     }
                 </tbody>
@@ -59,10 +62,6 @@ export default function AdminEvaluators(props) {
 
     function EvaluatorCard(props) {
 
-        function handleCloseClicked() {
-            document.getElementById(props.id).style.display = "none";
-        }
-
         // Render this only if props.evaluator is defined.
         if (props.evaluator) {
             return (
@@ -70,7 +69,7 @@ export default function AdminEvaluators(props) {
                     <Card>
                         <Card.Header style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                             <Card.Title> Evaluator Info </Card.Title>
-                            <CloseButton onClick={() => handleCloseClicked()} />
+                            <CloseButton onClick={props.onCloseClick} />
                         </Card.Header>
                         <Card.Body>
                             <Container fluid>
@@ -98,27 +97,27 @@ export default function AdminEvaluators(props) {
                                 }
                                 <Row>
                                     <Col lg={2} style={{ color: "purple" }}>Full name:</Col>
-                                    <Col lg={10}><div class="text-secondary">{props.evaluator.name}</div></Col>
+                                    <Col lg={10}><div class="text-secondary">{props.evaluator.evaluatorName} {props.evaluator.evaluatorSurname}</div></Col>
                                 </Row>
                                 <hr />
                                 <Row>
                                     <Col lg={2} style={{ color: "purple" }}>Email:</Col>
-                                    <Col lg={10}><div class="text-secondary">{props.evaluator.email}</div></Col>
+                                    <Col lg={10}><div class="text-secondary">{props.evaluator.evaluatorEmail}</div></Col>
                                 </Row>
                                 <hr />
                                 <Row>
                                     <Col lg={2} style={{ color: "purple" }}>ID:</Col>
-                                    <Col lg={10}><div class="text-secondary">{props.evaluator.id}</div></Col>
+                                    <Col lg={10}><div class="text-secondary">{props.evaluator.userName}</div></Col>
                                 </Row>
                                 <hr />
                                 <Row>
                                     <Col lg={2} style={{ color: "purple" }}>Student Limit:</Col>
-                                    <Col lg={10}><div style={{ fontWeight: "bold" }}>{props.evaluator.student_limit}</div></Col>
+                                    <Col lg={10}><div style={{ fontWeight: "bold" }}>{props.evaluator.studentLimit}</div></Col>
                                 </Row>
                                 <hr />
                                 <Row>
                                     <Col lg={2} style={{ color: "purple" }}>Assigned Students:</Col>
-                                    <Col lg={10}><div style={{ fontWeight: "bold" }}>{props.evaluator.num_of_students}</div></Col>
+                                    <Col lg={10}><div style={{ fontWeight: "bold" }}>{props.evaluator.assignedStudents.length}</div></Col>
                                 </Row>
                                 <hr />
                             </Container>
