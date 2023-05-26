@@ -1,5 +1,7 @@
 package com.bilport.demo.domain.dto;
 
+import java.util.Date;
+
 public class StudentResponse {
     String studentName;
     String studentSurname;
@@ -7,17 +9,24 @@ public class StudentResponse {
     String assignedEvaluatorId;
     String assignedTaId;
     String assignedSupervisorId;
+    int reportVersionCS299;
+    int reportVersionCS399;
+    String studentId;
 
     public StudentResponse() {
     }
 
-    public StudentResponse(String studentName, String studentSurname, String studentEmail, String assignedEvaluatorId, String assignedTaId, String assignedSupervisorId) {
+    public StudentResponse(String studentName, String studentSurname, String studentEmail, String assignedEvaluatorId,
+            String assignedTaId, String assignedSupervisorId, int reportVersionCS299, int reportVersionCS399, String studentId) {
         this.studentName = studentName;
         this.studentSurname = studentSurname;
         this.studentEmail = studentEmail;
         this.assignedEvaluatorId = assignedEvaluatorId;
         this.assignedTaId = assignedTaId;
         this.assignedSupervisorId = assignedSupervisorId;
+        this.reportVersionCS299 = reportVersionCS299;
+        this.reportVersionCS399 = reportVersionCS399;
+        this.studentId = studentId;
     }
 
     public String getStudentName() {
@@ -66,5 +75,29 @@ public class StudentResponse {
 
     public void setAssignedSupervisorId(String assignedSupervisorId) {
         this.assignedSupervisorId = assignedSupervisorId;
+    }
+
+    public int getReportVersionCS299() {
+        return reportVersionCS299;
+    }
+
+    public void setReportVersionCS299(int reportVersionCS299) {
+        this.reportVersionCS299 = reportVersionCS299;
+    }
+
+    public int getReportVersionCS399() {
+        return reportVersionCS399;
+    }
+
+    public void setReportVersionCS399(int reportVersionCS399) {
+        this.reportVersionCS399 = reportVersionCS399;
+    }
+
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
+    }
+
+    public String getStudentId() {
+        return studentId;
     }
 }

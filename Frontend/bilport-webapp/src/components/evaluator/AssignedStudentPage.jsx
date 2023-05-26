@@ -43,12 +43,12 @@ function AssignedStudentInfo(props){
                 <Container fluid>
                     <Row>
                         <Col lg = {2}>ID: </Col>
-                        <Col lg = {10}><div class = "text-secondary">{props.student.id}</div></Col>
+                        <Col lg = {10}><div class = "text-secondary">{props.student.studentName}</div></Col>
                     </Row>
                     <hr/>
                     <Row>
                         <Col lg = {2}>Email: </Col>
-                        <Col lg = {10}><div class = "text-secondary">{props.student.email}</div></Col>
+                        <Col lg = {10}><div class = "text-secondary">{props.student.studentEmail}</div></Col>
                     </Row>
                     <hr/>
                     <Row>
@@ -58,7 +58,7 @@ function AssignedStudentInfo(props){
                     <hr/>
                     <Row>
                         <Col lg = {2}>Status: </Col>
-                        <Col lg = {10}><div class = "text-primary">{props.student.status}</div></Col>
+                        <Col lg = {10}><div class = "text-primary">{props.student.reportStatus}</div></Col>
                     </Row>
                 </Container>
             </Card.Body>

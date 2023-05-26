@@ -1,14 +1,20 @@
 import StudentsTable from "../commonComponents/StudentsTable";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Alert, Button, Card, Row, Stack } from "react-bootstrap";
 import SearchBar from "../commonComponents/SearchBar";
 import SortDropdown from "../commonComponents/SortDropdown";
 
 export default function StudentsPage(props){
 
-    const [students] = useState(props.students)
+    //const [students, setStudents] = useState(props.students)
 
-    const [displayedStudents, setDisplayedStudents] = useState(students);
+    const [displayedStudents, setDisplayedStudents] = useState(props.students);
+
+    useEffect(() => {
+        setDisplayedStudents(props.students);
+    }
+        , [props.students]);
+
 
     const sortingOptions = [
         {name: "Sort by last submission date (ascending)" , key: "Date"},
@@ -27,7 +33,7 @@ export default function StudentsPage(props){
     };
 
     function handleRefreshDisplay(){
-        setDisplayedStudents(students);
+        setDisplayedStudents(props.students);
     }
 
     function handleSort(option){
@@ -86,7 +92,7 @@ export default function StudentsPage(props){
                         </div>
                     )})()}
                     <div className="standaloneCard" id = "standartStudentsList">
-                        <StudentsTable students = {displayedStudents} userType = {props.userType}/>
+                        <StudentsTable students = {displayedStudents} userType = {props.userType} reports = {props.reports}/>
                     </div>
                 </Card.Body>
             </Card>

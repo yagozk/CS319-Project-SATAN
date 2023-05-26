@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bilport.demo.domain.model.Supervisor;
-import com.bilport.demo.repository.SupervisorRepository;
 import com.bilport.demo.service.SupervisorService;
 
 @RestController
@@ -32,7 +31,6 @@ public class SupervisorController {
     @ResponseBody
     @GetMapping(value = "/{id}")
     public Supervisor getSupervisorOfStudent(@PathVariable("id") String id) {
-        System.out.println("\nHeyy|n");
         return supervisorService.findById(id);
     }
 

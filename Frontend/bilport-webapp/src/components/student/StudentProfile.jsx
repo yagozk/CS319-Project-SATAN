@@ -5,7 +5,6 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useState } from "react";
 import { useEffect } from "react";
 import {Spinner} from "react-bootstrap";
-import axios from "../../api/axios";
 
 
 async function fetchUserStudent(axiosInstance, auth, setStudent) {

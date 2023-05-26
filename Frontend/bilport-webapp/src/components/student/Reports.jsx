@@ -16,6 +16,7 @@ async function fetchReports(axiosPrivate, auth, setReports) {
     }
 }
 
+
 export default function Reports() {
 
     const { auth } = useAuth();
@@ -65,48 +66,48 @@ export default function Reports() {
             </Dropdown>
         );
     }
-    
+
     function ReportsInformation({ report }) {
         const axiosPrivate = useAxiosPrivate();
-    
+
         const handleDownloadReportFile = () => {
             const downloadReport = async () => {
                 try {
-                    const response = await axiosPrivate.get('/reports/file/' + report?.reportId + "_$1", {responseType: 'blob'}).then((response) => {
+                    const response = await axiosPrivate.get('/reports/file/' + report?.reportId + "_" + report?.version, { responseType: 'blob' }).then((response) => {
                         let fileName = report?.reportId + '.pdf';
                         if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-                          // IE variant
-                          window.navigator.msSaveOrOpenBlob(
-                            new Blob([response.data], {
-                              type: 'application/pdf',
-                              encoding: 'UTF-8'
-                            }),
-                            fileName
-                          );
+                            // IE variant
+                            window.navigator.msSaveOrOpenBlob(
+                                new Blob([response.data], {
+                                    type: 'application/pdf',
+                                    encoding: 'UTF-8'
+                                }),
+                                fileName
+                            );
                         } else {
-                          const url = window.URL.createObjectURL(
-                            new Blob([response.data], {
-                              type: 'application/pdf',
-                              encoding: 'UTF-8'
-                            })
-                          );
-                          const link = document.createElement('a');
-                          link.href = url;
-                          link.setAttribute('download', fileName);
-                          document.body.appendChild(link);
-                          link.click();
-                          link.remove();
+                            const url = window.URL.createObjectURL(
+                                new Blob([response.data], {
+                                    type: 'application/pdf',
+                                    encoding: 'UTF-8'
+                                })
+                            );
+                            const link = document.createElement('a');
+                            link.href = url;
+                            link.setAttribute('download', fileName);
+                            document.body.appendChild(link);
+                            link.click();
+                            link.remove();
                         }
-                      });
+                    });
                 } catch (err) {
                     console.error(err);
                 }
             };
-    
+
             downloadReport();
             console.log("KKK");
         }
-    
+
         return (
             <div className="standaloneCard">
                 <Card>
@@ -120,7 +121,7 @@ export default function Reports() {
                         </ul>
                         <br />
                         <div className="d-grid gap-2">
-                            <Button variant="primary"  onClick={handleDownloadReportFile} size="lg">
+                            <Button variant="primary" onClick={handleDownloadReportFile} size="lg">
                                 Download Report
                             </Button>
                             <Button variant="primary" size="lg">
@@ -132,111 +133,154 @@ export default function Reports() {
             </div>
         );
     }
-    
+
     function ReportSubmit() {
+
+        async function fetchUserStudent(axiosPrivate, auth, setStudent) {
+            try {
+                const response = await axiosPrivate.get(`/students/${auth.user}`);
+                setStudent(response.data);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
         const { auth } = useAuth();
-        
+
         const [reportId, setReportId] = useState({});
-    
-        const [reportTmp, setReportTmp] = useState({});
-    
+
+        const [reportTmp, setReportTmp] = useState({course: "CS299"});
+
         const axiosPrivate = useAxiosPrivate();
-    
+
         const [file, setFile] = useState();
-    
+
         const [showAlert, setShowAlert] = useState(false);
         const [showSuccessfulAlert, setShowSuccessfulAlert] = useState(false);
-    
+
+        const [student, setStudent] = useState({});
+
+        useEffect(() => {
+            fetchUserStudent(axiosPrivate, auth, setStudent);
+        }, []);
+
+
+
         const handleFileChange = (e) => {
             if (e.target.files) {
                 setFile(e.target.files[0]);
                 console.log(e.target.files[0].name);
             }
         };
-    
+
         const handleAlertDismiss = () => {
             setShowAlert(false);
         }
-    
+
         const handleUploadReport = () => {
-            if (!reportTmp || !reportId || !file){
+            if (!reportTmp || !reportId || !file) {
                 setShowAlert(true);
                 return;
             }
             const uploadReport = async () => {
                 try {
+                    console.log(student.reportVersion);
+
                     const response = await axiosPrivate.post('/reports/' + auth.user,
                         {
-                            reportId: reportTmp.reportId,
+                            reportId: auth.user + "_" + reportTmp.course,
                             reportOwner: auth.user,
-                            reportFileId: reportTmp.reportId + "_$1",
+                            reportFileId: auth.user + "_" + reportTmp.course + "_" + (reportTmp.course == "CS299" ? (student.reportVersionCS299 + 1) : (student.reportVersionCS399 + 1)),
                             reportDate: new Date(),
                             reportStatus: "Submitted",
-                            version: 1
+                            version: reportTmp.course == "CS299" ? (student.reportVersionCS299 + 1) : (student.reportVersionCS399 + 1),
+                            course: reportTmp.course
                         });
-    
-    
+
+
                 } catch (err) {
                     console.error(err);
                 }
             };
-    
+
             const formData = new FormData();
             formData.append('file', file)
-    
+
             const uploadReportFile = async () => {
                 try {
-                    const response = await axiosPrivate.post('/reports/file/' + reportTmp.reportId + "_$1", formData,
+                    const response = await axiosPrivate.post('/reports/file/' + auth.user + "_" + reportTmp.course + "_" + (reportTmp.course == "CS299" ? (student.reportVersionCS299 + 1) : (student.reportVersionCS399 + 1)),
+                        //const response = await axiosPrivate.post('/reports/file/' + auth.user + "_" + "1",
+                        formData,
                         {
-                            headers: {"Content-Type": "multipart/form-data"},
+                            headers: { "Content-Type": "multipart/form-data" },
                         }
-                        ).then((response) => {console.log("AAAA")});
-    
-    
+                    ).then((response) => { console.log("AAAA") });
+
+
                 } catch (err) {
                     console.error(err);
                 }
             };
-    
+
             if (reportId != undefined) {
                 uploadReport();
                 uploadReportFile();
-                console.log(reportId);
                 setShowSuccessfulAlert(true);
                 document.getElementById("formReportName").value = "";
-                setNewReportSubmit(newReportSubmit + 1);    
+                setNewReportSubmit(newReportSubmit + 1);
             }
-    
+
         }
-    
+
         return (
             <div className="standaloneCard">
                 <Card>
                     <Card.Body>
                         <Form.Group controlId="formFileLg" className="mb-3">
                             <Form.Label> Report name:</Form.Label>
-                            <Form.Control id = "formReportName" type="text" onChange={(e) => setReportTmp({...reportTmp, reportId: e.target.value})} 
-                            placeholder="Enter a name for your report" />
-                            <br/>
+                            <Form.Control id="formReportName" type="text" onChange={(e) => setReportTmp({ ...reportTmp, reportId: e.target.value })}
+                                placeholder="Enter a name for your report" />
+                            <br />
+
+
+                            <Form.Check defaultChecked
+                                type="radio"
+                                name="group1"
+                                id={`default-radio`}
+                                label="CS299"
+                                value="CS299"
+                                onChange={(e) => { setReportTmp({ ...reportTmp, course: e.target.value }) }
+                                }
+                            />
+
+                            <Form.Check
+                                type="radio"
+                                name="group1"
+                                label="CS399"
+                                value="CS399"
+                                id={`2-default-radio`}
+                                onChange={(e) => setReportTmp({ ...reportTmp, course: e.target.value })}
+                            />
+
                             <Form.Label> Upload your report: </Form.Label>
-                            <Form.Control type="file" accept='.pdf' onChange={handleFileChange}/>
+                            <Form.Control type="file" accept='.pdf' onChange={handleFileChange} />
                         </Form.Group>
                         <Button variant="primary" onClick={handleUploadReport} size="lg">
                             Upload Report
                         </Button>
                         <div>
-                            <br/>
-                            { showAlert &&
-                            <Alert variant='warning' dismissible onClose={handleAlertDismiss}>
-                                Please enter both a file name and choose a file before submitting your report!
-                            </Alert> }
+                            <br />
+                            {showAlert &&
+                                <Alert variant='warning' dismissible onClose={handleAlertDismiss}>
+                                    Please enter both a file name and choose a file before submitting your report!
+                                </Alert>}
                         </div>
                         <div>
-                            <br/>
-                            { showSuccessfulAlert &&
-                            <Alert variant='success' dismissible onClose={() => {setShowSuccessfulAlert(false)}}>
-                                Report uploaded successfully.
-                            </Alert> }
+                            <br />
+                            {showSuccessfulAlert &&
+                                <Alert variant='success' dismissible onClose={() => { setShowSuccessfulAlert(false) }}>
+                                    Report uploaded successfully.
+                                </Alert>}
                         </div>
                     </Card.Body>
                 </Card>

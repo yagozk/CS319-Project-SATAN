@@ -18,6 +18,7 @@ public class Report {
     public String reportId;
     public String reportOwner;
     public String reportFileId;
+    public String course;
     public Date reportDate;
     public String reportStatus;
     public int version;

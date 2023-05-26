@@ -60,6 +60,7 @@ public class AuthController {
                     .collect(Collectors.toList());
 
             authResponse.setAccessToken(token);
+            authResponse.setUsername(uname);
             authResponse.setRoles(roleList);
 
             logger.info(authResponse.getAccessToken());
