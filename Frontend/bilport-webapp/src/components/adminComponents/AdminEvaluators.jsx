@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { CloseButton, Table } from "react-bootstrap";
 import { useState } from "react";
 import { Card } from "react-bootstrap";
-import { Button, Container, Row, Col, Form, Stack } from "react-bootstrap";
+import { Button, Container, Row, Col, Form, Stack, Accordion } from "react-bootstrap";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 export default function AdminEvaluators(props) {
@@ -37,30 +37,34 @@ export default function AdminEvaluators(props) {
                 <Card.Body>
                     <EvaluatorsTable evaluators={props.evaluators} onRowClick={handleRowClicked} />
                     <hr />
-                    <Card>
-                        <Card.Body>
-                            <Form.Group controlId="formFileLg" className="mb-3">
-                                <Form.Label> Evaluator ID:</Form.Label>
-                                <Form.Control id="formReportName" type="text" placeholder="Enter a name for your report" onChange={(e) => setNewEvaluator({ ...newEvaluator, userName: e.target.value })} />
+                    <Accordion>
+                        <Accordion.Item eventKey="0">
+                            <Accordion.Header>Add a new evaluator</Accordion.Header>
+                            <Accordion.Body>
+                                <Form.Group controlId="formFileLg" className="mb-3">
+                                    <Form.Label> Evaluator ID:</Form.Label>
+                                    <Form.Control id="formReportName" type="text" placeholder="Enter a name for your report" onChange={(e) => setNewEvaluator({ ...newEvaluator, userName: e.target.value })} />
 
-                                <Form.Label> Evaluator Name:</Form.Label>
-                                <Form.Control id="formReportName" type="text" placeholder="Enter a name for your report" onChange={(e) => setNewEvaluator({ ...newEvaluator, evaluatorName: e.target.value })} />
+                                    <Form.Label> Evaluator Name:</Form.Label>
+                                    <Form.Control id="formReportName" type="text" placeholder="Enter a name for your report" onChange={(e) => setNewEvaluator({ ...newEvaluator, evaluatorName: e.target.value })} />
 
-                                <Form.Label> Evaluator Surname:</Form.Label>
-                                <Form.Control id="formReportName" type="text" placeholder="Enter a name for your report" onChange={(e) => setNewEvaluator({ ...newEvaluator, evaluatorSurname: e.target.value })} />
+                                    <Form.Label> Evaluator Surname:</Form.Label>
+                                    <Form.Control id="formReportName" type="text" placeholder="Enter a name for your report" onChange={(e) => setNewEvaluator({ ...newEvaluator, evaluatorSurname: e.target.value })} />
 
-                                <Form.Label> Evaluator Email:</Form.Label>
-                                <Form.Control id="formReportName" type="text" placeholder="Enter a name for your report" onChange={(e) => setNewEvaluator({ ...newEvaluator, evaluatorEmail: e.target.value })} />
+                                    <Form.Label> Evaluator Email:</Form.Label>
+                                    <Form.Control id="formReportName" type="text" placeholder="Enter a name for your report" onChange={(e) => setNewEvaluator({ ...newEvaluator, evaluatorEmail: e.target.value })} />
 
-                                <Form.Label> Evaluator Student Limit:</Form.Label>
-                                <Form.Control id="formReportName" type="text" placeholder="Enter a name for your report" onChange={(e) => setNewEvaluator({ ...newEvaluator, studentLimit: e.target.value })} />
+                                    <Form.Label> Evaluator Student Limit:</Form.Label>
+                                    <Form.Control id="formReportName" type="text" placeholder="Enter a name for your report" onChange={(e) => setNewEvaluator({ ...newEvaluator, studentLimit: e.target.value })} />
 
-                                <Form.Label> Evaluator Temporary Password:</Form.Label>
-                                <Form.Control id="formReportName" type="text" placeholder="Enter a name for your report" onChange={(e) => setNewEvaluator({ ...newEvaluator, userPassword: e.target.value })} />
-                            </Form.Group>
-                            <Button variant="outline-primary" onClick={() => fetchNewEvaluator(axiosPrivate, newEvaluator)}> Add New Evaluator </Button>
-                        </Card.Body>
-                    </Card>
+                                    <Form.Label> Evaluator Temporary Password:</Form.Label>
+                                    <Form.Control id="formReportName" type="text" placeholder="Enter a name for your report" onChange={(e) => setNewEvaluator({ ...newEvaluator, userPassword: e.target.value })} />
+                                </Form.Group>
+
+                                <Button variant="outline-primary" onClick={() => fetchNewEvaluator(axiosPrivate, newEvaluator)}> Add New Evaluator </Button>
+                            </Accordion.Body>
+                        </Accordion.Item>
+                    </Accordion>
                 </Card.Body>
             </Card>
             <EvaluatorCard style={{ display: "none" }} id="chosenEvaluatorCard" evaluator={chosenEvaluator}
@@ -108,7 +112,7 @@ export default function AdminEvaluators(props) {
                         </Card.Header>
                         <Card.Body>
                             <Container fluid>
-                                {props.userType == "admin" && // Only displays the forms if the user is admin, not a superadmin                                 
+                                {props.userType == "admin" && // Only displays the forms if the user is admin, not a superadmin
                                     <div>
                                         <Row>
                                             <Col lg={8}>
