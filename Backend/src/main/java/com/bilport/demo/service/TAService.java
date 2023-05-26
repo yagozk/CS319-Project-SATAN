@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bilport.demo.domain.dto.StudentResponse;
 import com.bilport.demo.domain.dto.SubmissionResponse;
 import com.bilport.demo.domain.model.Report;
 import com.bilport.demo.domain.model.Student;
@@ -67,5 +68,29 @@ public class TAService {
         }
         return submissions;
 
+    }
+
+    public List<StudentResponse> getAssignedStudents(String id) {
+        String[] assignedStudents = taRepository.findById(id).get().getAssignedStudents();
+        ArrayList<StudentResponse> studentResponses = new ArrayList<StudentResponse>();
+
+        for (String assignedStudent : assignedStudents) {
+            Student student = studentRepository.findById(assignedStudent).get();
+            StudentResponse studentResponse = new StudentResponse();
+
+            studentResponse.setStudentName(student.getStudentName());
+            studentResponse.setStudentSurname(student.getStudentSurname());
+            studentResponse.setStudentEmail(student.getStudentEmail());
+            studentResponse.setAssignedEvaluatorId(student.getAssignedEvaluatorId());
+            studentResponse.setAssignedTaId(student.getAssignedTaId());
+            studentResponse.setAssignedSupervisorId(student.getAssignedSupervisorId());
+            studentResponse.setReportVersionCS299(student.getReportVersionCS299());
+            studentResponse.setReportVersionCS399(student.getReportVersionCS399());
+            studentResponse.setStudentId(student.getUserName());
+
+            studentResponses.add(studentResponse);
+        }
+
+        return studentResponses;
     }
 }

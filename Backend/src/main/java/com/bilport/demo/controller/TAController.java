@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bilport.demo.domain.dto.StudentResponse;
 import com.bilport.demo.domain.dto.SubmissionResponse;
 import com.bilport.demo.domain.model.TA;
 import com.bilport.demo.service.TAService;
@@ -29,5 +30,11 @@ public class TAController {
     @GetMapping(value = "/submissions/{id}")
     public List<SubmissionResponse> getSubmissions(@PathVariable("id") String id) {
         return taService.getSubmissions(id);
+    }
+
+    @ResponseBody
+    @GetMapping(value = "/students/{id}")
+    public List<StudentResponse> getAssignedStudents(@PathVariable("id") String id) {
+        return taService.getAssignedStudents(id);
     }
 }

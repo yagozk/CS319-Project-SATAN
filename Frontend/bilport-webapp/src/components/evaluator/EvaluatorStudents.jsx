@@ -4,24 +4,26 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import useAuth from '../../hooks/useAuth';
 
 
-async function fetchStudents(axiosPrivate, auth, setStudentz) {
+
+async function fetchAllStudents(axiosPrivate, auth, setStudents) {
     try {
         const response = await axiosPrivate.get('/evaluators/students/' + auth.user);
-        setStudentz(response.data);
-    } catch (err) {
-        console.error(err);
-    }
-}
-
-async function fetchReports(axiosPrivate, auth, setReports) {
-    try {
-        const response = await axiosPrivate.get('/evaluators/reports/' + auth.user);
-        setReports(response.data);
+        setStudents(response.data);
         console.log(response.data)
     } catch (err) {
         console.error(err);
     }
 }
+
+// async function fetchReports(axiosPrivate, auth, setReports) {
+//     try {
+//         const response = await axiosPrivate.get('/evaluators/reports/' + auth.user);
+//         setReports(response.data);
+//         console.log(response.data)
+//     } catch (err) {
+//         console.error(err);
+//     }
+// }
 
 async function fetchSubmissions(axiosPrivate, auth, setSubmissions) {
     try {
@@ -35,15 +37,15 @@ async function fetchSubmissions(axiosPrivate, auth, setSubmissions) {
 
 export default function EvaluatorStudents() {
     const { auth } = useAuth();
-    const [studentz, setStudentz] = useState([]);
+    const [students, setStudents] = useState([]);
     const [reports, setReports] = useState([]);
     const [submissions, setSubmissions] = useState([]);
 
     const axiosPrivate = useAxiosPrivate();
 
     useEffect(() => {
-        //fetchStudents(axiosPrivate, auth, setStudentz)
         //fetchReports(axiosPrivate, auth, setReports);
+        fetchAllStudents(axiosPrivate, auth, setStudents);
         fetchSubmissions(axiosPrivate, auth, setSubmissions);
     }
         , []);
@@ -87,7 +89,8 @@ export default function EvaluatorStudents() {
     return (
         <div style={{ marginLeft: '250px', padding: '20px' }}>
             <h1 className="bigPageTitle"> Your assigned students </h1>
-            <StudentsPage userType="evaluator" students={submissions} reports={reports} />
+            <StudentsPage userType="evaluator" students={submissions} />
+            <StudentsPage userType="evaluator" students={students}/>
         </div>
     )
 }

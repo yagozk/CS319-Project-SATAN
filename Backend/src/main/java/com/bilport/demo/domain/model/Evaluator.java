@@ -14,6 +14,7 @@ public class Evaluator extends User {
     int studentLimit;
 
     public Evaluator() {
+        assignedStudents = new String[studentLimit];
     }
 
     public Evaluator(String userName, String userPassword, List<GrantedAuthority> userAuthorities, String evaluatorName,

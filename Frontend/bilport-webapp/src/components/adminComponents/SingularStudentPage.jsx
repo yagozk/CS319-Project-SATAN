@@ -31,9 +31,9 @@ function SingularStudentInfo(props) {
     const [student, setStudent] = useState({});
     const axiosPrivate = useAxiosPrivate();
 
-    async function fetchStudent(axiosPrivate, auth, setStudent) {
+    async function fetchStudent(axiosPrivate, setStudent) {
         try {
-            const response = await axiosPrivate.get('/students/' + props.student.reportOwner);
+            const response = await axiosPrivate.get('/students/' + props.student.studentId);
             setStudent(response.data);
             const foundEval = props.evaluators.find(obj => obj.id == response.data.assignedEvaluatorId);
             setStudentsEvaluator(foundEval);
@@ -46,7 +46,7 @@ function SingularStudentInfo(props) {
     useEffect(() => {
         //fetchStudents(axiosPrivate, auth, setStudentz)
         //fetchReports(axiosPrivate, auth, setReports);
-        fetchStudent(axiosPrivate, auth, setStudent);
+        fetchStudent(axiosPrivate, setStudent);
     }
         , []);
 
@@ -115,7 +115,7 @@ function SingularStudentInfo(props) {
                     <hr />
                     <Row>
                         <Col lg={2}>ID: </Col>
-                        <Col lg={10}><div class="text-secondary">{props.student.reportOwner}</div></Col>
+                        <Col lg={10}><div class="text-secondary">{props.student.studentId}</div></Col>
                     </Row>
                     <hr />
                     <Row>
@@ -125,12 +125,12 @@ function SingularStudentInfo(props) {
                     <hr />
                     <Row>
                         <Col lg={2}>Current Course: </Col>
-                        <Col lg={10}><div class="text-secondary">{props.student.course}</div></Col>
+                        <Col lg={10}><div class="text-secondary">{props.student.reportVersion299 ? (props.student.reportVersion399 ? "BOTH" : "CS399") : (props.student.reportVersion399 ? "CS399" : "NONE")}</div></Col>
                     </Row>
                     <hr />
                     <Row>
                         <Col lg={2}>Status: </Col>
-                        <Col lg={10}><div class="text-secondary">{props.student.reportStatus}</div></Col>
+                        <Col lg={10}><div class="text-secondary">{"..."}</div></Col>
                     </Row>
                     <hr />
                     <Row>

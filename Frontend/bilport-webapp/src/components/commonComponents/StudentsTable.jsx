@@ -6,7 +6,7 @@ export default function StudentsTable(props){
     const navigate = useNavigate();
 
     function handleRowClicked(id, course){
-        const assignedStudent = props.students.find(obj => obj.reportOwner === id && obj.course === course);
+        const assignedStudent = props.students.find(obj => obj.studentId === id);
         navigate(`/${props.userType}/students/${id}`, { state: {assignedStudent} } );
     };
 
@@ -32,7 +32,7 @@ export default function StudentsTable(props){
             return(<tbody>
                 {   
                     props.students.map( (student) => 
-                    <tr class = "clickRow" key = {student.id} onClick = { () => handleRowClicked(student.reportOwner, student.course) } >
+                    <tr class = "clickRow" key = {student.id} onClick = { () => handleRowClicked(student.studentId) } >
                         <td>{student.studentName}</td>
                         <td>{student.reportDate}</td>
                         <td>{student.reportStatus}</td>
@@ -45,10 +45,10 @@ export default function StudentsTable(props){
             return(<tbody>
                 {   
                     props.students.map( (student) =>
-                    <tr class = {student.evaluatorID != -1 ? "clickRowGreen" : "clickRowRed"} key = {student.id} onClick = { () => handleRowClicked(student.reportOwner, student.course) } >
+                    <tr class = {student.evaluatorID != -1 ? "clickRowGreen" : "clickRowRed"} key = {student.id} onClick = { () => handleRowClicked(student.studentId) } >
                         <td>{student.studentName}</td>
-                        <td>{student.reportDate}</td>
-                        <td>{student.reportStatus}</td>
+                        <td>{student.studentSurname}</td>
+                        <td>{student.studentId}</td>
                         <td>{student.course}</td>
                     </tr>)
                 }

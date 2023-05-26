@@ -98,5 +98,4 @@ public class Student extends User {
     public void setReportVersionCS399(int reportVersionCS399) {
         this.reportVersionCS399 = reportVersionCS399;
     }
-
 }

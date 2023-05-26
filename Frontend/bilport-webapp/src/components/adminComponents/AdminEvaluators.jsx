@@ -3,29 +3,64 @@ import { CloseButton, Table } from "react-bootstrap";
 import { useState } from "react";
 import { Card } from "react-bootstrap";
 import { Button, Container, Row, Col, Form, Stack } from "react-bootstrap";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 export default function AdminEvaluators(props) {
 
     //const [evaluators] = useState(props.evaluators);
     const [chosenEvaluator, setChosenEvaluator] = useState(); //Should be initially empty
-    
+    const [newEvaluator, setNewEvaluator] = useState({ studentLimit: 0});
+    const axiosPrivate = useAxiosPrivate();
+
     // Display the clicked evaluator's info card
     function handleRowClicked(id) {
-      const clickedEvaluator = props.evaluators.find(obj => obj.userName === id);
-      setChosenEvaluator(clickedEvaluator);
+        const clickedEvaluator = props.evaluators.find(obj => obj.userName === id);
+        setChosenEvaluator(clickedEvaluator);
     };
-  
+
     function handleCloseClicked() {
-      setChosenEvaluator(null); // Reset chosenEvaluator state to null
+        setChosenEvaluator(null); // Reset chosenEvaluator state to null
     }
-  
+
+    async function fetchNewEvaluator(axiosPrivate, newEvaluator) {
+        try {
+            const response = await axiosPrivate.post('/evaluators/newEvaluator', newEvaluator);
+            console.log(response.data)
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
     return (
         <div>
             <Card>
                 <Card.Body>
-                    <EvaluatorsTable evaluators={props.evaluators} onRowClick={handleRowClicked}  />
+                    <EvaluatorsTable evaluators={props.evaluators} onRowClick={handleRowClicked} />
                     <hr />
-                    <Button variant="outline-primary"> Add New Evaluator </Button>
+                    <Card>
+                        <Card.Body>
+                            <Form.Group controlId="formFileLg" className="mb-3">
+                                <Form.Label> Evaluator ID:</Form.Label>
+                                <Form.Control id="formReportName" type="text" placeholder="Enter a name for your report" onChange={(e) => setNewEvaluator({ ...newEvaluator, userName: e.target.value })} />
+
+                                <Form.Label> Evaluator Name:</Form.Label>
+                                <Form.Control id="formReportName" type="text" placeholder="Enter a name for your report" onChange={(e) => setNewEvaluator({ ...newEvaluator, evaluatorName: e.target.value })} />
+
+                                <Form.Label> Evaluator Surname:</Form.Label>
+                                <Form.Control id="formReportName" type="text" placeholder="Enter a name for your report" onChange={(e) => setNewEvaluator({ ...newEvaluator, evaluatorSurname: e.target.value })} />
+
+                                <Form.Label> Evaluator Email:</Form.Label>
+                                <Form.Control id="formReportName" type="text" placeholder="Enter a name for your report" onChange={(e) => setNewEvaluator({ ...newEvaluator, evaluatorEmail: e.target.value })} />
+
+                                <Form.Label> Evaluator Student Limit:</Form.Label>
+                                <Form.Control id="formReportName" type="text" placeholder="Enter a name for your report" onChange={(e) => setNewEvaluator({ ...newEvaluator, studentLimit: e.target.value })} />
+
+                                <Form.Label> Evaluator Temporary Password:</Form.Label>
+                                <Form.Control id="formReportName" type="text" placeholder="Enter a name for your report" onChange={(e) => setNewEvaluator({ ...newEvaluator, userPassword: e.target.value })} />
+                            </Form.Group>
+                            <Button variant="outline-primary" onClick={() => fetchNewEvaluator(axiosPrivate, newEvaluator)}> Add New Evaluator </Button>
+                        </Card.Body>
+                    </Card>
                 </Card.Body>
             </Card>
             <EvaluatorCard style={{ display: "none" }} id="chosenEvaluatorCard" evaluator={chosenEvaluator}
