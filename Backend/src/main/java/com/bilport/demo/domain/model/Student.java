@@ -38,7 +38,6 @@ public class Student extends User {
         this.reports299 = reports299;
         this.reports399 = reports399;
         this.coursesTaken = coursesTaken;
-        // sendRegistrationMail();
     }
 
     public String getStudentName() {
@@ -128,12 +127,4 @@ public class Student extends User {
     public void setCoursesTaken(String[] coursesTaken) {
         this.coursesTaken = coursesTaken;
     }
-
-    // public void sendRegistrationMail(){
-    //     String subject = "Bilport" + term + " Account Info";
-    //     String body = "Your account as a Student has been created in the Bilport system for" + term + ". Your username and password can be found below.<p/>";
-    //     String info = "<p/>Username: " + this.getUserName() + "<p/>Password: " + this.getUserPassword() + "<p/>";
-    //     String signature = "<p/>Bilport Team";
-    //     mailer.sendEmail(studentEmail, subject, body + info + signature);
-    // }
 }

@@ -88,12 +88,13 @@ public class Admin extends User {
     public void setAllTAs(List<TA> allTAs) {
         this.allTAs = allTAs;
     }
-
-    // public void sendRegistrationMail(){
-    //     String subject = "Bilport" + term + " Account Info";
-    //     String body = "Your account as an Admin has been created in the Bilport system for" + term + ". Your username and password can be found below.<p/>";
-    //     String info = "<p/>Username: " + this.getUserName() + "<p/>Password: " + this.getUserPassword() + "<p/>";
-    //     String signature = "<p/>Bilport Team";
-    //     mailer.sendEmail(adminEmail, subject, body + info + signature);
-    // }
+    /*
+    public void sendRegistrationMail(){
+        String subject = "Bilport 2023 Spring Semester Account Info";
+        String body = "Your account as an Admin has been created in the Bilport system for 2023 Spring Semester. Your username and password can be found below.<p/>";
+        String info = "<p/>Username: " + this.getUserName() + "<p/>Password: " + this.getUserPassword() + "<p/>";
+        String signature = "<p/>Bilport Team";
+        mailer.sendEmail(adminEmail, subject, body + info + signature);
+    }
+     */
 }
