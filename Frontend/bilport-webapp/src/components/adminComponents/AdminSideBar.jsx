@@ -1,7 +1,14 @@
 import { Outlet, Link } from "react-router-dom";
 import { Row, Col } from 'react-bootstrap';
+import useLogout from "../../hooks/useLogout";
 
 export default function AdminSideBar(){
+    const logout = useLogout();
+    
+    const signOut = async () => {
+      await logout();
+    }
+
     return(
     <>
         <Row>
@@ -20,6 +27,9 @@ export default function AdminSideBar(){
               <li class ="sidebar-item">
               <i class="material-icons">gavel</i>
                 <Link to="/admin" class = "sidebar-link">Evaluator Mode</Link>
+              </li>
+              <li className="sidebar-item" onClick={signOut}>
+                <i class="material-icons">logout</i> <Link className="sidebar-link"> Log Out</Link>
               </li>
             </ul>
           </Col>

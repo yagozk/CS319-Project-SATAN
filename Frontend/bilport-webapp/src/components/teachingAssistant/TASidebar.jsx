@@ -1,7 +1,14 @@
 import { Outlet, Link } from "react-router-dom";
 import { Row, Col } from 'react-bootstrap';
+import useLogout from "../../hooks/useLogout";
 
 export default function TASidebar(){
+  const logout = useLogout();
+    
+  const signOut = async () => {
+    await logout();
+  }
+
     return(
     <>
         <Row>
@@ -16,6 +23,9 @@ export default function TASidebar(){
               <li class ="sidebar-item">
               <i class="fa-solid fa-pen-nib fa-lg"></i>
                 <Link to="/ta/profile" class = "sidebar-link">Profile</Link>
+              </li>
+              <li className="sidebar-item" onClick={signOut}>
+                <i class="material-icons">logout</i> <Link className="sidebar-link"> Log Out</Link>
               </li>
             </ul>
           </Col>
