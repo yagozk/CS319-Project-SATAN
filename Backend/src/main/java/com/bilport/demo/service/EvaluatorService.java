@@ -133,8 +133,6 @@ public class EvaluatorService {
             oldEvaluator.setAssignedStudents(newAssignedStudentsEv);
             evaluatorRepository.save(oldEvaluator);
 
-            System.out.println(" assigned to student " + student.getStudentName() + " Old evaluator: " + oldEvaluator.getEvaluatorName() + " New evaluator: " + evaluator.getEvaluatorName());
-
         }
 
 
