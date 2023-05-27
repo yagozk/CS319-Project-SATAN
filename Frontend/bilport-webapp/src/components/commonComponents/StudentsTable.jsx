@@ -48,10 +48,10 @@ export default function StudentsTable(props){
                         <tr class="clickRow" key={student.reportOwner}  onClick={() =>
                             handleRowClicked(student.reportOwner, student.course)} >
                         <td>{student.studentName} {student.studentSurname}</td>
-                        <td>{student.reportOwner}</td>
+                        <td>{student.studentId}</td>
                         <td>{student.reportDate}</td>
                         <td>{student.reportStatus}</td>
-                        <td>{student.course}</td>
+                        <td>{student.coursesTaken.join(" ")}</td>
                     </tr>)
                 }
             </tbody>)
@@ -64,7 +64,7 @@ export default function StudentsTable(props){
                         <td>{student.studentName}</td>
                         <td>{student.studentSurname}</td>
                         <td>{student.studentId}</td>
-                        <td>{student.course}</td>
+                        <td>{student.coursesTaken}</td>
                     </tr>)
                 }
             </tbody>)

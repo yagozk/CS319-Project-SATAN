@@ -55,6 +55,9 @@ public class EvaluatorService {
             studentResponse.setReportVersionCS299(student.getReportVersionCS299());
             studentResponse.setReportVersionCS399(student.getReportVersionCS399());
             studentResponse.setStudentId(student.getUserName());
+            studentResponse.setReports299(student.getReports299());
+            studentResponse.setReports399(student.getReports399());
+            studentResponse.setCoursesTaken(student.getCoursesTaken());
 
             studentResponses.add(studentResponse);
         }

@@ -61,7 +61,7 @@ function AssignedStudentInfo(props){
                 <Container fluid>
                     <Row>
                         <Col lg = {2}>ID: </Col>
-                        <Col lg = {10}><div class = "text-secondary">{props.student.reportOwner}</div></Col>
+                        <Col lg = {10}><div class = "text-secondary">{props.student.studentId}</div></Col>
                     </Row>
                     <hr/>
                     <Row>
@@ -71,7 +71,7 @@ function AssignedStudentInfo(props){
                     <hr/>
                     <Row>
                         <Col lg = {2}>Current Course: </Col>
-                        <Col lg = {10}><div class = "text-secondary">{props.student.course}</div></Col>
+                        <Col lg = {10}><div class = "text-secondary">{props.student.coursesTaken.join(" ")}</div></Col>
                     </Row>
                     <hr/>
                     <Row>
