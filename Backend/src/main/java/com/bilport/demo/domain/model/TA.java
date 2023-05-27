@@ -19,7 +19,7 @@ public class TA extends User {
         super(userName, userPassword, userAuthorities);
         this.taFullName = taFullName;
         this.taEmail = taEmail;
-        sendRegistrationMail();
+        //sendRegistrationMail();
     }
 
     public TA(String taFullName, String taEmail) {
@@ -51,6 +51,7 @@ public class TA extends User {
         this.assignedStudents = assignedStudents;
     }
 
+    /*
     public void sendRegistrationMail(){
         String subject = "Bilport 2023 Spring Semester Account Info";
         String body = "Your account as a TA has been created in the Bilport system for 2023 Spring Semester. Your username and password can be found below.<p/>";
@@ -58,5 +59,5 @@ public class TA extends User {
         String signature = "<p/>Bilport Team";
         mailer.sendEmail(taEmail, subject, body + info + signature);
     }
-    
+     */
 }

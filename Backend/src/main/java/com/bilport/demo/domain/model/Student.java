@@ -33,7 +33,7 @@ public class Student extends User {
         this.assignedSupervisorId = assignedSupervisorId;
         this.reportVersionCS299 = reportVersionCS299;
         this.reportVersionCS399 = reportVersionC399;
-        sendRegistrationMail();
+        //sendRegistrationMail();
     }
 
     public String getStudentName() {
@@ -100,6 +100,7 @@ public class Student extends User {
         this.reportVersionCS399 = reportVersionCS399;
     }
 
+    /*
     public void sendRegistrationMail(){
         String subject = "Bilport 2023 Spring Semester Account Info";
         String body = "Your account as a Student has been created in the Bilport system for 2023 Spring Semester. Your username and password can be found below.<p/>";
@@ -107,4 +108,5 @@ public class Student extends User {
         String signature = "<p/>Bilport Team";
         mailer.sendEmail(studentEmail, subject, body + info + signature);
     }
+     */
 }

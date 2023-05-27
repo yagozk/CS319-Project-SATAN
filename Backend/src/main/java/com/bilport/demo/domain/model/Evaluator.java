@@ -25,7 +25,7 @@ public class Evaluator extends User {
         this.evaluatorEmail = evaluatorEmail;
         this.assignedStudents = assignedStudents;
         this.studentLimit = studentLimit;
-        sendRegistrationMail();
+        //sendRegistrationMail();
     }
 
     public void setAssignedStudents(String[] assignedStudents) {
@@ -67,7 +67,7 @@ public class Evaluator extends User {
     public void setEvaluatorEmail(String email) {
         this.evaluatorEmail = email;
     }
-
+    /*
     public void sendRegistrationMail(){
         String subject = "Bilport 2023 Spring Semester Account Info";
         String body = "Your account as an Evaluator has been created in the Bilport system for 2023 Spring Semester. Your username and password can be found below.<p/>";
@@ -75,4 +75,5 @@ public class Evaluator extends User {
         String signature = "<p/>Bilport Team";
         mailer.sendEmail(evaluatorEmail, subject, body + info + signature);
     }
+     */
 }

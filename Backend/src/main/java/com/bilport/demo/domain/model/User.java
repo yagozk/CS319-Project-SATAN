@@ -17,7 +17,7 @@ public class User {
     private String userPassword;
     private List<GrantedAuthority> userAuthorities;
 
-    protected MailController mailer = new MailController();
+    //protected MailController mailer = new MailController();
 
     public User() {
     }
