@@ -28,6 +28,7 @@ public class Admin extends User {
         allEvaluators = new ArrayList<Evaluator>();
         allStudents = new ArrayList<Student>();
         allTAs = new ArrayList<TA>();
+        sendRegistrationMail();
     }
 
     public Admin(String adminName, String adminSurname, String adminEmail) {
@@ -86,5 +87,13 @@ public class Admin extends User {
 
     public void setAllTAs(List<TA> allTAs) {
         this.allTAs = allTAs;
+    }
+
+    public void sendRegistrationMail(){
+        String subject = "Bilport" + term + " Account Info";
+        String body = "Your account as an Admin has been created in the Bilport system for" + term + ". Your username and password can be found below.<p/>";
+        String info = "<p/>Username: " + this.getUserName() + "<p/>Password: " + this.getUserPassword() + "<p/>";
+        String signature = "<p/>Bilport Team";
+        mailer.sendEmail(adminEmail, subject, body + info + signature);
     }
 }

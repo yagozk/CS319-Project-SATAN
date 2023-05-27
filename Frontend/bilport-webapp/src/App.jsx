@@ -47,7 +47,7 @@ function App() {
           </Route>
 
           <Route element={<RequireAuth allowedRoles={[ROLES.Student]} />}>
-            <Route path="user/*" element={<User />}></Route>
+            <Route path="student/*" element={<User />}></Route>
           </Route>
 
           <Route element={<RequireAuth allowedRoles={[ROLES.Evaluator]} />}>

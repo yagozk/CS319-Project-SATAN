@@ -6,6 +6,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 
+import com.bilport.demo.controller.MailController;
+
+
 @Document(collection = "users")
 public class User {
     
@@ -13,7 +16,11 @@ public class User {
     private String userName;
     private String userPassword;
     private List<GrantedAuthority> userAuthorities;
-   
+
+    public final String term = " 2023 Spring Semester";
+
+    protected MailController mailer = new MailController();
+
     public User() {
     }
           

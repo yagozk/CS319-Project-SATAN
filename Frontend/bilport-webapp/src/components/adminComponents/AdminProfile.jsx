@@ -5,7 +5,6 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useState } from "react";
 import { useEffect } from "react";
 import {Spinner} from "react-bootstrap";
-import axios from "../../api/axios";
 
 async function fetchUserAdmin(axiosInstance, auth, setAdmin) {
     try {
@@ -18,7 +17,7 @@ async function fetchUserAdmin(axiosInstance, auth, setAdmin) {
 
 export default function AdminProfile() {
     const { auth } = useAuth();
-    const [admin, setAdmin] = useState([]);
+    const [admin, setAdmin] = useState({});
     const axiosPrivate = useAxiosPrivate();
 
     useEffect(() => { fetchUserAdmin(axiosPrivate, auth, setAdmin); }, []);

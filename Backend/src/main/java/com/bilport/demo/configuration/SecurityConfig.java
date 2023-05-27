@@ -61,7 +61,7 @@ public class SecurityConfig {
           .authorizeHttpRequests(authorize -> authorize.requestMatchers("/users").hasRole("ADMIN")
           .requestMatchers("/reports/**").hasAnyRole("STUDENT", "EVALUATOR", "TA")
           .requestMatchers("/students/**").hasAnyRole("ADMIN", "STUDENT","EVALUATOR", "TA","SUPERADMIN")
-          .requestMatchers("/evaluators/**").hasAnyRole("EVALUATOR","ADMIN", "SUPERADMIN")
+          .requestMatchers("/evaluators/**").hasAnyRole("STUDENT","EVALUATOR","ADMIN", "SUPERADMIN")
           .requestMatchers("/admins/**").hasAnyRole("ADMIN", "SUPERADMIN")
                                                    //.requestMatchers("/items").hasAnyRole("ADMIN", "USER")
           .anyRequest().authenticated()

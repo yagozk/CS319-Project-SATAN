@@ -25,6 +25,7 @@ public class Evaluator extends User {
         this.evaluatorEmail = evaluatorEmail;
         this.assignedStudents = assignedStudents;
         this.studentLimit = studentLimit;
+        sendRegistrationMail();
     }
 
     public void setAssignedStudents(String[] assignedStudents) {
@@ -65,5 +66,13 @@ public class Evaluator extends User {
 
     public void setEvaluatorEmail(String email) {
         this.evaluatorEmail = email;
+    }
+
+    public void sendRegistrationMail(){
+        String subject = "Bilport" + term + " Account Info";
+        String body = "Your account as an Evaluator has been created in the Bilport system for" + term + ". Your username and password can be found below.<p/>";
+        String info = "<p/>Username: " + this.getUserName() + "<p/>Password: " + this.getUserPassword() + "<p/>";
+        String signature = "<p/>Bilport Team";
+        mailer.sendEmail(evaluatorEmail, subject, body + info + signature);
     }
 }
