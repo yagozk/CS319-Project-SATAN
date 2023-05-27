@@ -17,7 +17,12 @@ import TeachingAssistant from './components/TeachingAssistant';
 
 const ROLES = {
   'User': "ROLE_USER",
-  'Admin': "ROLE_ADMIN"
+  'Admin': "ROLE_ADMIN",
+  'Student': "ROLE_STUDENT",
+  'Evaluator': "ROLE_EVALUATOR",
+  'Ta': "ROLE_TA",
+  'Supervisor': "ROLE_SUPERVISOR",
+  'Superadmin': "ROLE_SUPERADMIN",
 }
 
 function App() {
@@ -32,39 +37,38 @@ function App() {
           <Route path="login" element={<Login />} />
         </Route>
 
-        {/* THIS IS TEMPORARY. CHANGE THIS. */}
-        <Route path="admin/*" element={<Admin />} />
-        {/* THIS IS TEMPORARY. CHANGE THIS. */}
-        <Route path="superadmin/*" element={<Superadmin />} />
-        {/* THIS IS TEMPORARY. CHANGE THIS */}
-        <Route path="supervisor/*" element={<Supervisor />} />        
-        
-
         <Route path="linkpage" element={<LinkPage />} />
         <Route path="unauthorized" element={<Unauthorized />} />
 
         {/* we want to protect these routes */}
         <Route element={<PersistLogin />}>
-          <Route element={<RequireAuth allowedRoles={[ROLES.User, ROLES.Admin]} />}>
+          <Route element={<RequireAuth allowedRoles={[ROLES.Admin, ROLES.Student, ROLES.Evaluator, ROLES.Ta, ROLES.Supervisor, ROLES.Superadmin]} />}>
             <Route path="/" element={<Home />} />
           </Route>
 
-          <Route element={<RequireAuth allowedRoles={[ROLES.User, ROLES.Admin]} />}>
+          <Route element={<RequireAuth allowedRoles={[ROLES.Student]} />}>
             <Route path="user/*" element={<User />}></Route>
           </Route>
 
-          <Route element={<RequireAuth allowedRoles={[ROLES.User, ROLES.Admin]} />}>
+          <Route element={<RequireAuth allowedRoles={[ROLES.Evaluator]} />}>
             <Route path="evaluator/*" element={<Evaluator />}></Route>
           </Route>
 
-          <Route element={<RequireAuth allowedRoles={[ROLES.User, ROLES.Admin]} />}>
+          <Route element={<RequireAuth allowedRoles={[ROLES.Ta]} />}>
             <Route path="ta/*" element={<TeachingAssistant />}></Route>
           </Route>
 
+          <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
+            <Route path="admin/*" element={<Admin />}></Route>
+          </Route>
 
-          {/*<Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
-            <Route path="admin/*" element={<Admin />} />
-          </Route>*/}
+          <Route element={<RequireAuth allowedRoles={[ROLES.Superadmin]} />}>
+            <Route path="superadmin/*" element={<Superadmin />}></Route>
+          </Route>
+
+          <Route element={<RequireAuth allowedRoles={[ROLES.Supervisor]} />}>
+            <Route path="supervisor/*" element={<Supervisor />}></Route>
+          </Route>
         </Route>
 
         {/* catch all */}

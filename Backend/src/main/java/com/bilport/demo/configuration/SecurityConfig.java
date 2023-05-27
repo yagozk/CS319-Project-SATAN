@@ -24,18 +24,18 @@ import jakarta.servlet.http.HttpServletResponse;
 @EnableWebSecurity
 public class SecurityConfig {
 
-  @Autowired
-  private AuthenticationConfiguration authenticationConfiguration;
+    @Autowired
+    private AuthenticationConfiguration authenticationConfiguration;
 
-  @Bean
-  public AuthenticationManager authManager() throws Exception {
-      return authenticationConfiguration.getAuthenticationManager();
-  }
+    @Bean
+    public AuthenticationManager authManager() throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
 
-  @Bean
-  public CustomRequestHeaderTokenFilter customFilter() throws Exception {
-      return new CustomRequestHeaderTokenFilter(authManager());
-  }
+    @Bean
+    public CustomRequestHeaderTokenFilter customFilter() throws Exception {
+        return new CustomRequestHeaderTokenFilter(authManager());
+    }
 
   @Bean
   public SecurityFilterChain filterChain1(HttpSecurity http) throws Exception {
@@ -59,14 +59,10 @@ public class SecurityConfig {
                                                    .requestMatchers(HttpMethod.GET, "/items").permitAll())
 
           .authorizeHttpRequests(authorize -> authorize.requestMatchers("/users").hasRole("ADMIN")
-          .requestMatchers(HttpMethod.GET, "/reports/*").hasAnyRole("ADMIN", "USER")
-          .requestMatchers(HttpMethod.POST, "/reports/*").hasAnyRole("ADMIN", "USER")
-          .requestMatchers(HttpMethod.GET, "/reports/file/*").hasAnyRole("ADMIN", "USER")
-          .requestMatchers(HttpMethod.POST, "/reports/file/*").hasAnyRole("ADMIN", "USER")
-          .requestMatchers(HttpMethod.GET, "/students/**").hasAnyRole("ADMIN", "USER")
-          .requestMatchers(HttpMethod.POST, "/students/**").hasAnyRole("ADMIN", "USER")
-          .requestMatchers(HttpMethod.GET, "/evaluators/**").hasAnyRole("ADMIN", "USER")
-          .requestMatchers(HttpMethod.GET, "/admins/**").hasAnyRole("ADMIN", "USER")
+          .requestMatchers("/reports/**").hasAnyRole("STUDENT", "EVALUATOR", "TA")
+          .requestMatchers("/students/**").hasAnyRole("ADMIN", "STUDENT","EVALUATOR", "TA","SUPERADMIN")
+          .requestMatchers("/evaluators/**").hasAnyRole("EVALUATOR","ADMIN", "SUPERADMIN")
+          .requestMatchers("/admins/**").hasAnyRole("ADMIN", "SUPERADMIN")
                                                    //.requestMatchers("/items").hasAnyRole("ADMIN", "USER")
           .anyRequest().authenticated()
           )
@@ -74,21 +70,21 @@ public class SecurityConfig {
       http.addFilterBefore( customFilter(), UsernamePasswordAuthenticationFilter.class); 
 
       return http.build();
-  } 
-
-  @Bean
-  public CorsFilter corsFilter() {
-    List<String> origins = new ArrayList<String>();
-    origins.add("http://localhost:5173");
-    origins.add("http://localhost:8080");
-    var source = new UrlBasedCorsConfigurationSource();
-    var config = new CorsConfiguration();
-    config.setAllowCredentials(true);
-    config.setAllowedOrigins(origins);
-    config.addAllowedHeader("*");
-    config.addExposedHeader("Authorization");
-    config.addAllowedMethod("*");
-    source.registerCorsConfiguration("/**", config);
-    return new CorsFilter(source);
   }
+
+    @Bean
+    public CorsFilter corsFilter() {
+        List<String> origins = new ArrayList<String>();
+        origins.add("http://localhost:5173");
+        origins.add("http://localhost:8080");
+        var source = new UrlBasedCorsConfigurationSource();
+        var config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.setAllowedOrigins(origins);
+        config.addAllowedHeader("*");
+        config.addExposedHeader("Authorization");
+        config.addAllowedMethod("*");
+        source.registerCorsConfiguration("/**", config);
+        return new CorsFilter(source);
+    }
 }

@@ -69,7 +69,7 @@ public class EvaluatorController {
         evaluator.setEvaluatorEmail(evaluatorReq.getEvaluatorEmail());
         evaluator.setStudentLimit(evaluatorReq.getStudentLimit());
         evaluator.setUserAuthorities(new ArrayList<GrantedAuthority>() {{
-            add(new SimpleGrantedAuthority("ROLE_USER"));
+            add(new SimpleGrantedAuthority("ROLE_EVALUATOR"));
         }});
 
 

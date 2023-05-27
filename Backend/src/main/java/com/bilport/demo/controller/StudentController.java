@@ -61,7 +61,7 @@ public class StudentController {
             student.setUserName(studentReq.getUserName());
             student.setUserPassword(studentReq.getUserPassword());
             student.setUserAuthorities(new ArrayList<GrantedAuthority>() {{
-                add(new SimpleGrantedAuthority("ROLE_USER"));
+                add(new SimpleGrantedAuthority("ROLE_STUDENT"));
             }});
             student.setStudentName(studentReq.getStudentName());
             student.setStudentSurname(studentReq.getStudentSurname());
