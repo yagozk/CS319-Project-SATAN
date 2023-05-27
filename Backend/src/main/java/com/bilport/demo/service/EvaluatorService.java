@@ -102,4 +102,43 @@ public class EvaluatorService {
         }
         return submissions;
     }
+
+    public void assignEvalToStudent(String evaluatorId, String studentId) {
+        Evaluator evaluator = evaluatorRepository.findById(evaluatorId).orElse(null);
+        Student student = studentRepository.findById(studentId).get();
+        Evaluator oldEvaluator = evaluatorRepository.findById(student.getAssignedEvaluatorId()).orElse(null);
+
+        String[] assignedStudents = evaluator.getAssignedStudents();
+        String[] newAssignedStudents = new String[assignedStudents.length + 1];
+
+        for (int i = 0; i < assignedStudents.length; i++) {
+            newAssignedStudents[i] = assignedStudents[i];
+        }
+
+        newAssignedStudents[assignedStudents.length] = studentId;
+        evaluator.setAssignedStudents(newAssignedStudents);
+        evaluatorRepository.save(evaluator);
+
+        if (oldEvaluator != null) {
+            String[] oldAssignedStudentsEv = oldEvaluator.getAssignedStudents();
+            String[] newAssignedStudentsEv = new String[oldAssignedStudentsEv.length - 1];
+
+            for (int i = 0, k = 0; i < oldAssignedStudentsEv.length; i++) {
+                if (oldAssignedStudentsEv[i].equals(studentId)) {
+                    continue;
+                }
+                newAssignedStudentsEv[k++] = oldAssignedStudentsEv[i];
+            }
+
+            oldEvaluator.setAssignedStudents(newAssignedStudentsEv);
+            evaluatorRepository.save(oldEvaluator);
+
+            System.out.println(" assigned to student " + student.getStudentName() + " Old evaluator: " + oldEvaluator.getEvaluatorName() + " New evaluator: " + evaluator.getEvaluatorName());
+
+        }
+
+
+        student.setAssignedEvaluatorId(evaluatorId);
+        studentRepository.save(student);
+    }
 }

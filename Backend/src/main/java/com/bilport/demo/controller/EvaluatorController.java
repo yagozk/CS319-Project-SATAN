@@ -52,7 +52,7 @@ public class EvaluatorController {
     public List<Evaluator> getEvaluators() {
         return evaluatorService.getEvaluators();
     }
-    
+
     @ResponseBody
     @GetMapping(value = "/submissions/{id}")
     public List<SubmissionResponse> getSubmissions(@PathVariable("id") String id) {
@@ -68,12 +68,21 @@ public class EvaluatorController {
         evaluator.setEvaluatorSurname(evaluatorReq.getEvaluatorSurname());
         evaluator.setEvaluatorEmail(evaluatorReq.getEvaluatorEmail());
         evaluator.setStudentLimit(evaluatorReq.getStudentLimit());
-        evaluator.setUserAuthorities(new ArrayList<GrantedAuthority>() {{
-            add(new SimpleGrantedAuthority("ROLE_EVALUATOR"));
-        }});
-
+        evaluator.setUserAuthorities(new ArrayList<GrantedAuthority>() {
+            {
+                add(new SimpleGrantedAuthority("ROLE_EVALUATOR"));
+            }
+        });
 
         evaluatorService.createEvaluator(evaluator);
         return "Evaluator created successfully";
+    }
+
+    @ResponseBody
+    @GetMapping(value = "/assign/{evlauatorId}/{studentId}")
+    public String assignEvalToStudent(@PathVariable("evlauatorId") String evlauatorId,
+            @PathVariable("studentId") String studentId) {
+        evaluatorService.assignEvalToStudent(evlauatorId, studentId);
+        return "Evaluator assigned successfully";
     }
 }
