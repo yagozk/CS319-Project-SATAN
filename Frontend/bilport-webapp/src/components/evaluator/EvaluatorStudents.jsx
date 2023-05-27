@@ -37,15 +37,15 @@ async function fetchSubmissions(axiosPrivate, auth, setSubmissions) {
 
 export default function EvaluatorStudents() {
     const { auth } = useAuth();
-    const [students, setStudents] = useState([]);
-    const [reports, setReports] = useState([]);
+    //const [students, setStudents] = useState([]);
+    //const [reports, setReports] = useState([]);
     const [submissions, setSubmissions] = useState([]);
 
     const axiosPrivate = useAxiosPrivate();
 
     useEffect(() => {
         //fetchReports(axiosPrivate, auth, setReports);
-        fetchAllStudents(axiosPrivate, auth, setStudents);
+        //fetchAllStudents(axiosPrivate, auth, setStudents);
         fetchSubmissions(axiosPrivate, auth, setSubmissions);
     }
         , []);
@@ -90,7 +90,7 @@ export default function EvaluatorStudents() {
         <div style={{ marginLeft: '250px', padding: '20px' }}>
             <h1 className="bigPageTitle"> Your assigned students </h1>
             <StudentsPage userType="evaluator" students={submissions} />
-            <StudentsPage userType="evaluator" students={students}/>
+            {/*<StudentsPage userType="evaluator" students={students}/>*/}
         </div>
     )
 }

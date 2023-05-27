@@ -10,7 +10,7 @@ const Evaluator = () => {
       <Routes>
           <Route path = "/" element={<EvaluatorSideBar/>}>
               <Route index element={<EvaluatorStudents/>} />
-              <Route path = "students/:id" element ={<AssignedStudentPage/>} />
+              <Route path = "students/:id/:course" element ={<AssignedStudentPage/>} />
               <Route path = "profile" element = {<EvaluatorProfile/>} />
               <Route path = "course_ta_info" element = {<CourseTAInfo/>} />
           </Route>
