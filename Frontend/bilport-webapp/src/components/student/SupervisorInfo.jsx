@@ -6,7 +6,7 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 async function fetchSupervisor(axiosPrivate, auth, setSupervisor) {
     try {
         let x = auth.user.substring(2, 4).concat(auth.user.substring(0, 2),auth.user.substring(4));
-        const response = await axiosPrivate.get('/supervisors/'+x);
+        const response = await axiosPrivate.get('/supervisors/'+ auth.user);
         setSupervisor(response.data);
     } catch (err) {
         console.error(err);

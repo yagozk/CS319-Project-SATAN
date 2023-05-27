@@ -39,7 +39,7 @@ public class Supervisor extends User {
         this.graduation_university = graduation_university;
         this.university_major = university_major;
         this.assignedstudentId = assignedstudentId;
-        sendRegistrationMail();
+        // sendRegistrationMail();
     }
 
     public String getId() {
@@ -98,12 +98,12 @@ public class Supervisor extends User {
         this.assignedstudentId = assignedstudentId;
     }
 
-    public void sendRegistrationMail(){
-        String subject = "Bilport" + term + " Account Info";
-        String body = "Your account as a Supervisor has been created in the Bilport system for" + term + ". Your username and password can be found below.<p/>";
-        String info = "<p/>Username: " + this.getUserName() + "<p/>Password: " + this.getUserPassword() + "<p/>";
-        String additionalInfo = " You can use your login information to evaluate your student's internship through the following link.<p/> ***  LINK TO BE ADDED ***";
-        String signature = "<p/>Bilport Team";
-        mailer.sendEmail(supervisorEmail, subject, body + info + additionalInfo + signature);
-    }
+    // public void sendRegistrationMail(){
+    //     String subject = "Bilport" + term + " Account Info";
+    //     String body = "Your account as a Supervisor has been created in the Bilport system for" + term + ". Your username and password can be found below.<p/>";
+    //     String info = "<p/>Username: " + this.getUserName() + "<p/>Password: " + this.getUserPassword() + "<p/>";
+    //     String additionalInfo = " You can use your login information to evaluate your student's internship through the following link.<p/> ***  LINK TO BE ADDED ***";
+    //     String signature = "<p/>Bilport Team";
+    //     mailer.sendEmail(supervisorEmail, subject, body + info + additionalInfo + signature);
+    // }
 }

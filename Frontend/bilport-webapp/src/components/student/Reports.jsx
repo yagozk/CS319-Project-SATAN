@@ -16,12 +16,37 @@ async function fetchReports(axiosPrivate, auth, setReports) {
     }
 }
 
+async function fetchReportsWithCourse(axiosPrivate, auth, course, setReports) {
+    try {
+        const response = await axiosPrivate.get('/reports/' + auth.user + "/" + course);
+        setReports(response.data);
+    } catch (err) {
+        console.error(err);
+    }
+}
+
 
 export default function Reports() {
+    async function fetchUserStudent(axiosPrivate, auth, setStudent) {
+        try {
+            const response = await axiosPrivate.get(`/students/${auth.user}`);
+            setStudent(response.data);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const [student, setStudent] = useState({});
+
+    useEffect(() => {
+        fetchUserStudent(axiosPrivate, auth, setStudent);
+    }, []);
 
     const { auth } = useAuth();
 
     const [reports, setReports] = useState([]);
+    const [reports299, setReports299] = useState([]);
+    const [reports399, setReports399] = useState([]);
     const [report, setReport] = useState({});
     const [newReportSubmit, setNewReportSubmit] = useState(0);
 
@@ -29,26 +54,21 @@ export default function Reports() {
 
     useEffect(() => {
         fetchReports(axiosPrivate, auth, setReports);
+        fetchReportsWithCourse(axiosPrivate, auth, "CS299", setReports299);
+        fetchReportsWithCourse(axiosPrivate, auth, "CS399", setReports399);
     }
         , [newReportSubmit]);
-
-    useEffect(() => {
-        console.log(reports);
-    }
-        , [reports]);
-
-
 
     return (
         <div style={{ marginLeft: '250px', padding: '20px' }}>
             <h1 className="bigPageTitle">Reports</h1>
             <Tabs defaultActiveKey="reportList" >
                 <Tab eventKey="reportList" title="Report List" tabClassName='coloredTab' >
-                    <div style={{ marginTop: "25px" }}><ReportsDropdown reports={reports} report={report} setReport={setReport} /></div>
-                    <ReportsInformation report={report} />
+                    {/* <div style={{ marginTop: "25px" }}><ReportsDropdown reports={reports} report={report} setReport={setReport} /></div> */}
+                    <ReportsInformation report={report} student={student} setReport={setReport}/>
                 </Tab>
                 <Tab eventKey="reportSubmit" title="Submit Report" tabClassName='coloredTab' >
-                    <ReportSubmit />
+                    <ReportSubmit student={student}/>
                 </Tab>
             </Tabs>
         </div>
@@ -67,14 +87,14 @@ export default function Reports() {
         );
     }
 
-    function ReportsInformation({ report }) {
+    function ReportsInformation(props) {
         const axiosPrivate = useAxiosPrivate();
 
         const handleDownloadReportFile = () => {
             const downloadReport = async () => {
                 try {
-                    const response = await axiosPrivate.get('/reports/file/' + report?.reportId + "_" + report?.version, { responseType: 'blob' }).then((response) => {
-                        let fileName = report?.reportId + '.pdf';
+                    const response = await axiosPrivate.get('/reports/file/' + props.report?.reportId, { responseType: 'blob' }).then((response) => {
+                        let fileName = props.report?.reportId + '.pdf';
                         if (window.navigator && window.navigator.msSaveOrOpenBlob) {
                             // IE variant
                             window.navigator.msSaveOrOpenBlob(
@@ -108,48 +128,50 @@ export default function Reports() {
             console.log("KKK");
         }
 
-        return (
-            <div className="standaloneCard">
-                <Card>
-                    <Card.Body>
-                        <Card.Title>Report Information</Card.Title>
-                        <hr />
-                        <ul className="report-info-list">
-                            <li>Report name: <div className="text-info">{report?.reportId ? report?.reportId : "Report Not Selected"}</div></li>
-                            <li>Submission date: <div className="text-info"> {report?.reportDate ? report?.reportDate : "Report Not Selected"} </div></li>
-                            <li>Status: <div className="text-danger">{report?.reportStatus ? report?.reportStatus : "Report Not Selected"} </div></li>
-                        </ul>
-                        <br />
-                        <div className="d-grid gap-2">
-                            <Button variant="primary" onClick={handleDownloadReportFile} size="lg">
-                                Download Report
-                            </Button>
-                            <Button variant="primary" size="lg">
-                                Download Feedback
-                            </Button>
-                        </div>
-                    </Card.Body>
-                </Card>
-            </div>
-        );
+        console.log(props.student);
+
+        if (props.student.coursesTaken != undefined) {
+            return (
+                props.student.coursesTaken.map((course) =>
+                    <div className="standaloneCard">
+                        <Card>
+                            <Card.Header>  {props.student.coursesTaken} </Card.Header>
+                            <Card.Body>
+                                <Card.Title>Report Information</Card.Title>
+                                <ReportsDropdown reports={course == "CS299" ? reports299 : reports399 } report={report} setReport={setReport}/>
+                                <hr />
+                                <ul className="report-info-list">
+                                    <li>Report name: <div className="text-info">{props.report?.reportId ? props.report?.reportId : "Report Not Selected"}</div></li>
+                                    <li>Submission date: <div className="text-info"> {props.report?.reportDate ? props.report?.reportDate : "Report Not Selected"} </div></li>
+                                    <li>Status: <div className="text-danger">{props.report?.reportStatus ? props.report?.reportStatus : "Report Not Selected"} </div></li>
+                                    <li>Version: <div className="text-danger">{props.report?.version ? props.report?.version : "Report Not Selected"} </div></li>
+                                </ul>
+                                <br />
+                                <div className="d-grid gap-2">
+                                    <Button variant="primary" onClick={handleDownloadReportFile} size="lg">
+                                        Download Report
+                                    </Button>
+                                    <Button variant="primary" size="lg">
+                                        Download Feedback
+                                    </Button>
+                                </div>
+                            </Card.Body>
+                        </Card>
+                    </div>));
+        }
+        else {
+            return (<Card>
+                <Card.Header> LOADING </Card.Header>
+            </Card>)
+        }
     }
 
-    function ReportSubmit() {
-
-        async function fetchUserStudent(axiosPrivate, auth, setStudent) {
-            try {
-                const response = await axiosPrivate.get(`/students/${auth.user}`);
-                setStudent(response.data);
-            } catch (error) {
-                console.error(error);
-            }
-        }
-
+    function ReportSubmit(props) {
         const { auth } = useAuth();
 
         const [reportId, setReportId] = useState({});
 
-        const [reportTmp, setReportTmp] = useState({course: "CS299"});
+        const [reportTmp, setReportTmp] = useState({ course: "CS299" });
 
         const axiosPrivate = useAxiosPrivate();
 
@@ -157,13 +179,6 @@ export default function Reports() {
 
         const [showAlert, setShowAlert] = useState(false);
         const [showSuccessfulAlert, setShowSuccessfulAlert] = useState(false);
-
-        const [student, setStudent] = useState({});
-
-        useEffect(() => {
-            fetchUserStudent(axiosPrivate, auth, setStudent);
-        }, []);
-
 
 
         const handleFileChange = (e) => {
@@ -184,17 +199,17 @@ export default function Reports() {
             }
             const uploadReport = async () => {
                 try {
-                    console.log(student.reportVersion);
+                    console.log(props.student.reportVersion);
 
                     const response = await axiosPrivate.post('/reports/' + auth.user,
                         {
-                            reportId: auth.user + "_" + reportTmp.course,
+                            reportId: auth.user + "_" + reportTmp.course + "_" + (reportTmp.course == "CS299" ? (props.student.reports299.length + 1) : (props.student.reports399.length + 1)),
                             reportOwner: auth.user,
-                            reportFileId: auth.user + "_" + reportTmp.course + "_" + (reportTmp.course == "CS299" ? (student.reportVersionCS299 + 1) : (student.reportVersionCS399 + 1)),
+                            reportFileId: auth.user + "_" + reportTmp.course + "_" + (reportTmp.course == "CS299" ? (props.student.reports299.length + 1) : (props.student.reports399.length + 1)),
                             reportDate: new Date(),
                             reportStatus: "Submitted",
-                            version: reportTmp.course == "CS299" ? (student.reportVersionCS299 + 1) : (student.reportVersionCS399 + 1),
-                            course: reportTmp.course
+                            version: reportTmp.course == "CS299" ? (props.student.reports299.length + 1) : (props.student.reports399.length + 1),
+                            course: reportTmp.course,
                         });
 
 
@@ -208,8 +223,7 @@ export default function Reports() {
 
             const uploadReportFile = async () => {
                 try {
-                    const response = await axiosPrivate.post('/reports/file/' + auth.user + "_" + reportTmp.course + "_" + (reportTmp.course == "CS299" ? (student.reportVersionCS299 + 1) : (student.reportVersionCS399 + 1)),
-                        //const response = await axiosPrivate.post('/reports/file/' + auth.user + "_" + "1",
+                    const response = await axiosPrivate.post('/reports/file/' + auth.user + "_" + reportTmp.course + "_" + (reportTmp.course == "CS299" ? (student.reports299.length + 1) : (student.reports399.length + 1)),
                         formData,
                         {
                             headers: { "Content-Type": "multipart/form-data" },
@@ -222,28 +236,26 @@ export default function Reports() {
                 }
             };
 
-            if (reportId != undefined) {
+            //if (reportTmp.reportId != undefined) {
                 uploadReport();
                 uploadReportFile();
                 setShowSuccessfulAlert(true);
                 document.getElementById("formReportName").value = "";
                 setNewReportSubmit(newReportSubmit + 1);
-            }
+            //}
 
         }
 
+        if (props.student.coursesTaken == undefined) { return(<Card>LOADING</Card>)}
         return (
             <div className="standaloneCard">
                 <Card>
                     <Card.Body>
                         <Form.Group controlId="formFileLg" className="mb-3">
-                            <Form.Label> Report name:</Form.Label>
-                            <Form.Control id="formReportName" type="text" onChange={(e) => setReportTmp({ ...reportTmp, reportId: e.target.value })}
-                                placeholder="Enter a name for your report" />
                             <br />
 
 
-                            <Form.Check defaultChecked
+                            <Form.Check  inline defaultChecked disabled={!student.coursesTaken.includes("CS299")}
                                 type="radio"
                                 name="group1"
                                 id={`default-radio`}
@@ -253,7 +265,7 @@ export default function Reports() {
                                 }
                             />
 
-                            <Form.Check
+                            <Form.Check disabled={!student.coursesTaken.includes("CS399")} 
                                 type="radio"
                                 name="group1"
                                 label="CS399"

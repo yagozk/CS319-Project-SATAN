@@ -1,6 +1,5 @@
 package com.bilport.demo.service;
 
-import com.bilport.demo.domain.model.Admin;
 import com.bilport.demo.domain.model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;

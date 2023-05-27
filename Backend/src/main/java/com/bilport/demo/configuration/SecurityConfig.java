@@ -63,6 +63,7 @@ public class SecurityConfig {
           .requestMatchers("/students/**").hasAnyRole("ADMIN", "STUDENT","EVALUATOR", "TA","SUPERADMIN")
           .requestMatchers("/evaluators/**").hasAnyRole("STUDENT","EVALUATOR","ADMIN", "SUPERADMIN")
           .requestMatchers("/admins/**").hasAnyRole("ADMIN", "SUPERADMIN")
+          .requestMatchers("/supervisors/**").hasAnyRole("STUDENT","EVALUATOR","ADMIN", "SUPERADMIN", "SUPERVISOR", "TA")
                                                    //.requestMatchers("/items").hasAnyRole("ADMIN", "USER")
           .anyRequest().authenticated()
           )

@@ -11,7 +11,6 @@ import com.bilport.demo.domain.model.Admin;
 import com.bilport.demo.domain.model.Report;
 import com.bilport.demo.domain.model.Student;
 import com.bilport.demo.repository.AdminRepository;
-import com.bilport.demo.repository.EvaluatorRepository;
 import com.bilport.demo.repository.ReportRepository;
 import com.bilport.demo.repository.StudentRepository;
 

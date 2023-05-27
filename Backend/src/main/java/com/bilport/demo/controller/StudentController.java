@@ -44,7 +44,9 @@ public class StudentController {
             studentResponse.setReportVersionCS299(studentModel.getReportVersionCS299());
             studentResponse.setReportVersionCS399(studentModel.getReportVersionCS399());
             studentResponse.setStudentId(studentModel.getUserName());
-
+            studentResponse.setReports299(studentModel.getReports299());
+            studentResponse.setReports399(studentModel.getReports399());
+            studentResponse.setCoursesTaken(studentModel.getCoursesTaken());
 
             return new ResponseEntity<StudentResponse>(studentResponse, HttpStatus.OK);
 

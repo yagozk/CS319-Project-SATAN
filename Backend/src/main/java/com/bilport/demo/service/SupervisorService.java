@@ -14,7 +14,7 @@ public class SupervisorService {
     SupervisorRepository supervisorRepository;
 
     public Supervisor findByStudentId(String userName) {
-        return supervisorRepository.findById(userName).orElse(null);
+        return supervisorRepository.findByAssignedstudentId(userName).orElse(null);
     }
 
     public Supervisor findById(String userName) {

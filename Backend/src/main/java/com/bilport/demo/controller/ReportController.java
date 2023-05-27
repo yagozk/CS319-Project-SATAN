@@ -7,7 +7,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.method.P;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,6 +31,12 @@ public class ReportController {
     @GetMapping(value = "/{name}")
     public List<Report> getReportsOfStudent(@PathVariable("name") String name) {
         return reportService.findByReportOwner(name);
+    }
+
+    @ResponseBody
+    @GetMapping(value = "/{name}/{course}")
+    public List<Report> getReportsOfStudentAndCourse(@PathVariable("name") String name, @PathVariable("course") String course) {
+        return reportService.findByReportOwnerAndCourse(name, course);
     }
 
     @PostMapping(value = "/file/{reportId}")

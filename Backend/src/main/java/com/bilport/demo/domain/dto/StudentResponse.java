@@ -1,7 +1,5 @@
 package com.bilport.demo.domain.dto;
 
-import java.util.Date;
-
 public class StudentResponse {
     String studentName;
     String studentSurname;
@@ -12,12 +10,16 @@ public class StudentResponse {
     int reportVersionCS299;
     int reportVersionCS399;
     String studentId;
+    String[] reports299;
+    String[] reports399;
+    String[] coursesTaken;
 
     public StudentResponse() {
     }
 
     public StudentResponse(String studentName, String studentSurname, String studentEmail, String assignedEvaluatorId,
-            String assignedTaId, String assignedSupervisorId, int reportVersionCS299, int reportVersionCS399, String studentId) {
+            String assignedTaId, String assignedSupervisorId, int reportVersionCS299, int reportVersionCS399,
+            String studentId, String[] reports299, String[] reports399, String[] coursesTaken) {
         this.studentName = studentName;
         this.studentSurname = studentSurname;
         this.studentEmail = studentEmail;
@@ -27,6 +29,9 @@ public class StudentResponse {
         this.reportVersionCS299 = reportVersionCS299;
         this.reportVersionCS399 = reportVersionCS399;
         this.studentId = studentId;
+        this.reports299 = reports299;
+        this.reports399 = reports399;
+        this.coursesTaken = coursesTaken;
     }
 
     public String getStudentName() {
@@ -100,4 +105,30 @@ public class StudentResponse {
     public String getStudentId() {
         return studentId;
     }
+
+    public String[] getReports299() {
+        return reports299;
+    }
+
+    public void setReports299(String[] reports299) {
+        this.reports299 = reports299;
+    }
+
+    public String[] getReports399() {
+        return reports399;
+    }
+
+    public void setReports399(String[] reports399) {
+        this.reports399 = reports399;
+    }
+
+    public String[] getCoursesTaken() {
+        return coursesTaken;
+    }
+
+    public void setCoursesTaken(String[] coursesTaken) {
+        this.coursesTaken = coursesTaken;
+    }
+
+    
 }

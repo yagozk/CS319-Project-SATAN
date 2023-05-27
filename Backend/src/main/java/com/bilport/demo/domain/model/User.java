@@ -17,9 +17,9 @@ public class User {
     private String userPassword;
     private List<GrantedAuthority> userAuthorities;
 
-    public final String term = " 2023 Spring Semester";
+    // public final String term = " 2023 Spring Semester";
 
-    protected MailController mailer = new MailController();
+    // protected MailController mailer = new MailController();
 
     public User() {
     }
