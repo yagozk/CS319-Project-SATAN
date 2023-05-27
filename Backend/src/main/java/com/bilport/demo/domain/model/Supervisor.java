@@ -99,8 +99,8 @@ public class Supervisor extends User {
     }
 
     public void sendRegistrationMail(){
-        String subject = "Bilport" + term + " Account Info";
-        String body = "Your account as a Supervisor has been created in the Bilport system for" + term + ". Your username and password can be found below.<p/>";
+        String subject = "Bilport 2023 Spring Semester Account Info";
+        String body = "Your account as a Supervisor has been created in the Bilport system for 2023 Spring Semester. Your username and password can be found below.<p/>";
         String info = "<p/>Username: " + this.getUserName() + "<p/>Password: " + this.getUserPassword() + "<p/>";
         String additionalInfo = " You can use your login information to evaluate your student's internship through the following link.<p/> ***  LINK TO BE ADDED ***";
         String signature = "<p/>Bilport Team";
