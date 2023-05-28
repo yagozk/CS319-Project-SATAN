@@ -3,6 +3,15 @@ import StudentsPage from "../commonComponents/StudentsPage";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import useAuth from '../../hooks/useAuth';
 
+async function fetchUserTA(axiosInstance, auth, setTa) {
+    try {
+        const response = await axiosInstance.get(`/TAs/${auth.user}`);
+        setTa(response.data);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 async function fetchSubmissions(axiosPrivate, auth, setSubmissions) {
     try {
         const response = await axiosPrivate.get('/TAs/submissions/' + auth.user);
@@ -13,9 +22,9 @@ async function fetchSubmissions(axiosPrivate, auth, setSubmissions) {
     }
 }
 
-async function fetchAllStudents(axiosPrivate, auth, setStudents) {
+async function fetchAllStudents(axiosPrivate, course, setStudents) {
     try {
-        const response = await axiosPrivate.get('/TAs/students/' + auth.user);
+        const response = await axiosPrivate.get('/students/all/' + course);
         setStudents(response.data);
         console.log(response.data)
     } catch (err) {
@@ -27,21 +36,22 @@ export default function TAStudents() {
     const { auth } = useAuth();
     const [submissions, setSubmissions] = useState([]);
     const [students, setStudents] = useState([]);
+    const [ta, setTa] = useState({});
 
     const axiosPrivate = useAxiosPrivate();
 
     useEffect(() => {
         //fetchStudents(axiosPrivate, auth, setStudentz)
         //fetchReports(axiosPrivate, auth, setReports);
-        fetchSubmissions(axiosPrivate, auth, setSubmissions);
-        fetchAllStudents(axiosPrivate, auth, setStudents);
+        //fetchSubmissions(axiosPrivate, auth, setSubmissions);
+        fetchAllStudents(axiosPrivate, "CS399" ,setStudents);
+        fetchUserTA(axiosPrivate, auth, setTa);
     }
         , []);
 
     return (
         <div style={{ marginLeft: '250px', padding: '20px' }}>
             <h1 className="bigPageTitle"> Students </h1>
-            <StudentsPage userType="ta" students={submissions} />
             <StudentsPage userType="ta" students={students} />
         </div>
     )

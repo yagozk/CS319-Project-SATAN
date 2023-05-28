@@ -32,7 +32,7 @@ function SingularStudentInfo(props) {
     const [studentsEvaluator, setStudentsEvaluator] = useState({});
     const [isChooseEvaluatorDisplayed, setChooseEvaluatorDisplay] = useState(false);
     const [evaluators, setEvaluators] = useState([]);
-    const [evaluatorToAssign, setEvaluatorToAssign] = useState({evaluatorId: props.student.assignedEvaluatorId});
+    const [evaluatorToAssign, setEvaluatorToAssign] = useState({ evaluatorId: props.student.assignedEvaluatorId });
     const { auth } = useAuth();
     // const [student, setStudent] = useState({});
     const axiosPrivate = useAxiosPrivate();
@@ -68,10 +68,9 @@ function SingularStudentInfo(props) {
         , []);
 
     useEffect(() => {
-            const foundEval = evaluators.find(obj => obj.userName == props.student.assignedEvaluatorId);
-            setStudentsEvaluator(foundEval);
-            console.log(foundEval)
-
+        const foundEval = evaluators.find(obj => obj.userName == props.student.assignedEvaluatorId);
+        setStudentsEvaluator(foundEval);
+        console.log(foundEval + " " + props.student.assignedEvaluatorId);
     }, [evaluators, props.student.assignedEvaluatorId]);
 
     function AssignStudentToEvaluator(props) {
@@ -85,17 +84,17 @@ function SingularStudentInfo(props) {
                         props.evaluators.map((evaluator) => (
                             <Form.Check
                                 type="radio"
-                                checked = {evaluator.userName == props.student.assignedEvaluatorId}
-                                disabled = {evaluator.userName == props.student.assignedEvaluatorId}
+                                checked={evaluator.userName == props.student.assignedEvaluatorId}
+                                disabled={evaluator.userName == props.student.assignedEvaluatorId}
                                 id="assign-evaluator-radio"
                                 name="assign-evaluator-radio-group"
-                                value = {evaluator.userName}
+                                value={evaluator.userName}
                                 label={`${evaluator.evaluatorName + " " + evaluator.evaluatorSurname} (Remaining Quota: ${evaluator.studentLimit - evaluator.assignedStudents.length})`}
-                                onChange={(e) => setEvaluatorToAssign({evaluatorId: e.target.value})} />
+                                onChange={(e) => setEvaluatorToAssign({ evaluatorId: e.target.value })} />
                         ))
                     }
                     <br />
-                    <Button variant="warning" onClick = {handleSubmitChange} disabled = {evaluatorToAssign.evaluatorId == props.student.assignedEvaluatorId}>Submit Change</Button>
+                    <Button variant="warning" onClick={handleSubmitChange} disabled={evaluatorToAssign.evaluatorId == props.student.assignedEvaluatorId}>Submit Change</Button>
                 </Card.Body>
             </Card>
         );
@@ -134,8 +133,8 @@ function SingularStudentInfo(props) {
         , [isChooseEvaluatorDisplayed])
 
 
-    if (studentsEvaluator != undefined) {
-        console.log(studentsEvaluator.userName);
+    if (!props.student.assignedEvaluatorId || studentsEvaluator) {
+        //console.log(studentsEvaluator.userName);
         return (
             <Card className="standaloneCard">
                 <Card.Header>
@@ -156,28 +155,33 @@ function SingularStudentInfo(props) {
                         </Row>
                         <hr />
                         <Row>
-                            <Col lg={2}>Current Course: </Col>
-                            <Col lg={10}><div class="text-secondary">{props.student.reportVersion299 ? (props.student.reportVersion399 ? "BOTH" : "CS399") : (props.student.reportVersion399 ? "CS399" : "NONE")}</div></Col>
-                        </Row>
-                        <hr />
-                        <Row>
-                            <Col lg={2}>Status: </Col>
-                            <Col lg={10}><div class="text-secondary">{"..."}</div></Col>
+                            <Col lg={2}>Courses Taken: </Col>
+                            <Col lg={10}><div class="text-secondary">{props.student.coursesTaken.join(" & ")}</div></Col>
                         </Row>
                         <hr />
                         <Row>
                             <Col lg={2}>Evaluator: </Col>
-                            {studentsEvaluator.userName &&
+                            {studentsEvaluator?.userName &&
                                 <Col lg={10}><div class="text-primary">{studentsEvaluator.evaluatorName + " " + studentsEvaluator.evaluatorSurname}</div></Col>}
-                            {!studentsEvaluator.userName &&
+                            {!studentsEvaluator?.userName &&
                                 <Col lg={10}><div class="text-danger">Not assigned to an evaluator yet</div></Col>}
+                        </Row>
+                        <hr />
+                        <Row>
+                            <Col lg={2}>CS299 Report Iteration Amount: </Col>
+                            <Col lg={10}><div class="text-primary">{props.student.reports299.length}</div></Col>
+                        </Row>
+                        <hr />
+                        <Row>
+                            <Col lg={2}>CS399 Report Iteration Amount: </Col>
+                            <Col lg={10}><div class="text-primary">{props.student.reports399.length}</div></Col>
                         </Row>
                         <br />
                         <Row>
                             <Button id="assignButton" variant="outline-primary" onClick={handleAssignStudentButtonClick}>Assign student to an evaluator</Button>
                             <div id="assignStudentToEvaluatorDisplay">
                                 <br />
-                                <AssignStudentToEvaluator evaluators={evaluators} student = {props.student}/>
+                                <AssignStudentToEvaluator evaluators={evaluators} student={props.student} />
                             </div>
                         </Row>
                     </Container>

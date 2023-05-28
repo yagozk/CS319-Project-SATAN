@@ -83,8 +83,8 @@ export default function StudentsPage(props) {
                         if (props.userType == "admin") //This is necessary because this is only rendered in admin
                             return (
                                 <div className="standaloneCard">
-                                    <Alert variant="success" dismissible> Green students are assigned to an evaluator. </Alert>
-                                    <Alert variant="danger" dismissible> Red students are not assigned to an evaluator yet. </Alert>
+                                    <Alert variant="success" > Green students are assigned to an evaluator. </Alert>
+                                    <Alert variant="danger" > Red students are not assigned to an evaluator yet. </Alert>
                                 </div>
                             )
                     })()}

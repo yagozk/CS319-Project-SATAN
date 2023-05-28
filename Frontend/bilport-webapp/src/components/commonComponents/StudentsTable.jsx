@@ -61,19 +61,20 @@ export default function StudentsTable(props) {
                         <Table striped bordered hover>
                             <thead>
                                 <th>Name</th>
+                                <th>Surname</th>
                                 <th>ID</th>
-                                <th>Last Submission Date</th>
-                                <th>Status</th>
-                                <th>Course</th>
+                                <th>Mail</th>
+                                <th>Courses Taken</th>
                             </thead>
                             <tbody>
                                 {
                                     props.students.map((student) =>
-                                        <tr class={student.evaluatorID != -1 ? "clickRowGreen" : "clickRowRed"} key={student.id} onClick={() => handleRowClicked(student.studentId)} >
+                                        <tr class={(student.assignedEvaluatorId && student.assignedEvaluatorId != "") ? "clickRowGreen" : "clickRowRed"} key={student.id} onClick={() => handleRowClicked(student.studentId)} >
                                             <td>{student.studentName}</td>
                                             <td>{student.studentSurname}</td>
                                             <td>{student.studentId}</td>
-                                            <td>{student.coursesTaken}</td>
+                                            <td>{student.studentEmail}</td>
+                                            <td>{student.coursesTaken.join(" & ")}</td>
                                         </tr>)
                                 }
                             </tbody>

@@ -24,10 +24,10 @@ import com.bilport.demo.service.StudentService;
 @RestController
 @RequestMapping(value = "/students")
 public class StudentController {
-    
+
     @Autowired
     StudentService studentService;
-    
+
     @ResponseBody
     @GetMapping(value = "/{name}")
     public ResponseEntity<StudentResponse> getStudent(@PathVariable("name") String studentId) {
@@ -59,9 +59,11 @@ public class StudentController {
             Student student = new Student();
             student.setUserName(studentReq.getUserName());
             student.setUserPassword(studentReq.getUserPassword());
-            student.setUserAuthorities(new ArrayList<GrantedAuthority>() {{
-                add(new SimpleGrantedAuthority("ROLE_STUDENT"));
-            }});
+            student.setUserAuthorities(new ArrayList<GrantedAuthority>() {
+                {
+                    add(new SimpleGrantedAuthority("ROLE_STUDENT"));
+                }
+            });
             student.setStudentName(studentReq.getStudentName());
             student.setStudentSurname(studentReq.getStudentSurname());
             student.setStudentEmail(studentReq.getStudentEmail());
@@ -89,10 +91,18 @@ public class StudentController {
             studentResponse.setAssignedEvaluatorId(student.getAssignedEvaluatorId());
             studentResponse.setAssignedSupervisorId(student.getAssignedSupervisorId());
             studentResponse.setStudentId(student.getUserName());
+            studentResponse.setReports299(student.getReports299());
+            studentResponse.setReports399(student.getReports399());
+            studentResponse.setCoursesTaken(student.getCoursesTaken());
 
             studentResponses.add(studentResponse);
         }
 
         return studentResponses;
+    }
+
+    @GetMapping(value = "/all/{course}")
+    public List<StudentResponse> getStudentsByCourse(@PathVariable("course") String course) {
+        return studentService.findByCourse(course);
     }
 }
