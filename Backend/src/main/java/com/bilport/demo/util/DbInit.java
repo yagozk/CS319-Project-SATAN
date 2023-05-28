@@ -1,5 +1,6 @@
 // package com.bilport.demo.util;
 
+// import com.bilport.demo.domain.model.Course;
 // import com.bilport.demo.domain.model.Evaluator;
 // import com.bilport.demo.domain.model.Report;
 // import com.bilport.demo.domain.model.Student;
@@ -11,6 +12,7 @@
 // import com.bilport.demo.repository.SupervisorRepository;
 // import com.bilport.demo.repository.TARepository;
 // import com.bilport.demo.repository.AdminRepository;
+// import com.bilport.demo.repository.CourseRepository;
 // import com.bilport.demo.repository.SuperadminRepository;
 // import com.bilport.demo.repository.UserRepository;
 
@@ -29,9 +31,9 @@
 // public class DbInit implements CommandLineRunner {
 
 //     @Autowired
-//     private final StudentRepository repository;
+//     private final CourseRepository repository;
 
-//     public DbInit(StudentRepository repository) {
+//     public DbInit(CourseRepository repository) {
 //         this.repository = repository;
 //     }
 
@@ -59,12 +61,18 @@
 //     // ArrayList<String>( Arrays.asList( new String[]{"ROLE_USER"})))));
 //     // }
 
+//     // @Override
+//     // public void run(String... args) throws Exception {
+//     //     repository.save(new Student("22003131", "pass1",
+//     //             getAuthorities(new ArrayList<String>(Arrays.asList(new String[] { "ROLE_USER" }))), "Haktan", "Götten",
+//     //             "gotten@mail.com", "20022002", "20012001",
+//     //             "00223131", 0, 0));
+//     // }
+
 //     @Override
 //     public void run(String... args) throws Exception {
-//         repository.save(new Student("22003131", "pass1",
-//                 getAuthorities(new ArrayList<String>(Arrays.asList(new String[] { "ROLE_USER" }))), "Haktan", "Götten",
-//                 "gotten@mail.com", "20022002", "20012001",
-//                 "00223131", 0, 0));
+//         repository.save(new Course("CS299", "Summer Training 1", ""));
+//         repository.save(new Course("CS399", "Summer Training 2", ""));
 //     }
 
 //     private List<GrantedAuthority> getAuthorities(List<String> roles) {

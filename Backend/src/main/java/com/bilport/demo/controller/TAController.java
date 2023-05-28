@@ -26,15 +26,15 @@ public class TAController {
         return taService.findById(id);
     }
 
-    @ResponseBody
-    @GetMapping(value = "/submissions/{id}")
-    public List<SubmissionResponse> getSubmissions(@PathVariable("id") String id) {
-        return taService.getSubmissions(id);
-    }
+    // @ResponseBody
+    // @GetMapping(value = "/submissions/{id}")
+    // public List<SubmissionResponse> getSubmissions(@PathVariable("id") String id) {
+    //     return taService.getSubmissions(id);
+    // }
 
-    @ResponseBody
-    @GetMapping(value = "/students/{id}")
-    public List<StudentResponse> getAssignedStudents(@PathVariable("id") String id) {
-        return taService.getAssignedStudents(id);
-    }
+    // @ResponseBody
+    // @GetMapping(value = "/students/{id}")
+    // public List<StudentResponse> getAssignedStudents(@PathVariable("id") String id) {
+    //     return taService.getAssignedStudents(id);
+    // }
 }

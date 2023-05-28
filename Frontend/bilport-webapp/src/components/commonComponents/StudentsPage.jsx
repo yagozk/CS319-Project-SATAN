@@ -11,7 +11,7 @@ export default function StudentsPage(props) {
 
     const [displayedStudents, setDisplayedStudents] = useState(props.students);
 
-    const [newStudent, setNewStudent] = useState({ assignedSupervisorId: -1});
+    const [newStudent, setNewStudent] = useState({ assignedSupervisorId: ""});
     const axiosPrivate = useAxiosPrivate();
 
     useEffect(() => {
