@@ -6,13 +6,12 @@ import { useState } from "react";
 import { useEffect } from "react";
 import {Spinner} from "react-bootstrap";
 import axios from "../../api/axios";
-
+import CourseTAInfo from "../commonComponents/CourseTAInfo";
 
 export default function EvaluatorTAInfo() {
 const { auth } = useAuth();
   const [student, setStudent] = useState([]);
   const axiosPrivate = useAxiosPrivate();
-  const [ta, setTA] = useState([]);
   const [evaluator, setEvaluator] = useState([]);
 
 
@@ -30,22 +29,6 @@ const { auth } = useAuth();
       fetchUserStudent();
     }
   }, [auth.user, axiosPrivate]);
-
-
-  useEffect(() => {
-    const fetchUserTA = async () => {
-      try {
-        const response = await axiosPrivate.get(`/TAs/${student.assignedTaId}`);
-        setTA(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    if (student.assignedTaId) {
-      fetchUserTA();
-    }
-  }, [student.assignedTaId, axiosPrivate]);
 
   useEffect(() => {
     const fetchUserEvaluator = async () => {
@@ -89,23 +72,8 @@ const { auth } = useAuth();
                 </Card>
             </div>
             <div className = "standaloneCard">
-                <Card>
-                    <Card.Body>
-                        <Card.Title> Your assigned Teaching Assistant </Card.Title>
-                        <hr/>
-                        <Container fluid>
-                                <Row>
-                                    <Col lg = {2} style={{ color: "purple"}}>Name: </Col>
-                                    <Col lg = {10}><div className = "text-secondary">{ta.taFullName}</div></Col>
-                                </Row>
-                                <hr/>
-                                <Row>
-                                    <Col lg = {2} style={{ color: "purple"}}>Email: </Col>
-                                    <Col lg = {10} ><div className = "text-secondary">{ta.taEmail}</div></Col>
-                                </Row>
-                        </Container>
-                    </Card.Body>
-                </Card>
+                <CourseTAInfo customStyle={{ marginLeft: 0, padding: 0 }} course="CS299" />
+                <CourseTAInfo customStyle={{ marginLeft: 0, padding: 0 }} course="CS399" />
             </div>
         </div>
     );

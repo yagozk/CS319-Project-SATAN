@@ -41,4 +41,18 @@ public class SupervisorController {
 
     }
 
+    @PostMapping(value = "/set/{studentId}")
+    public ResponseEntity<String> newSupervisor(@PathVariable("studentId") String studentId,
+            @RequestBody Supervisor supervisor) {
+        try {
+            supervisorService.newSupervisor(studentId, supervisor);
+
+            return new ResponseEntity<String>("Success Upload", HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity<String>("Fail Upload", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
 }
