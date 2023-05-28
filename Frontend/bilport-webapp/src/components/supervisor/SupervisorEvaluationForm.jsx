@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Card, Row, Col, Container, Form, Accordion, Button } from "react-bootstrap";
+import { Card, Row, Col, Container, Form, Accordion, Button, FormCheck } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import useAuth from '../../hooks/useAuth';
@@ -118,6 +118,13 @@ export default function SupervisorEvaluationForm() {
                     <Container>
                         <Card>
                             <Card.Body>
+                                <Row>
+                                    <Card.Title> Course Name </Card.Title>
+                                    <Card.Subtitle className="mb-2 text-secondary">Which course did the trainee do the summer training for?</Card.Subtitle>
+                                    <Col><Form.Check type="radio" name="courseRadio" label="CS299"/></Col>
+                                    <Col><Form.Check type="radio" name="courseRadio" label="CS399"/></Col>
+                                </Row>
+                                <hr/>
                                 <Row>
                                     <Col>Internship starting date:</Col>
                                     <Col>
