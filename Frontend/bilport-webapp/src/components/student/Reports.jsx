@@ -1,7 +1,7 @@
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { Button, Form, Card, Alert } from "react-bootstrap";
+import { Button, Form, Card, Alert, Spinner } from "react-bootstrap";
 import { useRef, useState, useEffect, useLayoutEffect, version } from 'react';
 import useAuth from '../../hooks/useAuth';
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
@@ -160,9 +160,13 @@ export default function Reports() {
                     </div>));
         }
         else {
-            return (<Card>
-                <Card.Header> LOADING </Card.Header>
-            </Card>)
+            return (
+            <div>
+                <br/>
+                <Card>
+                    <Card.Header> <Spinner variant='primary'></Spinner> </Card.Header>
+                </Card>
+            </div>)
         }
     }
 

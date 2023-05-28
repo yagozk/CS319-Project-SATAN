@@ -84,13 +84,17 @@ function SingularStudentInfo(props) {
                         props.evaluators.map((evaluator) => (
                             <Form.Check
                                 type="radio"
-                                checked={evaluator.userName == props.student.assignedEvaluatorId}
+                                checked={evaluatorToAssign.evaluatorId === evaluator.userName} 
                                 disabled={evaluator.userName == props.student.assignedEvaluatorId}
                                 id="assign-evaluator-radio"
                                 name="assign-evaluator-radio-group"
                                 value={evaluator.userName}
                                 label={`${evaluator.evaluatorName + " " + evaluator.evaluatorSurname} (Remaining Quota: ${evaluator.studentLimit - evaluator.assignedStudents.length})`}
-                                onChange={(e) => setEvaluatorToAssign({ evaluatorId: e.target.value })} />
+                                onChange={(e) => {
+                                    if (e.target.checked) { 
+                                        setEvaluatorToAssign({ evaluatorId: e.target.value });
+                                    }
+                                }} />
                         ))
                     }
                     <br />
@@ -111,6 +115,7 @@ function SingularStudentInfo(props) {
             try {
                 const response = await axiosPrivate.get('/evaluators/assign/' + evaluatorToAssign.evaluatorId + "/" + props.student.studentId);
                 console.log(response.data);
+                
             } catch (err) {
                 console.error(err);
             }

@@ -186,6 +186,16 @@ function AssignedStudentReport(props) {
 
         return (
             <div class="standaloneCard">
+                <div className="mb-4">
+                    <Dropdown>
+                        <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                            {report.reportId ? report.reportId : "Select a report"}
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            {reports.map((report, i) => <Dropdown.Item key={i} onClick={() => { setReport(report); }}>{report?.reportId}</Dropdown.Item>)}
+                        </Dropdown.Menu>
+                    </Dropdown>
+                </div>
                 <Form>
                     <Card.Title>Average of the grades on the summer training evaluation form: </Card.Title>
                     <Form.Control onChange={(e) => setPartA1(e.target.value)} size="sm" style={{ width: "100px" }} defaultValue={form.partA1}></Form.Control>
@@ -215,14 +225,6 @@ function AssignedStudentReport(props) {
                 </div>
                 <br />
                 <div className="d-grid gap-2"><Button size="lg" onClick={handlepartASubmission}>Submit</Button></div>
-                <Dropdown>
-                    <Dropdown.Toggle variant="secondary" id="dropdown-basic" style={{ backgroundColor: "blue" }}>
-                        {report.reportId ? report.reportId : "Select a report"}
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu>
-                        {reports.map((report, i) => <Dropdown.Item key={i} onClick={() => { setReport(report); }}>{report?.reportId}</Dropdown.Item>)}
-                    </Dropdown.Menu>
-                </Dropdown>
             </div>
         );
     }
@@ -238,7 +240,7 @@ function AssignedStudentReport(props) {
         const [showErrorAlert, setShowErrorAlert] = useState(false);
 
 
-        useEffect(() => {
+        /*useEffect(() => {
             const uploadFeedbackDiv = document.getElementById("uploadFeedbackDiv");
             if (satisfactory) {
                 uploadFeedbackDiv.style.display = "block";
@@ -246,7 +248,7 @@ function AssignedStudentReport(props) {
             else {
                 uploadFeedbackDiv.style.display = "none";
             }
-        }, [satisfactory]);
+        }, [satisfactory]);*/
 
 
         function handleSatisfactoryCheck(e) {

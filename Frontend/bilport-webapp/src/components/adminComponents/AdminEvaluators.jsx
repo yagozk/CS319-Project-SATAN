@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { CloseButton, Table } from "react-bootstrap";
-import { useState } from "react";
+import { Alert, CloseButton, Table } from "react-bootstrap";
+import { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
 import { Button, Container, Row, Col, Form, Stack, Accordion } from "react-bootstrap";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
@@ -9,6 +9,7 @@ export default function AdminEvaluators(props) {
 
     //const [evaluators] = useState(props.evaluators);
     const [chosenEvaluator, setChosenEvaluator] = useState(); //Should be initially empty
+    const [displayNewEvalAddedAlert, setDisplayNewEvalAddedAlert] = useState(false);
     const [newEvaluator, setNewEvaluator] = useState({ studentLimit: 0});
     const axiosPrivate = useAxiosPrivate();
 
@@ -26,6 +27,8 @@ export default function AdminEvaluators(props) {
         try {
             const response = await axiosPrivate.post('/evaluators/newEvaluator', newEvaluator);
             console.log(response.data)
+            setDisplayNewEvalAddedAlert(true);
+
         } catch (err) {
             console.error(err);
         }
@@ -43,28 +46,32 @@ export default function AdminEvaluators(props) {
                             <Accordion.Body>
                                 <Form.Group controlId="formFileLg" className="mb-3">
                                     <Form.Label> Evaluator ID:</Form.Label>
-                                    <Form.Control id="formReportName" type="text" placeholder="Enter a name for your report" onChange={(e) => setNewEvaluator({ ...newEvaluator, userName: e.target.value })} />
+                                    <Form.Control id="formReportName" type="text" placeholder="Enter evaluator ID" onChange={(e) => setNewEvaluator({ ...newEvaluator, userName: e.target.value })} />
 
                                     <Form.Label> Evaluator Name:</Form.Label>
-                                    <Form.Control id="formReportName" type="text" placeholder="Enter a name for your report" onChange={(e) => setNewEvaluator({ ...newEvaluator, evaluatorName: e.target.value })} />
+                                    <Form.Control id="formReportName" type="text" placeholder="Enter evaluator name" onChange={(e) => setNewEvaluator({ ...newEvaluator, evaluatorName: e.target.value })} />
 
                                     <Form.Label> Evaluator Surname:</Form.Label>
-                                    <Form.Control id="formReportName" type="text" placeholder="Enter a name for your report" onChange={(e) => setNewEvaluator({ ...newEvaluator, evaluatorSurname: e.target.value })} />
+                                    <Form.Control id="formReportName" type="text" placeholder="Enter evaluator surname" onChange={(e) => setNewEvaluator({ ...newEvaluator, evaluatorSurname: e.target.value })} />
 
                                     <Form.Label> Evaluator Email:</Form.Label>
-                                    <Form.Control id="formReportName" type="text" placeholder="Enter a name for your report" onChange={(e) => setNewEvaluator({ ...newEvaluator, evaluatorEmail: e.target.value })} />
+                                    <Form.Control id="formReportName" type="text" placeholder="Enter evaluator email" onChange={(e) => setNewEvaluator({ ...newEvaluator, evaluatorEmail: e.target.value })} />
 
                                     <Form.Label> Evaluator Student Limit:</Form.Label>
-                                    <Form.Control id="formReportName" type="text" placeholder="Enter a name for your report" onChange={(e) => setNewEvaluator({ ...newEvaluator, studentLimit: e.target.value })} />
+                                    <Form.Control id="formReportName" type="text" placeholder="Enter evaluator student limit" onChange={(e) => setNewEvaluator({ ...newEvaluator, studentLimit: e.target.value })} />
 
                                     <Form.Label> Evaluator Temporary Password:</Form.Label>
-                                    <Form.Control id="formReportName" type="text" placeholder="Enter a name for your report" onChange={(e) => setNewEvaluator({ ...newEvaluator, userPassword: e.target.value })} />
+                                    <Form.Control id="formReportName" type="text" placeholder="Enter the initial password of evaluator" onChange={(e) => setNewEvaluator({ ...newEvaluator, userPassword: e.target.value })} />
                                 </Form.Group>
 
                                 <Button variant="outline-primary" onClick={() => fetchNewEvaluator(axiosPrivate, newEvaluator)}> Add New Evaluator </Button>
                             </Accordion.Body>
                         </Accordion.Item>
                     </Accordion>
+                    {displayNewEvalAddedAlert && <div>
+                        <br/>
+                        <Alert variant="success" dismissible>New evaluator added. Refresh the page to view the up to date management list.</Alert>
+                    </div>}
                 </Card.Body>
             </Card>
             <EvaluatorCard style={{ display: "none" }} id="chosenEvaluatorCard" evaluator={chosenEvaluator}
@@ -122,12 +129,6 @@ export default function AdminEvaluators(props) {
                                                         <Form.Control size="sm" style={{ width: "100px" }} />
                                                         <Button variant="outline-secondary"> Change </Button>
                                                     </Stack>
-                                                </Form>
-                                            </Col>
-                                            <Col lg={4}>
-                                                {/* This will be tricky to implement! */}
-                                                <Form>
-                                                    <Form.Check type="switch" label="Enable Admin Privilege" id="admin-switch" />
                                                 </Form>
                                             </Col>
                                         </Row>

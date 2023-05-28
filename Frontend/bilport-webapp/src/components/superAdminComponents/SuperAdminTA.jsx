@@ -11,7 +11,7 @@ export default function SuperAdminTA(){
             </div>
             <br/>
             <SetCourseTA course="CS299"/>  
-
+            <hr style={{color: "white"}}/>
             <div style={{marginLeft: "0px !important"}}>
                 <CourseTAInfo customStyle={{ marginLeft: 0, padding: 0 }} course="CS399"  />
             </div>
@@ -39,7 +39,7 @@ function SetCourseTA(props){
         <div>
             <Accordion>
                 <Accordion.Item eventKey="0">
-                    <Accordion.Header>Set Course TA</Accordion.Header>
+                    <Accordion.Header>Set Course TA for {props.course}</Accordion.Header>
                     <Accordion.Body>                   
                         <Form.Group className="mb-3" controlId="changeSupervisorInfo"  >
                             <Form.Label>Full name:</Form.Label>

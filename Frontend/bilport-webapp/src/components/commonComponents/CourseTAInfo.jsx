@@ -23,8 +23,11 @@ export default function CourseTAInfo(props){
 
     return (
         <div style={{ ...{ marginLeft: '250px', padding: '20px' }, ...props.customStyle }}>
-            <h1 class = "bigPageTitle"> {props.course} TA Info </h1>
+            <h1 class = "bigPageTitle">  </h1>
             <Card>
+                <Card.Header>
+                    <Card.Title> {props.course} Teaching Assistant </Card.Title>
+                </Card.Header>
                 <Card.Body>
                     <Container fluid>
                         <Row>

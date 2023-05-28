@@ -24,17 +24,20 @@ export default function SuperAdminSingularStudentPage(props){
                             <hr/>
                             <Row>
                                 <Col lg = {2}>ID: </Col>
-                                <Col lg = {10}><div class = "text-secondary">{props.student.id}</div></Col>
+                                <Col lg = {10}><div class = "text-secondary">{props.student.studentId}</div></Col>
                             </Row>
                             <hr/>
                             <Row>
                                 <Col lg = {2}>Email: </Col>
-                                <Col lg = {10}><div class = "text-secondary">{props.student.email}</div></Col>
+                                <Col lg = {10}><div class = "text-secondary">{props.student.studentEmail}</div></Col>
                             </Row>
                             <hr/>
                             <Row>
                                 <Col lg = {2}>Current Course: </Col>
-                                <Col lg = {10}><div class = "text-secondary">{props.student.course}</div></Col>
+                                <Col lg = {10}><div class = "text-secondary">{props.student.coursesTaken[0]}</div>
+                                { props.student.coursesTaken[1] && 
+                                <div class = "text-secondary">{props.student.coursesTaken[1]}</div>}
+                                </Col>
                             </Row>
                             <hr/>
                         </Container>

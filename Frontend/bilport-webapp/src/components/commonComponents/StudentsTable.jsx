@@ -14,7 +14,7 @@ export default function StudentsTable(props) {
         console.log(assignedStudent);
         if (props.userType == "evaluator")
             navigate(`/${props.userType}/students/${id}`, { state: { assignedStudent } });
-        else if (props.userType == "admin")
+        else if (props.userType == "admin" || props.userType == "superadmin")
             navigate(`/${props.userType}/students/${id}`, { state: { assignedStudent } });
 
     };

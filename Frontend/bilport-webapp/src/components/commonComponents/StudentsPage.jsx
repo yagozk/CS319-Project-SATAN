@@ -21,16 +21,16 @@ export default function StudentsPage(props) {
 
 
     const sortingOptions = [
-        { name: "Sort by last submission date (ascending)", key: "Date" },
-        { name: "Sort by last submission date (descending)", key: "Date (Desc)" },
         { name: "Sort by name (ascending)", key: "Name" },
-        { name: "Sort by name (descending)", key: "Name (Desc)" }
+        { name: "Sort by name (descending)", key: "Name (Desc)" },
+        { name: "Sort by last submission date (ascending)", key: "Date" },
+        { name: "Sort by last submission date (descending)", key: "Date (Desc)" }
     ];
 
     function handleSearch(searchQuery) {
         if (searchQuery !== "") {
-            const searchedStudents = students.filter(student =>
-                student.name.toLowerCase().includes(searchQuery.toLowerCase())
+            const searchedStudents = props.students.filter(student =>
+                (student.studentName + student.studentSurname).toLowerCase().includes(searchQuery.toLowerCase())
             );
             setDisplayedStudents(searchedStudents);
         }
@@ -54,10 +54,10 @@ export default function StudentsPage(props) {
         const sortedStudents = [...displayedStudents];
 
         if (option === "Name") {
-            sortedStudents.sort((student1, student2) => (student1.name > student2.name ? 1 : -1));
+            sortedStudents.sort((student1, student2) => (student1.studentName > student2.studentName ? 1 : -1));
         }
         else if (option === "Name (Desc)") {
-            sortedStudents.sort((student1, student2) => (student1.name < student2.name ? 1 : -1));
+            sortedStudents.sort((student1, student2) => (student1.studentName < student2.studentName ? 1 : -1));
         }
         else if (option === "Date") {
             sortedStudents.sort((s1, s2) => {

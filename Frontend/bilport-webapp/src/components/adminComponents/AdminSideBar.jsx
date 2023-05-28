@@ -24,10 +24,6 @@ export default function AdminSideBar(){
               <i class="material-icons">account_circle</i>
                 <Link to="/admin/profile" class = "sidebar-link">Profile</Link>
               </li>
-              <li class ="sidebar-item">
-              <i class="material-icons">gavel</i>
-                <Link to="/admin" class = "sidebar-link">Evaluator Mode</Link>
-              </li>
               <li className="sidebar-item" onClick={signOut}>
                 <i class="material-icons">logout</i> <Link className="sidebar-link"> Log Out</Link>
               </li>
