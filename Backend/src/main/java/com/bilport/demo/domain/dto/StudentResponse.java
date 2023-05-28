@@ -5,10 +5,7 @@ public class StudentResponse {
     String studentSurname;
     String studentEmail;
     String assignedEvaluatorId;
-    String assignedTaId;
     String assignedSupervisorId;
-    int reportVersionCS299;
-    int reportVersionCS399;
     String studentId;
     String[] reports299;
     String[] reports399;
@@ -18,16 +15,13 @@ public class StudentResponse {
     }
 
     public StudentResponse(String studentName, String studentSurname, String studentEmail, String assignedEvaluatorId,
-            String assignedTaId, String assignedSupervisorId, int reportVersionCS299, int reportVersionCS399,
-            String studentId, String[] reports299, String[] reports399, String[] coursesTaken) {
+            String assignedSupervisorId, String studentId, String[] reports299, String[] reports399,
+            String[] coursesTaken) {
         this.studentName = studentName;
         this.studentSurname = studentSurname;
         this.studentEmail = studentEmail;
         this.assignedEvaluatorId = assignedEvaluatorId;
-        this.assignedTaId = assignedTaId;
         this.assignedSupervisorId = assignedSupervisorId;
-        this.reportVersionCS299 = reportVersionCS299;
-        this.reportVersionCS399 = reportVersionCS399;
         this.studentId = studentId;
         this.reports299 = reports299;
         this.reports399 = reports399;
@@ -66,36 +60,12 @@ public class StudentResponse {
         this.assignedEvaluatorId = assignedEvaluatorId;
     }
 
-    public String getAssignedTaId() {
-        return assignedTaId;
-    }
-
-    public void setAssignedTaId(String assignedTaId) {
-        this.assignedTaId = assignedTaId;
-    }
-
     public String getAssignedSupervisorId() {
         return assignedSupervisorId;
     }
 
     public void setAssignedSupervisorId(String assignedSupervisorId) {
         this.assignedSupervisorId = assignedSupervisorId;
-    }
-
-    public int getReportVersionCS299() {
-        return reportVersionCS299;
-    }
-
-    public void setReportVersionCS299(int reportVersionCS299) {
-        this.reportVersionCS299 = reportVersionCS299;
-    }
-
-    public int getReportVersionCS399() {
-        return reportVersionCS399;
-    }
-
-    public void setReportVersionCS399(int reportVersionCS399) {
-        this.reportVersionCS399 = reportVersionCS399;
     }
 
     public void setStudentId(String studentId) {
@@ -130,5 +100,4 @@ public class StudentResponse {
         this.coursesTaken = coursesTaken;
     }
 
-    
 }

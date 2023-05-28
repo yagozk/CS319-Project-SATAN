@@ -135,7 +135,7 @@ export default function Reports() {
                 props.student.coursesTaken.map((course) =>
                     <div className="standaloneCard">
                         <Card>
-                            <Card.Header>  {props.student.coursesTaken} </Card.Header>
+                            <Card.Header>  {course} </Card.Header>
                             <Card.Body>
                                 <Card.Title>Report Information</Card.Title>
                                 <ReportsDropdown reports={course == "CS299" ? reports299 : reports399 } report={report} setReport={setReport}/>
@@ -253,8 +253,6 @@ export default function Reports() {
                     <Card.Body>
                         <Form.Group controlId="formFileLg" className="mb-3">
                             <br />
-
-
                             <Form.Check  inline defaultChecked disabled={!student.coursesTaken.includes("CS299")}
                                 type="radio"
                                 name="group1"

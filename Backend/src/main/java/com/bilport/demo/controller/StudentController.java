@@ -39,10 +39,7 @@ public class StudentController {
             studentResponse.setStudentSurname(studentModel.getStudentSurname());
             studentResponse.setStudentEmail(studentModel.getStudentEmail());
             studentResponse.setAssignedEvaluatorId(studentModel.getAssignedEvaluatorId());
-            studentResponse.setAssignedTaId(studentModel.getAssignedTaId());
             studentResponse.setAssignedSupervisorId(studentModel.getAssignedSupervisorId());
-            studentResponse.setReportVersionCS299(studentModel.getReportVersionCS299());
-            studentResponse.setReportVersionCS399(studentModel.getReportVersionCS399());
             studentResponse.setStudentId(studentModel.getUserName());
             studentResponse.setReports299(studentModel.getReports299());
             studentResponse.setReports399(studentModel.getReports399());
@@ -69,10 +66,7 @@ public class StudentController {
             student.setStudentSurname(studentReq.getStudentSurname());
             student.setStudentEmail(studentReq.getStudentEmail());
             student.setAssignedEvaluatorId(studentReq.getAssignedEvaluatorId());
-            student.setAssignedTaId(studentReq.getAssignedTaId());
             student.setAssignedSupervisorId(studentReq.getAssignedSupervisorId());
-            student.setReportVersionCS299(0);
-            student.setReportVersionCS399(0);
 
             studentService.createStudent(student);
             return "Student created";
@@ -93,10 +87,7 @@ public class StudentController {
             studentResponse.setStudentSurname(student.getStudentSurname());
             studentResponse.setStudentEmail(student.getStudentEmail());
             studentResponse.setAssignedEvaluatorId(student.getAssignedEvaluatorId());
-            studentResponse.setAssignedTaId(student.getAssignedTaId());
             studentResponse.setAssignedSupervisorId(student.getAssignedSupervisorId());
-            studentResponse.setReportVersionCS299(student.getReportVersionCS299());
-            studentResponse.setReportVersionCS399(student.getReportVersionCS399());
             studentResponse.setStudentId(student.getUserName());
 
             studentResponses.add(studentResponse);

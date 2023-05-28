@@ -11,10 +11,7 @@ public class Student extends User {
     String studentSurname;
     String studentEmail;
     String assignedEvaluatorId;
-    String assignedTaId;
     String assignedSupervisorId;
-    int reportVersionCS299;
-    int reportVersionCS399;
     String[] reports299;
     String[] reports399;
     String[] coursesTaken;
@@ -24,17 +21,14 @@ public class Student extends User {
 
     public Student(String userName, String userPassword, List<GrantedAuthority> userAuthorities, String studentName,
             String studentSurname,
-            String studentEmail, String assignedEvaluatorId, String assignedTaId, String assignedSupervisorId,
-            int reportVersionCS299, int reportVersionC399, String[] reports299, String[] reports399, String[] coursesTaken) {
+            String studentEmail, String assignedEvaluatorId, String assignedSupervisorId,
+            String[] reports299, String[] reports399, String[] coursesTaken) {
         super(userName, userPassword, userAuthorities);
         this.studentName = studentName;
         this.studentSurname = studentSurname;
         this.studentEmail = studentEmail;
         this.assignedEvaluatorId = assignedEvaluatorId;
-        this.assignedTaId = assignedTaId;
         this.assignedSupervisorId = assignedSupervisorId;
-        this.reportVersionCS299 = reportVersionCS299;
-        this.reportVersionCS399 = reportVersionC399;
         this.reports299 = reports299;
         this.reports399 = reports399;
         this.coursesTaken = coursesTaken;
@@ -72,36 +66,12 @@ public class Student extends User {
         this.assignedEvaluatorId = assignedEvaluatorId;
     }
 
-    public String getAssignedTaId() {
-        return assignedTaId;
-    }
-
-    public void setAssignedTaId(String assignedTaId) {
-        this.assignedTaId = assignedTaId;
-    }
-
     public String getAssignedSupervisorId() {
         return assignedSupervisorId;
     }
 
     public void setAssignedSupervisorId(String assignedSupervisorId) {
         this.assignedSupervisorId = assignedSupervisorId;
-    }
-
-    public int getReportVersionCS299() {
-        return reportVersionCS299;
-    }
-
-    public void setReportVersionCS299(int reportVersionCS299) {
-        this.reportVersionCS299 = reportVersionCS299;
-    }
-
-    public int getReportVersionCS399() {
-        return reportVersionCS399;
-    }
-
-    public void setReportVersionCS399(int reportVersionCS399) {
-        this.reportVersionCS399 = reportVersionCS399;
     }
 
     public String[] getReports299() {
