@@ -1,16 +1,59 @@
 import { useEffect, useState } from "react";
 import { Card, Row, Col, Container, Form, Accordion, Button } from "react-bootstrap";
+import { useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
+import useAuth from '../../hooks/useAuth';
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 
-export default function SupervisorEvaluationForm(){
+async function fetchSupervisorForm(axiosInstance, auth, setForm) {
+    try {
+        console.log("a");
+        let x = auth.user.substring(2, 4).concat(auth.user.substring(0, 2),auth.user.substring(4));
+        const response = await axiosInstance.get(`/supervisorForms/` + x);
+        setForm(response.data);
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+export default function SupervisorEvaluationForm() {
+    const { auth } = useAuth();
     const [internshipStartDate, setInternshipStartDate] = useState("");
     const [internshipEndDate, setInternshipEndDate] = useState("");
     const [internshipDuration, setInternshipDuration] = useState(0);
-    
+    const [showLoading, setShowLoading] = useState(false);
+    const [showErrorAlert, setShowErrorAlert] = useState(false);
+
+    let [q1, setQ1] = useState({});
+    let [q2, setQ2] = useState({});
+    let [q3, setQ3] = useState({});
+    let [q4, setQ4] = useState({});
+    let [q5, setQ5] = useState({});
+    let [q6, setQ6] = useState({});
+    let [q7, setQ7] = useState({});
+    let [q8, setQ8] = useState({});
+
+    const [studentId, setStudentId] = useState(auth.user.substring(2, 4).concat(auth.user.substring(0, 2),auth.user.substring(4)));
+    const [comment, setComment] = useState({});
+    const [form, setForm] = useState([]);
+
+
+    useEffect(() => { fetchSupervisorForm(axiosPrivate, auth, setForm); }, []);
+        console.log(form);
+
+    useEffect(() => {
+            console.log(form);
+        }, [form]);
+
+    const axiosPrivate = useAxiosPrivate();
+
+
+
     useEffect( () => {
         const start = new Date(internshipStartDate);
         const end = new Date(internshipEndDate);
-        
+
         if (end - start > 0){
             setInternshipDuration(Math.ceil( (end - start) / (1000 * 60 * 60 * 24)));
         }
@@ -19,6 +62,51 @@ export default function SupervisorEvaluationForm(){
         }
 
     }, [internshipStartDate, internshipEndDate] )
+
+    const handleFormSubmission = (id) => {
+        if (Object.keys(q1) == null || Object.keys(q2) == null ||
+            Object.keys(q3) == null || Object.keys(q4) == null || Object.keys(q5) == null ||
+            Object.keys(q6) == null || Object.keys(q7) == null) {
+            setShowErrorAlert(true);
+            setShowLoading(false);
+            return;
+            }
+
+            const submitForm = async () => {
+                try {
+                    const response = await axiosPrivate.post(('/supervisorForms/' + studentId),
+                        {
+                            studentId: studentId,
+                            q1: q1,
+                            q2: q2,
+                            q3: q3,
+                            q4: q4,
+                            q5: q5,
+                            q6: q6,
+                            q7: q7,
+                            q8: q8,
+                            comment: comment,
+                            course: "CS299",
+                            startDate: internshipStartDate,
+                            endDate: internshipEndDate
+                        });
+                    setShowLoading(false);
+                    setShowErrorAlert(false);
+
+
+                } catch (err) {
+                    console.error(err);
+                    setShowErrorAlert(true);
+                    setShowLoading(false);
+                }
+        };
+
+        if (studentId != undefined) {
+
+                submitForm();
+                console.log("s");
+        }
+    }
 
     return(
         <div style={{ marginLeft: '250px', padding: '20px' }}>
@@ -33,7 +121,7 @@ export default function SupervisorEvaluationForm(){
                                 <Row>
                                     <Col>Internship starting date:</Col>
                                     <Col>
-                                        <input type="date" value={internshipStartDate} 
+                                        <input type="date" value={internshipStartDate}
                                         onChange={(event) => {setInternshipStartDate(event.target.value)}}/>
                                     </Col>
                                     <Col>Internship ending date:</Col>
@@ -66,64 +154,64 @@ export default function SupervisorEvaluationForm(){
                             <Card.Body>
                                 <Row className="mb-3">
                                     <Col xs={4}>How much did the trainee improve her/his proffessional skills during the training?</Col>
-                                    <Col><Form.Check type="radio" aria-label="good" name="radioGroup1"/></Col>
-                                    <Col><Form.Check type="radio" aria-label="avg" name="radioGroup1"/></Col>
-                                    <Col><Form.Check type="radio" aria-label="poor" name="radioGroup1"/></Col>
-                                    <Col><Form.Check type="radio" aria-label="insuff" name="radioGroup1"/></Col>
+                                    <Col><Form.Check type="radio" aria-label="good" name="radioGroup1" onChange={(e) => setQ1(3)} /></Col>
+                                    <Col><Form.Check type="radio" aria-label="avg" name="radioGroup1" onChange={(e) => setQ1(2)}/></Col>
+                                    <Col><Form.Check type="radio" aria-label="poor" name="radioGroup1" onChange={(e) => setQ1(1)}/></Col>
+                                    <Col><Form.Check type="radio" aria-label="insuff" name="radioGroup1" onChange={(e) => setQ1(0)}/></Col>
                                 </Row>
                                 <hr/>
                                 <Row className="mb-3">
                                     <Col xs={4}>How well did the trainee contribute to the solution of technical problems at work?</Col>
-                                    <Col><Form.Check type="radio" aria-label="good" name="radioGroup2"/></Col>
-                                    <Col><Form.Check type="radio" aria-label="avg" name="radioGroup2"/></Col>
-                                    <Col><Form.Check type="radio" aria-label="poor" name="radioGroup2"/></Col>
-                                    <Col><Form.Check type="radio" aria-label="insuff" name="radioGroup2"/></Col>
+                                    <Col><Form.Check type="radio" aria-label="good" name="radioGroup2" onChange={(e) => setQ2(3)}/></Col>
+                                    <Col><Form.Check type="radio" aria-label="avg" name="radioGroup2" onChange={(e) => setQ2(2)}/></Col>
+                                    <Col><Form.Check type="radio" aria-label="poor" name="radioGroup2" onChange={(e) => setQ2(1)}/></Col>
+                                    <Col><Form.Check type="radio" aria-label="insuff" name="radioGroup2" onChange={(e) => setQ2(0)}/></Col>
                                 </Row>
                                 <hr/>
                                 <Row className="mb-3">
                                     <Col xs={4}>How did the trainee cooperate with her/his colleagues and supervisors?</Col>
-                                    <Col><Form.Check type="radio" aria-label="good" name="radioGroup3"/></Col>
-                                    <Col><Form.Check type="radio" aria-label="avg" name="radioGroup3"/></Col>
-                                    <Col><Form.Check type="radio" aria-label="poor" name="radioGroup3"/></Col>
-                                    <Col><Form.Check type="radio" aria-label="insuff" name="radioGroup3"/></Col>
+                                    <Col><Form.Check type="radio" aria-label="good" name="radioGroup3" onChange={(e) => setQ3(3)}/></Col>
+                                    <Col><Form.Check type="radio" aria-label="avg" name="radioGroup3" onChange={(e) => setQ3(2)}/></Col>
+                                    <Col><Form.Check type="radio" aria-label="poor" name="radioGroup3" onChange={(e) => setQ3(1)}/></Col>
+                                    <Col><Form.Check type="radio" aria-label="insuff" name="radioGroup3" onChange={(e) => setQ3(0)}/></Col>
                                 </Row>
                                 <hr/>
                                 <Row className="mb-3">
                                     <Col xs={4}>Did the trainee fairly treat all individuals at the workplace regardless of factors such as race, religion, gender, disability, age, or national origin?</Col>
-                                    <Col><Form.Check type="radio" aria-label="good" name="radioGroup4"/></Col>
-                                    <Col><Form.Check type="radio" aria-label="avg" name="radioGroup4"/></Col>
-                                    <Col><Form.Check type="radio" aria-label="poor" name="radioGroup4"/></Col>
-                                    <Col><Form.Check type="radio" aria-label="insuff" name="radioGroup4"/></Col>
+                                    <Col><Form.Check type="radio" aria-label="good" name="radioGroup4" onChange={(e) => setQ4(3)}/></Col>
+                                    <Col><Form.Check type="radio" aria-label="avg" name="radioGroup4" onChange={(e) => setQ4(2)}/></Col>
+                                    <Col><Form.Check type="radio" aria-label="poor" name="radioGroup4" onChange={(e) => setQ4(1)}/></Col>
+                                    <Col><Form.Check type="radio" aria-label="insuff" name="radioGroup4" onChange={(e) => setQ4(0)}/></Col>
                                 </Row>
                                 <hr/>
                                 <Row className="mb-3">
                                     <Col xs={4}>How did the trainee contribute to teamwork?</Col>
-                                    <Col><Form.Check type="radio" aria-label="good" name="radioGroup5"/></Col>
-                                    <Col><Form.Check type="radio" aria-label="avg" name="radioGroup5"/></Col>
-                                    <Col><Form.Check type="radio" aria-label="poor" name="radioGroup5"/></Col>
-                                    <Col><Form.Check type="radio" aria-label="insuff" name="radioGroup5"/></Col>
+                                    <Col><Form.Check type="radio" aria-label="good" name="radioGroup5"  onChange={(e) => setQ5(3)}/></Col>
+                                    <Col><Form.Check type="radio" aria-label="avg" name="radioGroup5" onChange={(e) => setQ5(2)}/></Col>
+                                    <Col><Form.Check type="radio" aria-label="poor" name="radioGroup5" onChange={(e) => setQ5(1)}/></Col>
+                                    <Col><Form.Check type="radio" aria-label="insuff" name="radioGroup5" onChange={(e) => setQ5(0)}/></Col>
                                 </Row>
                                 <hr/>
                                 <Row className="mb-3">
                                     <Col xs={4}>In the context of teamwork, did the trainee take into account the opinions of other team members?</Col>
-                                    <Col><Form.Check type="radio" aria-label="good" name="radioGroup6"/></Col>
-                                    <Col><Form.Check type="radio" aria-label="avg" name="radioGroup6"/></Col>
-                                    <Col><Form.Check type="radio" aria-label="poor" name="radioGroup6"/></Col>
-                                    <Col><Form.Check type="radio" aria-label="insuff" name="radioGroup6"/></Col>
+                                    <Col><Form.Check type="radio" aria-label="good" name="radioGroup6" onChange={(e) => setQ6(3)}/></Col>
+                                    <Col><Form.Check type="radio" aria-label="avg" name="radioGroup6" onChange={(e) => setQ6(2)}/></Col>
+                                    <Col><Form.Check type="radio" aria-label="poor" name="radioGroup6" onChange={(e) => setQ6(1)}/></Col>
+                                    <Col><Form.Check type="radio" aria-label="insuff" name="radioGroup6" onChange={(e) => setQ6(0)}/></Col>
                                 </Row>
                                 <hr/>
                                 <Row className="mb-3">
                                     <Col xs={4}>Did the trainee behave responsibly in making decisions consistent with the safety and health of others?</Col>
-                                    <Col><Form.Check type="radio" aria-label="good" name="radioGroup7"/></Col>
-                                    <Col><Form.Check type="radio" aria-label="avg" name="radioGroup7"/></Col>
-                                    <Col><Form.Check type="radio" aria-label="poor" name="radioGroup7"/></Col>
-                                    <Col><Form.Check type="radio" aria-label="insuff" name="radioGroup7"/></Col>
+                                    <Col><Form.Check type="radio" aria-label="good" name="radioGroup7" onChange={(e) => setQ7(3)}/></Col>
+                                    <Col><Form.Check type="radio" aria-label="avg" name="radioGroup7" onChange={(e) => setQ7(2)}/></Col>
+                                    <Col><Form.Check type="radio" aria-label="poor" name="radioGroup7" onChange={(e) => setQ7(1)}/></Col>
+                                    <Col><Form.Check type="radio" aria-label="insuff" name="radioGroup7" onChange={(e) => setQ7(0)}/></Col>
                                 </Row>
                                 <hr/>
                                 <Row className="justify-content-md-center">
                                     <Col md="auto">
                                         <Form.Label><b>General evaluation of the trainee: </b></Form.Label>
-                                        <Form.Control id="evaluationFormBlock" aria-describedby="evaluationFormBlock"/>
+                                        <Form.Control id="evaluationFormBlock" aria-describedby="evaluationFormBlock" onChange={(e) => setQ8(e.target.value)} />
                                         <Form.Text id="evaluationFormBlock" muted>(evaluate out of 10 points: 5 is the passing grade)</Form.Text>
                                     </Col>
                                 </Row>
@@ -136,13 +224,13 @@ export default function SupervisorEvaluationForm(){
                                     <Accordion.Header>Add Additional Comments:</Accordion.Header>
                                     <Accordion.Body>
                                         <Form.Label>Enter your comments: </Form.Label>
-                                        <Form.Control as="textarea" rows={4} />
+                                        <Form.Control as="textarea" rows={4} onChange={(e) => setComment(e.target.value)}/>
                                     </Accordion.Body>
                                 </Accordion.Item>
                             </Accordion>
                         </Row>
                         <Row className="justify-content-md-center">
-                            <Button variant="primary">Submit</Button>
+                            <Button variant="primary" onClick={handleFormSubmission}>Submit</Button>
                         </Row>
                     </Container>
                 </Card.Body>

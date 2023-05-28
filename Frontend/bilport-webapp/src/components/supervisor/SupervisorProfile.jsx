@@ -7,14 +7,20 @@ import { useEffect } from "react";
 
 async function fetchUserSupervisor(axiosInstance, auth, setSupervisor) {
     try {
-        const response = await axiosInstance.get(`/supervisors/${auth.user}`);
-        setSupervisor(response.data);
+    console.log(auth.user);
+        let x = auth.user.substring(2, 4).concat(auth.user.substring(0, 2),auth.user.substring(4));
+    const response = await axiosInstance.get(`/supervisors/` +x);
+    setSupervisor(response.data);
+    console.log(response.data);
+    console.log("c");
+
     } catch (error) {
         console.error(error);
     }
 }
 
 export default function SupervisorProfile() {
+    console.log("a");
     const { auth } = useAuth();
     const [supervisor, setSupervisor] = useState({});
     const axiosPrivate = useAxiosPrivate();
