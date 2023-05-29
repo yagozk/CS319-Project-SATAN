@@ -10,7 +10,7 @@ export default function AdminEvaluators(props) {
     //const [evaluators] = useState(props.evaluators);
     const [chosenEvaluator, setChosenEvaluator] = useState(); //Should be initially empty
     const [displayNewEvalAddedAlert, setDisplayNewEvalAddedAlert] = useState(false);
-    const [newEvaluator, setNewEvaluator] = useState({ studentLimit: 0});
+    const [newEvaluator, setNewEvaluator] = useState({ studentLimit: 0 });
     const axiosPrivate = useAxiosPrivate();
 
     // Display the clicked evaluator's info card
@@ -69,7 +69,7 @@ export default function AdminEvaluators(props) {
                         </Accordion.Item>
                     </Accordion>
                     {displayNewEvalAddedAlert && <div>
-                        <br/>
+                        <br />
                         <Alert variant="success" dismissible>New evaluator added. Refresh the page to view the up to date management list.</Alert>
                     </div>}
                 </Card.Body>
@@ -107,6 +107,18 @@ export default function AdminEvaluators(props) {
 
 
     function EvaluatorCard(props) {
+        const axiosPrivate = useAxiosPrivate();
+        const [studentLimit, setStudentLimit] = useState(0);
+
+        async function fetchChangeEvaluatorLimit(axiosPrivate, evaluator, studentLimit) {
+            try {
+                const response = await axiosPrivate.get('/evaluators/change/' + evaluator.userName + "/" + studentLimit);
+                console.log(response.data)
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
 
         // Render this only if props.evaluator is defined.
         if (props.evaluator) {
@@ -126,8 +138,8 @@ export default function AdminEvaluators(props) {
                                                 <Form>
                                                     <Stack direction="horizontal" gap={4}>
                                                         <Form.Label>Change Student Limit: </Form.Label>
-                                                        <Form.Control size="sm" style={{ width: "100px" }} />
-                                                        <Button variant="outline-secondary"> Change </Button>
+                                                        <Form.Control size="sm" style={{ width: "100px" }} onChange={(e) => setStudentLimit(e.target.value)}/>
+                                                        <Button variant="outline-secondary" onClick={() => fetchChangeEvaluatorLimit(axiosPrivate, props.evaluator, studentLimit)}> Change </Button>
                                                     </Stack>
                                                 </Form>
                                             </Col>

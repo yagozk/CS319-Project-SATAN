@@ -139,4 +139,17 @@ public class EvaluatorService {
         student.setAssignedEvaluatorId(evaluatorId);
         studentRepository.save(student);
     }
+
+    public void changeStudentLimit(String evaluatorId, int studentLimit) {
+        Evaluator evaluator = evaluatorRepository.findById(evaluatorId).orElse(null);
+
+        if (studentLimit < evaluator.getAssignedStudents().length || studentLimit < 0 || evaluator == null) {
+            return;
+        }
+
+        evaluator.setStudentLimit(studentLimit);
+        evaluatorRepository.save(evaluator);
+    }
+
+    
 }

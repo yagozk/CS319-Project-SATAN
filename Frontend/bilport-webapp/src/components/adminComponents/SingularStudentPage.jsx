@@ -174,12 +174,12 @@ function SingularStudentInfo(props) {
                         <hr />
                         <Row>
                             <Col lg={2}>CS299 Report Iteration Amount: </Col>
-                            <Col lg={10}><div class="text-primary">{props.student.reports299.length}</div></Col>
+                            <Col lg={10}><div class="text-primary">{props.student.reports299 ? props.student.reports299.length : 0}</div></Col>
                         </Row>
                         <hr />
                         <Row>
                             <Col lg={2}>CS399 Report Iteration Amount: </Col>
-                            <Col lg={10}><div class="text-primary">{props.student.reports399.length}</div></Col>
+                            <Col lg={10}><div class="text-primary">{props.student.reports399 ? props.student.reports399.length : 0}</div></Col>
                         </Row>
                         <br />
                         <Row>

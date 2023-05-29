@@ -20,6 +20,7 @@ import com.bilport.demo.domain.dto.SubmissionResponse;
 import com.bilport.demo.domain.model.Evaluator;
 import com.bilport.demo.domain.model.Report;
 import com.bilport.demo.service.EvaluatorService;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping(value = "/evaluators")
@@ -83,4 +84,18 @@ public class EvaluatorController {
         evaluatorService.assignEvalToStudent(evlauatorId, studentId);
         return "Evaluator assigned successfully";
     }
+
+    @GetMapping(value = "/change/{evlauatorId}/{studentLimit}")
+    public String getMethodName(@PathVariable("evlauatorId") String evlauatorId,
+            @PathVariable("studentLimit") int studentLimit) {
+        try {
+            evaluatorService.changeStudentLimit(evlauatorId, studentLimit);
+            System.out.println("Student limit changed successfully");
+            return "Student limit changed successfully";
+        } catch (Exception e) {
+            System.out.println("AAAAA NOOO");
+            return "Error occured";
+        }
+    }
+
 }
