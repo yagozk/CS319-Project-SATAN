@@ -34,6 +34,12 @@ public class ReportController {
     }
 
     @ResponseBody
+    @GetMapping(value = "/report/{reportId}")
+    public Report getReportById(@PathVariable("reportId") String reportId) {
+        return reportService.findByReportId(reportId);
+    }
+
+    @ResponseBody
     @GetMapping(value = "/{name}/{course}")
     public List<Report> getReportsOfStudentAndCourse(@PathVariable("name") String name, @PathVariable("course") String course) {
         return reportService.findByReportOwnerAndCourse(name, course);

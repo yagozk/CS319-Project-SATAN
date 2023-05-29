@@ -12,7 +12,7 @@ export default function StudentsTable(props) {
         const assignedStudent = props.students.find(obj => obj.studentId === id);
         console.log("ass");
         console.log(assignedStudent);
-        if (props.userType == "evaluator")
+        if (props.userType == "evaluator" || props.userType == "ta")
             navigate(`/${props.userType}/students/${id}`, { state: { assignedStudent } });
         else if (props.userType == "admin" || props.userType == "superadmin")
             navigate(`/${props.userType}/students/${id}`, { state: { assignedStudent } });

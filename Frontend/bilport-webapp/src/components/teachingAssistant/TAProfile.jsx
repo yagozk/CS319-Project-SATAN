@@ -41,6 +41,11 @@ export default function TAProfile() {
                             <Col lg={2} style={{ color: "purple" }}>ID:</Col>
                             <Col lg={10}><div class="text-secondary">{ta.userName}</div></Col>
                         </Row>
+                        <hr />
+                        <Row>
+                            <Col lg={2} style={{ color: "purple" }}>Assigned Course:</Col>
+                            <Col lg={10}><div class="text-secondary">{ta.assignedCourse}</div></Col>
+                        </Row>
                     </Container>
                 </Card.Body>
             </Card>

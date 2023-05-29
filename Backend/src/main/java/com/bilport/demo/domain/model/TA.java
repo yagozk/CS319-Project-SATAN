@@ -9,15 +9,17 @@ import org.springframework.security.core.GrantedAuthority;
 public class TA extends User {
     String taFullName;
     String taEmail;
+    String assignedCourse;
 
     public TA() {
     }
 
     public TA(String userName, String userPassword, List<GrantedAuthority> userAuthorities, String taFullName,
-            String taEmail) {
+            String taEmail, String assignedCourse) {
         super(userName, userPassword, userAuthorities);
         this.taFullName = taFullName;
         this.taEmail = taEmail;
+        this.assignedCourse = assignedCourse;
         //sendRegistrationMail();
     }
 
@@ -40,6 +42,14 @@ public class TA extends User {
 
     public void setTaEmail(String taEmail) {
         this.taEmail = taEmail;
+    }
+
+    public String getAssignedCourse() {
+        return assignedCourse;
+    }
+
+    public void setAssignedCourse(String assignedCourse) {
+        this.assignedCourse = assignedCourse;
     }
     /*
     public void sendRegistrationMail(){
