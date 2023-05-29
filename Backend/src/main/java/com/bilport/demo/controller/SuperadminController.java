@@ -47,6 +47,9 @@ public class SuperadminController {
     TAService taService;
     @Autowired
     EvaluatorService evaluatorService;
+    //Declaration for mail sending capabilities
+    @Autowired
+    MailController mailer;
 
     @ResponseBody
     @GetMapping(value = "/{id}")
@@ -121,6 +124,7 @@ public class SuperadminController {
                         }
                         
                         studentService.createStudent(student);
+                        mailer.sendRegistrationMailStudent(student);
                     }
                 }
             }
@@ -168,6 +172,7 @@ public class SuperadminController {
                         evaluator.setStudentLimit((int) (row.getCell(5).getNumericCellValue()));
 
                         evaluatorService.createEvaluator(evaluator);
+                        mailer.sendRegistrationMailEvaluator(evaluator);
                     }
                 }
             }
