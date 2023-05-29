@@ -57,7 +57,7 @@ export default function TASingleStudentPage(props) {
                                 <hr />
                                 <Row>
                                     <Col lg={2}>CS299 Report Status: </Col>
-                                    <Col lg={10}><div class="text-primary">{props.student.reports299.length == 0 ? "Not Submitted" : (props.report ? props.report.reportStatus : "...")}</div></Col>
+                                    <Col lg={10}><div class="text-primary">{(props.student.reports299 && props.student.reports299.length == 0) ? "Not Submitted" : (props.report ? props.report.reportStatus : "...")}</div></Col>
                                 </Row>
                             </div>}
 
@@ -66,7 +66,7 @@ export default function TASingleStudentPage(props) {
                                 <hr />
                                 <Row>
                                     <Col lg={2}>CS399 Report Status: </Col>
-                                    <Col lg={10}><div class="text-primary">{props.student.reports299.length == 0 ? "Not Submitted" : (props.report ? props.report.reportStatus : "...")}</div></Col>
+                                    <Col lg={10}><div class="text-primary">{(props.student.reports399 && props.student.reports399.length == 0) ? "Not Submitted" : (props.report ? props.report.reportStatus : "...")}</div></Col>
                                 </Row>
                             </div>}
                     </Container>
