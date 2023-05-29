@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
+import com.bilport.demo.controller.MailController;
 import com.bilport.demo.domain.model.Student;
 import com.bilport.demo.domain.model.Supervisor;
 import com.bilport.demo.repository.StudentRepository;
@@ -20,6 +21,10 @@ public class SupervisorService {
 
     @Autowired
     StudentRepository studentRepository;
+
+    // for mail sending capabilities
+    @Autowired
+    MailController mailer;
 
     public Supervisor findByStudentId(String userName) {
         return supervisorRepository.findByAssignedstudentId(userName).orElse(null);
@@ -35,6 +40,7 @@ public class SupervisorService {
 
     public void createSupervisor(Supervisor supervisor) {
         supervisorRepository.save(supervisor);
+        mailer.sendRegistrationMailSupervisor(supervisor);
     }
 
     public void newSupervisor(String studentId, Supervisor supervisor) {
@@ -54,5 +60,6 @@ public class SupervisorService {
             supervisorRepository.delete(oldSupervisor);
         }
         supervisorRepository.save(supervisor);
+        mailer.sendRegistrationMailSupervisor(supervisor);
     }
 }
