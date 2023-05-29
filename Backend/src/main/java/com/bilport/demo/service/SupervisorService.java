@@ -36,25 +36,23 @@ public class SupervisorService {
     public void createSupervisor(Supervisor supervisor) {
         supervisorRepository.save(supervisor);
     }
-    
+
     public void newSupervisor(String studentId, Supervisor supervisor) {
         Supervisor oldSupervisor = supervisorRepository.findByAssignedstudentId(studentId).orElse(null);
 
-        if (oldSupervisor == null) {
-            return;
-        } else {
-            Student student = studentRepository.findById(studentId).orElse(null);
-            student.setAssignedSupervisorId(supervisor.getUserName());
-            studentRepository.save(student);
+        Student student = studentRepository.findById(studentId).orElse(null);
+        student.setAssignedSupervisorId(supervisor.getUserName());
+        studentRepository.save(student);
 
-            supervisor.setUserAuthorities(new ArrayList<GrantedAuthority>() {
-                {
-                    add(new SimpleGrantedAuthority("ROLE_SUPERVISOR"));
-                }
-            });
-            
+        supervisor.setUserAuthorities(new ArrayList<GrantedAuthority>() {
+            {
+                add(new SimpleGrantedAuthority("ROLE_SUPERVISOR"));
+            }
+        });
+
+        if (oldSupervisor != null) {
             supervisorRepository.delete(oldSupervisor);
-            supervisorRepository.save(supervisor);
         }
+        supervisorRepository.save(supervisor);
     }
 }

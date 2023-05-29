@@ -128,6 +128,44 @@ export default function Reports() {
             console.log("KKK");
         }
 
+        
+        const handleDownloadFeedbackFile = (course, userType) => {
+            const downloadReport = async () => {
+                try {
+                    const response = await axiosPrivate.get("/feedbacks/file/" + userType + "_" + auth.user + "_" + course, { responseType: 'blob' }).then((response) => {
+                        let fileName = (userType + "_" + auth.user + "_" + course) + '.pdf';
+                        if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                            // IE variant
+                            window.navigator.msSaveOrOpenBlob(
+                                new Blob([response.data], {
+                                    type: 'application/pdf',
+                                    encoding: 'UTF-8'
+                                }),
+                                fileName
+                            );
+                        } else {
+                            const url = window.URL.createObjectURL(
+                                new Blob([response.data], {
+                                    type: 'application/pdf',
+                                    encoding: 'UTF-8'
+                                })
+                            );
+                            const link = document.createElement('a');
+                            link.href = url;
+                            link.setAttribute('download', fileName);
+                            document.body.appendChild(link);
+                            link.click();
+                            link.remove();
+                        }
+                    });
+                } catch (err) {
+                    console.error(err);
+                }
+            };
+
+            downloadReport();
+        }
+
         console.log(props.student);
 
         if (props.student.coursesTaken != undefined) {
@@ -151,8 +189,11 @@ export default function Reports() {
                                     <Button variant="primary" onClick={handleDownloadReportFile} size="lg">
                                         Download Report
                                     </Button>
-                                    <Button variant="primary" size="lg">
-                                        Download Feedback
+                                    <Button variant="primary" size="lg" onClick={() => handleDownloadFeedbackFile(course, "T")}>
+                                        Download TA Feedback
+                                    </Button>
+                                    <Button variant="primary" size="lg" onClick={() => handleDownloadFeedbackFile(course, "E")}>
+                                        Download Evaluator Feedback
                                     </Button>
                                 </div>
                             </Card.Body>

@@ -33,6 +33,13 @@ public class SupervisorFormController {
         return supervisorFormService.findByStudentId(name);
     }
 
+    @ResponseBody
+    @GetMapping(value = "/direct/{id}")
+    public SupervisorForm getEvaluatorReport(@PathVariable("id") String name) {
+        System.out.println("RRRR");
+        return supervisorFormService.findById(name);
+    }
+
     @PostMapping(value = "/{id}")
     public ResponseEntity<String> uploadSupervisorInfo(@PathVariable("id") String id,
             @RequestBody SupervisorForm evaluatorForm) {

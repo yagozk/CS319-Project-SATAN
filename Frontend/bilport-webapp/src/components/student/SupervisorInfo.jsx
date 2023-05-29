@@ -12,7 +12,7 @@ async function fetchSupervisor(axiosPrivate, auth, setSupervisor) {
     }
 }
 
-export default function SupervisorInfo() {
+export default function SupervisorInfo(props) {
 
     const { auth } = useAuth();
 
@@ -36,45 +36,46 @@ export default function SupervisorInfo() {
 
     { /* IMPORTANT: There should be a "No supervisor info" display if the student hasn't entered a supervisor yet*/ }
     return (
-        <div style={{ marginLeft: '250px', padding: '20px' }}>
-            <h1 className="bigPageTitle"> Supervisor Information </h1>
-            <Card>
-                <Card.Body>
-                    <Card.Title>Your supervisor </Card.Title>
+        props.student.coursesTaken.map((course) => <div style={{ marginLeft: '250px', padding: '20px' }}>
+        <h1 className="bigPageTitle"> Supervisor Information for {course} </h1>
+        <Card>
+            <Card.Body>
+                <Card.Title>Your supervisor </Card.Title>
+                <hr />
+                <Container fluid>
+                    <Card.Subtitle><b>Contact Information:</b></Card.Subtitle>
                     <hr />
-                    <Container fluid>
-                        <Card.Subtitle><b>Contact Information:</b></Card.Subtitle>
-                        <hr />
-                        <Row>
-                            <Col lg={2} style={{ color: "purple" }}>Full name: </Col>
-                            <Col lg={10}><div className="text-secondary">{supervisor.supervisorFullName}</div></Col>
-                        </Row>
-                        <Row>
-                            <Col lg={2} style={{ color: "purple" }}>Email: </Col>
-                            <Col lg={10} ><div className="text-secondary">{supervisor.supervisorEmail}</div></Col>
-                        </Row>
-                        <br />
-                        <Card.Subtitle><b>About: </b></Card.Subtitle>
-                        <hr />
-                        <Row>
-                            <Col lg={2} style={{ color: "purple" }}>Working position: </Col>
-                            <Col lg={10}><div className="text-secondary">{supervisor.working_position}</div></Col>
-                        </Row>
-                        <Row>
-                            <Col lg={2} style={{ color: "purple" }}>Graduated from: </Col>
-                            <Col lg={10}><div className="text-secondary">{supervisor.graduation_university}</div></Col>
-                        </Row>
-                        <Row>
-                            <Col lg={2} style={{ color: "purple" }}>University Major: </Col>
-                            <Col lg={10}><div className="text-secondary">{supervisor.university_major}</div></Col>
-                        </Row>
-                    </Container>
-                </Card.Body>
-            </Card>
-            <div className="standaloneCard">
-                <ChangeSupervisorInfo />
-            </div>
+                    <Row>
+                        <Col lg={2} style={{ color: "purple" }}>Full name: </Col>
+                        <Col lg={10}><div className="text-secondary">{supervisor.supervisorFullName}</div></Col>
+                    </Row>
+                    <Row>
+                        <Col lg={2} style={{ color: "purple" }}>Email: </Col>
+                        <Col lg={10} ><div className="text-secondary">{supervisor.supervisorEmail}</div></Col>
+                    </Row>
+                    <br />
+                    <Card.Subtitle><b>About: </b></Card.Subtitle>
+                    <hr />
+                    <Row>
+                        <Col lg={2} style={{ color: "purple" }}>Working position: </Col>
+                        <Col lg={10}><div className="text-secondary">{supervisor.working_position}</div></Col>
+                    </Row>
+                    <Row>
+                        <Col lg={2} style={{ color: "purple" }}>Graduated from: </Col>
+                        <Col lg={10}><div className="text-secondary">{supervisor.graduation_university}</div></Col>
+                    </Row>
+                    <Row>
+                        <Col lg={2} style={{ color: "purple" }}>University Major: </Col>
+                        <Col lg={10}><div className="text-secondary">{supervisor.university_major}</div></Col>
+                    </Row>
+                </Container>
+            </Card.Body>
+        </Card>
+        <div className="standaloneCard">
+            <ChangeSupervisorInfo />
         </div>
+    </div>)
+        
     );
 
     function ChangeSupervisorInfo() {
@@ -105,72 +106,6 @@ export default function SupervisorInfo() {
                 console.error(err);
             }
         }
-
-
-
-        //     const handleSubmitSupervisorInfo = () => {
-        //         setShowLoading(true);
-        //         console.log(supervisorEmail)
-        //         if (Object.keys(supervisorFullName).length == 0 || Object.keys(supervisorEmail).length == 0 || 
-        //         Object.keys(working_position).length == 0 || Object.keys(graduation_university).length == 0 
-        //         || Object.keys(university_major).length == 0){
-        //             setShowErrorAlert(true);
-        //             setShowLoading(false);
-        //             return;
-        //         }
-        //         const submitSupervisor = async () => {
-        //             let x = auth.user.substring(2, 4).concat(auth.user.substring(0, 2),auth.user.substring(4));
-        //             try {
-        //                 const response = await axiosPrivate.post(('/supervisors/'+x),
-        //                     {
-        //                         id: auth.user.substring(2, 4) + auth.user.substring(0, 2) + auth.user.substring(4),
-        //                         supervisorFullName: supervisorFullName,
-        //                         supervisorEmail: supervisorEmail,
-        //                         working_position: working_position,
-        //                         graduation_university: graduation_university,
-        //                         university_major: university_major,
-        //                         assignedStudentID: auth.user
-        //                     });
-        //                     setNewSupervisorInfo(newSupervisorInfo + 1);
-        //                     setShowLoading(false);
-        //                     setShowErrorAlert(false);
-
-
-        //             } catch (err) {
-        //                 console.error(err);
-        //                 setShowErrorAlert(true);
-        //                 setShowLoading(false);
-        //             }
-        //         };
-
-
-        // /*
-        //         const formData = new FormData();
-        //         formData.append('supervisor', supervisor)*/
-
-        // /*
-        //         const uploadSupervisorInfo = async () => {
-        //             try {
-        //                 const response = await axiosPrivate.post('/supervisors/' + "x", formData,
-        //                     {
-        //                         headers: {"Content-Type": "application/json"},
-        //                     }
-        //                     ).then((response) => {console.log("\nCCCCC\n")});
-
-
-        //             } catch (err) {
-        //                 console.error(err);
-        //             }
-        //         };*/
-
-        //         if (supervisorFullName != undefined) {
-        //             submitSupervisor();
-        //             //uploadSupervisorInfo();
-        //             console.log(id);
-        //             //document.getElementById("formReportName").value = "";
-        //         }
-
-        //     }
 
 
         return (

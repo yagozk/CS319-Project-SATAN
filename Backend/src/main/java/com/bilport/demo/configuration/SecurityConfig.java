@@ -37,42 +37,50 @@ public class SecurityConfig {
         return new CustomRequestHeaderTokenFilter(authManager());
     }
 
-  @Bean
-  public SecurityFilterChain filterChain1(HttpSecurity http) throws Exception {
-          http.cors().and().csrf().disable()
-          .exceptionHandling()
-           .authenticationEntryPoint((request, response, authEx) -> {
-                                       //response.setHeader("WWW-Authenticate", "Basic realm=\"Access to /signin authentication endpoint\"");
-                                       response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                                       response.getWriter().write("{ \"Error\": \"" + authEx.getMessage() + " - You are not authenticated.\" }");
-                                   })
-          .and()
-              .sessionManagement()
-              .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-          .and()
+    @Bean
+    public SecurityFilterChain filterChain1(HttpSecurity http) throws Exception {
+        http.cors().and().csrf().disable()
+                .exceptionHandling()
+                .authenticationEntryPoint((request, response, authEx) -> {
+                    // response.setHeader("WWW-Authenticate", "Basic realm=\"Access to /signin
+                    // authentication endpoint\"");
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    response.getWriter()
+                            .write("{ \"Error\": \"" + authEx.getMessage() + " - You are not authenticated.\" }");
+                })
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
 
-          .authorizeHttpRequests(authorize -> authorize.requestMatchers(HttpMethod.POST, "/auth/signup").permitAll()
-          //.requestMatchers(HttpMethod.POST, "/").permitAll()
-                                                   .requestMatchers(HttpMethod.GET, "/auth/signin").authenticated()
-                                                   .requestMatchers(HttpMethod.GET, "/auth/signout").authenticated()
-                                                   .requestMatchers(HttpMethod.GET, "/auth/refresh").permitAll()
-                                                   .requestMatchers(HttpMethod.GET, "/items").permitAll())
+                .authorizeHttpRequests(
+                        authorize -> authorize.requestMatchers(HttpMethod.POST, "/auth/signup").permitAll()
+                                // .requestMatchers(HttpMethod.POST, "/").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/auth/signin").authenticated()
+                                .requestMatchers(HttpMethod.GET, "/auth/signout").authenticated()
+                                .requestMatchers(HttpMethod.GET, "/auth/refresh").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/items").permitAll())
 
-          .authorizeHttpRequests(authorize -> authorize.requestMatchers("/users").hasRole("ADMIN")
-          .requestMatchers("/reports/**").hasAnyRole("STUDENT", "EVALUATOR", "TA")
-          .requestMatchers("/students/**").hasAnyRole("ADMIN", "STUDENT","EVALUATOR", "TA","SUPERADMIN")
-          .requestMatchers("/evaluators/**").hasAnyRole("STUDENT","EVALUATOR","ADMIN", "SUPERADMIN")
-          .requestMatchers("/admins/**").hasAnyRole("ADMIN", "SUPERADMIN")
-          .requestMatchers("/supervisors/**").hasAnyRole("STUDENT","EVALUATOR","ADMIN", "SUPERADMIN", "SUPERVISOR", "TA")
-          .requestMatchers("/courses/**").hasAnyRole("STUDENT","EVALUATOR","ADMIN", "SUPERADMIN", "SUPERVISOR", "TA")
-                                                   //.requestMatchers("/items").hasAnyRole("ADMIN", "USER")
-          .anyRequest().authenticated()
-          )
-          ;
-      http.addFilterBefore( customFilter(), UsernamePasswordAuthenticationFilter.class); 
+                .authorizeHttpRequests(authorize -> authorize.requestMatchers("/users").hasRole("ADMIN")
+                        .requestMatchers("/reports/**").hasAnyRole("STUDENT", "EVALUATOR", "TA")
+                        .requestMatchers("/students/**").hasAnyRole("ADMIN", "STUDENT", "EVALUATOR", "TA", "SUPERADMIN")
+                        .requestMatchers("/evaluators/**").hasAnyRole("STUDENT", "EVALUATOR", "ADMIN", "SUPERADMIN")
+                        .requestMatchers("/admins/**").hasAnyRole("ADMIN", "SUPERADMIN")
+                        .requestMatchers("/supervisors/**")
+                        .hasAnyRole("STUDENT", "EVALUATOR", "ADMIN", "SUPERADMIN", "SUPERVISOR", "TA")
+                        .requestMatchers("/courses/**")
+                        .hasAnyRole("STUDENT", "EVALUATOR", "ADMIN", "SUPERADMIN", "SUPERVISOR", "TA")
+                        .requestMatchers("/supervisorForms/**")
+                        .hasAnyRole("STUDENT", "EVALUATOR", "ADMIN", "SUPERADMIN", "SUPERVISOR", "TA")
+                        .requestMatchers("/feedbacks/**")
+                        .hasAnyRole("STUDENT", "EVALUATOR", "ADMIN", "SUPERADMIN", "SUPERVISOR", "TA")
 
-      return http.build();
-  }
+                        // .requestMatchers("/items").hasAnyRole("ADMIN", "USER")
+                        .anyRequest().authenticated());
+        http.addFilterBefore(customFilter(), UsernamePasswordAuthenticationFilter.class);
+
+        return http.build();
+    }
 
     @Bean
     public CorsFilter corsFilter() {

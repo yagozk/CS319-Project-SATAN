@@ -115,6 +115,38 @@ export default function TASingleStudentPage(props) {
             downloadReport();
         }
 
+        const [file, setFile] = useState();
+
+        const handleFileChange = (e) => {
+            if (e.target.files) {
+                setFile(e.target.files[0]);
+                console.log(e.target.files[0].name);
+            }
+        };
+
+        const handleUploadReport = () => {
+            const formData = new FormData();
+            formData.append('file', file)
+
+            const uploadReportFile = async () => {
+                try {
+                    const response = await axiosPrivate.post('/feedbacks/file/T_' + props.student.studentId + "_" + props.ta.assignedCourse,
+                        formData,
+                        {
+                            headers: { "Content-Type": "multipart/form-data" },
+                        }
+                    ).then((response) => { console.log("AAAA") });
+
+
+                } catch (err) {
+                    console.error(err);
+                }
+            };
+
+            console.log(formData.get('file'));
+            uploadReportFile();
+        }
+
         return (
             <div className="standaloneCard">
                 <Card>
@@ -126,9 +158,9 @@ export default function TASingleStudentPage(props) {
                             <hr />
                             <Form.Label>Upload Feedback</Form.Label>
                             <Stack direction="horizontal" gap={3}>
-                                <Form.Control type="file"></Form.Control>
+                                <Form.Control type="file" onChange={handleFileChange}></Form.Control>
                                 <div className="vr" />
-                                <Button variant="success"> Upload </Button>
+                                <Button variant="success" onClick={handleUploadReport}> Upload </Button>
                             </Stack>
                         </Container>
                     </Card.Body>

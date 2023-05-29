@@ -4,8 +4,6 @@ import useAuth from '../../hooks/useAuth';
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useState } from "react";
 import { useEffect } from "react";
-import {Spinner} from "react-bootstrap";
-import axios from "../../api/axios";
 import CourseTAInfo from "../commonComponents/CourseTAInfo";
 
 export default function EvaluatorTAInfo() {

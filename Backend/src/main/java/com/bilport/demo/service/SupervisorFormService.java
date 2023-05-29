@@ -27,4 +27,9 @@ public class SupervisorFormService {
     public void createSupervisorForm(SupervisorForm form) {
         supervisorFormRepository.save(form);
     }
+
+    public SupervisorForm findById(String name) {
+        System.out.println(supervisorFormRepository.findById(name).orElse(null).getCourse() + ": QQQ33");
+        return supervisorFormRepository.findById(name).orElse(null);
+    }
 }

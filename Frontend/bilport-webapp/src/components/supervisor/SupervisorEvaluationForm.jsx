@@ -9,8 +9,7 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 async function fetchSupervisorForm(axiosInstance, auth, setForm) {
     try {
         console.log("a");
-        let x = auth.user.substring(2, 4).concat(auth.user.substring(0, 2),auth.user.substring(4));
-        const response = await axiosInstance.get(`/supervisorForms/` + x);
+        const response = await axiosInstance.get(`/supervisorForms/direct/` + auth.user);
         setForm(response.data);
     } catch (err) {
         console.error(err);
@@ -34,7 +33,7 @@ export default function SupervisorEvaluationForm() {
     let [q7, setQ7] = useState({});
     let [q8, setQ8] = useState({});
 
-    const [studentId, setStudentId] = useState(auth.user.substring(2, 4).concat(auth.user.substring(0, 2),auth.user.substring(4)));
+    const [studentId, setStudentId] = useState(auth.user);
     const [comment, setComment] = useState({});
     const [form, setForm] = useState([]);
 

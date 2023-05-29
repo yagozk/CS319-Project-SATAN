@@ -46,11 +46,11 @@ export default function AssignedStudentPage() {
                                 <AssignedStudentInfo student={assignedStudent} />
                             </Tab>
                             {assignedStudent.coursesTaken.includes("CS299") && <Tab eventKey="report" title="Report of CS299" tabClassName="coloredTab" disabled={!assignedStudent.coursesTaken.includes("CS299")}>
-                                <AssignedStudentReport student={assignedStudent} course="CS299"/>
+                                <AssignedStudentReport student={assignedStudent} course="CS299" />
                             </Tab>
                             }
                             {assignedStudent.coursesTaken.includes("CS399") && <Tab eventKey="report399" title="Report of CS399" tabClassName="coloredTab">
-                                <AssignedStudentReport student={assignedStudent} course="CS399"/>
+                                <AssignedStudentReport student={assignedStudent} course="CS399" />
                             </Tab>}
                         </Tabs>
                     </Card.Header>
@@ -108,6 +108,7 @@ function AssignedStudentReport(props) {
     const [showErrorAlert, setShowErrorAlert] = useState(false);
     const [form, setForm] = useState([]);
     const [reports, setReports] = useState([]);
+    const [supervisorForms, setSupervisorForms] = useState({});
     const [report, setReport] = useState({});
 
     async function fetchReportsWithCourse(axiosPrivate, auth, course, setReports) {
@@ -120,11 +121,22 @@ function AssignedStudentReport(props) {
         }
     }
 
+    async function fetchSupervisorForm(axiosPrivate, supervisor, setReports) {
+        try {
+            const response = await axiosPrivate.get('/supervisorForms/' + supervisor);
+            console.log(response.data);
+            setSupervisorForms(response.data);
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
 
     useEffect(() => {
         fetchEvaluatorForm(axiosPrivate, props.student.studentId, setForm);
         fetchReportsWithCourse(axiosPrivate, props.student.studentId, props.course, setReports);
-    }, [props.student.studentId, props.course]);
+        fetchSupervisorForm(axiosPrivate, props.student.assignedSupervisorId, setSupervisorForms);
+    }, [props.student.studentId, props.course, props.student.assignedSupervisorId]);
     console.log(form);
 
     useEffect(() => {
@@ -186,16 +198,6 @@ function AssignedStudentReport(props) {
 
         return (
             <div class="standaloneCard">
-                <div className="mb-4">
-                    <Dropdown>
-                        <Dropdown.Toggle variant="primary" id="dropdown-basic">
-                            {report.reportId ? report.reportId : "Select a report"}
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu>
-                            {reports.map((report, i) => <Dropdown.Item key={i} onClick={() => { setReport(report); }}>{report?.reportId}</Dropdown.Item>)}
-                        </Dropdown.Menu>
-                    </Dropdown>
-                </div>
                 <Form>
                     <Card.Title>Average of the grades on the summer training evaluation form: </Card.Title>
                     <Form.Control onChange={(e) => setPartA1(e.target.value)} size="sm" style={{ width: "100px" }} defaultValue={form.partA1}></Form.Control>
@@ -229,7 +231,7 @@ function AssignedStudentReport(props) {
         );
     }
 
-    function ReportPartB() {
+    function ReportPartB(props) {
         //let [partA1, setPartA1] = useState({});
         //let [partA2, setPartA2] = useState({});
         //let [partA3, setPartA3] = useState({});
@@ -238,6 +240,77 @@ function AssignedStudentReport(props) {
         const [satisfactory, setSatisfactory] = useState(false);
         const [showLoading, setShowLoading] = useState(false);
         const [showErrorAlert, setShowErrorAlert] = useState(false);
+
+        const axiosPrivate = useAxiosPrivate();
+
+        const handleDownloadReportFile = () => {
+            const downloadReport = async () => {
+                try {
+                    const response = await axiosPrivate.get("/reports/file/" + (props.course == "CS299" ? (props.student.reports299)[0] : (props.student.reports399)[0]), { responseType: 'blob' }).then((response) => {
+                        let fileName = (props.course== "CS299" ? (props.student.reports299)[0] : (props.student.reports399)[0]) + '.pdf';
+                        if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                            // IE variant
+                            window.navigator.msSaveOrOpenBlob(
+                                new Blob([response.data], {
+                                    type: 'application/pdf',
+                                    encoding: 'UTF-8'
+                                }),
+                                fileName
+                            );
+                        } else {
+                            const url = window.URL.createObjectURL(
+                                new Blob([response.data], {
+                                    type: 'application/pdf',
+                                    encoding: 'UTF-8'
+                                })
+                            );
+                            const link = document.createElement('a');
+                            link.href = url;
+                            link.setAttribute('download', fileName);
+                            document.body.appendChild(link);
+                            link.click();
+                            link.remove();
+                        }
+                    });
+                } catch (err) {
+                    console.error(err);
+                }
+            };
+
+            downloadReport();
+        }
+
+        const [file, setFile] = useState();
+
+        const handleFileChange = (e) => {
+            if (e.target.files) {
+                setFile(e.target.files[0]);
+                console.log(e.target.files[0].name);
+            }
+        };
+
+        const handleUploadReport = () => {
+            const formData = new FormData();
+            formData.append('file', file)
+
+            const uploadReportFile = async () => {
+                try {
+                    const response = await axiosPrivate.post('/feedbacks/file/E_' + props.student.studentId + "_" + props.course,
+                        formData,
+                        {
+                            headers: { "Content-Type": "multipart/form-data" },
+                        }
+                    ).then((response) => { console.log("AAAA") });
+
+
+                } catch (err) {
+                    console.error(err);
+                }
+            };
+
+            console.log(formData.get('file'));
+            uploadReportFile();
+        }
 
 
         /*useEffect(() => {
@@ -266,9 +339,9 @@ function AssignedStudentReport(props) {
             const submitPartB = async () => {
                 try {
 
-                    const response = await axiosPrivate.post(('/evaluatorForms/' + props.student.reportOwner),
+                    const response = await axiosPrivate.post(('/evaluatorForms/' + props.student.studentId),
                         {
-                            studentId: props.student.reportOwner,
+                            studentId: props.student.studentId,
                             course: props.student.course,
                             partB1: partB1,
                             partB2: partB2,
@@ -285,7 +358,7 @@ function AssignedStudentReport(props) {
             };
 
             if (props != undefined) {
-                submitPartB(props.student.reportOwner);
+                submitPartB(props.student.studentId);
                 //uploadSupervisorInfo();
                 //console.log(studentId);
                 //document.getElementById("formReportName").value = "";
@@ -295,15 +368,18 @@ function AssignedStudentReport(props) {
         return (
             <div class="standaloneCard">
                 <Stack direction="horizontal" gap={3}>
-                    <Form.Select>
-                        <option>Report 1</option>
-                        <option>Report 2</option>
-                        <option>Report 3</option>
-                        <option>Report 4</option>
-                        <option>Report 5</option>
-                    </Form.Select>
+                    <div className="mb-4">
+                        <Dropdown>
+                            <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                                {report.reportId ? report.reportId : "Select a report"}
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu>
+                                {reports.map((report, i) => <Dropdown.Item key={i} onClick={() => { setReport(report); }}>{report?.reportId}</Dropdown.Item>)}
+                            </Dropdown.Menu>
+                        </Dropdown>
+                    </div>
                     <div className="vr" />
-                    <Button variant="primary">Download</Button>
+                    <Button variant="primary" onClick={handleDownloadReportFile}>Download</Button>
                 </Stack>
                 <hr />
                 <Form>
@@ -316,9 +392,9 @@ function AssignedStudentReport(props) {
                 <div id="uploadFeedbackDiv">
                     <Card.Title>Upload Feedback</Card.Title>
                     <Stack direction="horizontal" gap={3}>
-                        <Form.Control type="file" size="md" />
+                        <Form.Control type="file" size="md" onChange={handleFileChange} />
                         <div className="vr" />
-                        <Button variant="primary" >Upload</Button>
+                        <Button variant="primary" onClick={handleUploadReport}>Upload</Button>
                     </Stack>
                     <br />
                 </div>
@@ -414,7 +490,7 @@ function AssignedStudentReport(props) {
                         <ReportPartA form={props.student} />
                     </Tab>
                     <Tab eventKey="partB" title="Part B">
-                        <ReportPartB form={props.student} />
+                        <ReportPartB form={props.student} student={props.student} course={props.course} />
                     </Tab>
                     <Tab eventKey="partC" title="Part C">
                         <ReportPartC form={props.student} />
