@@ -100,6 +100,7 @@ export default function SupervisorInfo() {
             try {
                 const response = await axiosPrivate.post('/supervisors/set/' + auth.user, newSupervisor);
                 console.log(response.data)
+                setNewSupervisorInfo(newSupervisorInfo + 1)
             } catch (err) {
                 console.error(err);
             }
