@@ -24,6 +24,8 @@ public class MailController {
     @Autowired
     private JavaMailSender mailSender;
 
+    private final String term = "2023 Spring Semester";
+
     /**
      * Constructor in case a MailController is created using the new keyword
      */
@@ -69,7 +71,7 @@ public class MailController {
      */
     public void sendRegistrationMailStudent(Student s){
         String subject = "Bilport 2023 Spring Semester Account Info";
-        String body = "Your account as a Student has been created in the Bilport system for 2023 Spring Semester. Your username and password can be found below.<p/>";
+        String body = "Your account as a Student has been created in the Bilport system for " + term + ". Your username and password can be found below.<p/>";
         String info = "<p/>Username: " + s.getUserName() + "<p/>Password: " + s.getUserPassword() + "<p/>";
         String signature = "<p/>Bilport Team";
         sendEmail(s.getStudentEmail(), subject, body + info + signature);
@@ -81,7 +83,7 @@ public class MailController {
      */
     public void sendRegistrationMailEvaluator(Evaluator e){
         String subject = "Bilport 2023 Spring Semester Account Info";
-        String body = "Your account as an Evaluator has been created in the Bilport system for 2023 Spring Semester. Your username and password can be found below.<p/>";
+        String body = "Your account as an Evaluator has been created in the Bilport system for " + term + ". Your username and password can be found below.<p/>";
         String info = "<p/>Username: " + e.getUserName() + "<p/>Password: " + e.getUserPassword() + "<p/>";
         String signature = "<p/>Bilport Team";
         sendEmail(e.getEvaluatorEmail(), subject, body + info + signature);
@@ -93,7 +95,7 @@ public class MailController {
      */
     public void sendRegistrationMailAdmin(Admin a){
         String subject = "Bilport 2023 Spring Semester Account Info";
-        String body = "Your account as an Admin has been created in the Bilport system for 2023 Spring Semester. Your username and password can be found below.<p/>";
+        String body = "Your account as an Admin has been created in the Bilport system for " + term + ". Your username and password can be found below.<p/>";
         String info = "<p/>Username: " + a.getUserName() + "<p/>Password: " + a.getUserPassword() + "<p/>";
         String signature = "<p/>Bilport Team";
         sendEmail(a.getAdminEmail(), subject, body + info + signature);
@@ -105,7 +107,7 @@ public class MailController {
      */
     public void sendRegistrationMailTA(TA t){
         String subject = "Bilport 2023 Spring Semester Account Info";
-        String body = "Your account as a TA has been created in the Bilport system for 2023 Spring Semester. Your username and password can be found below.<p/>";
+        String body = "Your account as a TA has been created in the Bilport system for " + term + ". Your username and password can be found below.<p/>";
         String info = "<p/>Username: " + t.getUserName() + "<p/>Password: " + t.getUserPassword() + "<p/>";
         String signature = "<p/>Bilport Team";
         sendEmail(t.getTaEmail(), subject, body + info + signature);
@@ -117,7 +119,7 @@ public class MailController {
      */
     public void sendRegistrationMailSupervisor(Supervisor s){
         String subject = "Bilport 2023 Spring Semester Account Info";
-        String body = "Your account as a Supervisor has been created in the Bilport system for 2023 Spring Semester. Your username and password can be found below.<p/>";
+        String body = "Your account as a Supervisor has been created in the Bilport system for " + term + ". Your username and password can be found below.<p/>";
         String info = "<p/>Username: " + s.getUserName() + "<p/>Password: " + s.getUserPassword() + "<p/>";
         String additionalInfo = " You can use your login information to evaluate your student's internship through the following link.<p/> ***  LINK TO BE ADDED ***";
         String signature = "<p/>Bilport Team";
