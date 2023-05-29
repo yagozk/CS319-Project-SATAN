@@ -4,14 +4,14 @@ import java.util.Random;
 
 public class PasswordGenerator {
 
-    private static final int PASSWORD_LENGTH = 8;
+    private final int PASSWORD_LENGTH = 8;
 
-    private static final String UPPER_CASE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    private static final String LOWER_CASE_CHARS = "abcdefghijklmnopqrstuvwxyz";
-    private static final String NUMBERS = "0123456789";
-    private static final String SPECIAL_CHARS = "!@#$%&*()_-<>?";
+    private final String UPPER_CASE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private final String LOWER_CASE_CHARS = "abcdefghijklmnopqrstuvwxyz";
+    private final String NUMBERS = "0123456789";
+    private final String SPECIAL_CHARS = "!@#$%&*()_-<>?";
 
-    public static String generatePassword(){
+    public String generatePassword(){
         StringBuilder password = new StringBuilder();
         Random rand = new Random();
         
@@ -38,12 +38,12 @@ public class PasswordGenerator {
         return password.toString();
     }
 
-    private static char getRandomChar(String charSet, Random random) {
+    private char getRandomChar(String charSet, Random random) {
         int randomIndex = random.nextInt(charSet.length());
         return charSet.charAt(randomIndex);
     }
 
-    private static String getRandomCharSet(Random random) {
+    private String getRandomCharSet(Random random) {
         int randomIndex = random.nextInt(4);
         switch (randomIndex) {
             case 0:
