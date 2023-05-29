@@ -4,6 +4,7 @@ import EvaluatorProfile from './evaluator/EvaluatorProfile';
 import CourseTAInfo from './commonComponents/CourseTAInfo';
 import AssignedStudentPage from './evaluator/AssignedStudentPage';
 import { Routes, Route } from 'react-router-dom';
+import EvaluatorTAInfo from './evaluator/EvaluatorTAInfo';
 
 const Evaluator = () => {
     return (
@@ -12,7 +13,7 @@ const Evaluator = () => {
               <Route index element={<EvaluatorStudents/>} />
               <Route path = "students/:id" element ={<AssignedStudentPage/>} />
               <Route path = "profile" element = {<EvaluatorProfile/>} />
-              <Route path = "course_ta_info" element = {<CourseTAInfo/>} />
+              <Route path = "course_ta_info" element = {<EvaluatorTAInfo/>} />
           </Route>
       </Routes>
     )
