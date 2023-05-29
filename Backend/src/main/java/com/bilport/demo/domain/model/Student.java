@@ -17,6 +17,9 @@ public class Student extends User {
     String[] coursesTaken;
 
     public Student() {
+        reports299 = new String[0];
+        reports399 = new String[0];
+        coursesTaken = new String[0];
     }
 
     public Student(String userName, String userPassword, List<GrantedAuthority> userAuthorities, String studentName,

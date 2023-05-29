@@ -69,6 +69,7 @@ public class StudentController {
             student.setStudentEmail(studentReq.getStudentEmail());
             student.setAssignedEvaluatorId(studentReq.getAssignedEvaluatorId());
             student.setAssignedSupervisorId(studentReq.getAssignedSupervisorId());
+            student.setCoursesTaken(studentReq.getCoursesTaken());
 
             studentService.createStudent(student);
             return "Student created";

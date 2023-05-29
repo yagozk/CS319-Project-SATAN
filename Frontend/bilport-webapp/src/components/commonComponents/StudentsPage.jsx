@@ -1,6 +1,6 @@
 import StudentsTable from "../commonComponents/StudentsTable";
 import { useState, useEffect } from "react";
-import { Alert, Button, Card, Row, Stack, Accordion,Form } from "react-bootstrap";
+import { Alert, Button, Card, Row, Stack, Accordion, Form } from "react-bootstrap";
 import SearchBar from "../commonComponents/SearchBar";
 import SortDropdown from "../commonComponents/SortDropdown";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
@@ -11,7 +11,7 @@ export default function StudentsPage(props) {
 
     const [displayedStudents, setDisplayedStudents] = useState(props.students);
 
-    const [newStudent, setNewStudent] = useState({ assignedSupervisorId: ""});
+    const [newStudent, setNewStudent] = useState({ assignedSupervisorId: "" });
     const axiosPrivate = useAxiosPrivate();
 
     useEffect(() => {
@@ -75,6 +75,24 @@ export default function StudentsPage(props) {
         setDisplayedStudents(sortedStudents);
     };
 
+    function handleChange() {
+        var courses = [];
+        var checkBox299 = document.getElementById("check-course-299");
+        var checkBox399 = document.getElementById("check-course-399");
+
+        if(checkBox299.checked == true)
+            courses.push("CS299");
+        else
+            courses.pop("CS299");
+
+        if(checkBox399.checked == true)
+            courses.push("CS399");
+        else
+            courses.pop("CS399");
+
+        setNewStudent({ ...newStudent, coursesTaken: courses});
+    }
+
     return (
         <div>
             <Card>
@@ -118,17 +136,30 @@ export default function StudentsPage(props) {
                                                 <Form.Label> Student Email:</Form.Label>
                                                 <Form.Control id="formReportName" type="text" placeholder="Enter the email of the student" onChange={(e) => setNewStudent({ ...newStudent, studentEmail: e.target.value })} />
 
-                                                <Form.Label> Student Assigned Evaluator ID:</Form.Label>
-                                                <Form.Control id="formReportName" type="text" placeholder="Enter the assigned evaluator ID of the student" onChange={(e) => setNewStudent({ ...newStudent, assignedEvaluatorId: e.target.value })} />
-
-                                                <Form.Label> Student Assigned TA ID:</Form.Label>
-                                                <Form.Control id="formReportName" type="text" placeholder="Enter the assigned TA ID of the student" onChange={(e) => setNewStudent({ ...newStudent, assignedTaId: e.target.value })} />
-
                                                 <Form.Label> Student Temporary Password:</Form.Label>
                                                 <Form.Control id="formReportName" type="text" placeholder="Enter the temporary password of the student" onChange={(e) => setNewStudent({ ...newStudent, userPassword: e.target.value })} />
+
+                                                <Form.Check inline
+                                                    type="checkbox"
+                                                    name="group1"
+                                                    id="check-course-299"
+                                                    label="CS299"
+                                                    value="CS299"
+                                                    onChange={() =>  handleChange()
+                                                    }
+                                                />
+
+                                                <Form.Check
+                                                    type="checkbox"
+                                                    name="group1"
+                                                    label="CS399"
+                                                    value="CS399"
+                                                    id="check-course-399"
+                                                    onChange={() => handleChange()}
+                                                />
                                             </Form.Group>
 
-                                            <Button variant="outline-primary" onClick = {() => fetchNewStudent(axiosPrivate, newStudent)}> Add New Student </Button>
+                                            <Button variant="outline-primary" onClick={() => fetchNewStudent(axiosPrivate, newStudent)}> Add New Student </Button>
                                         </Accordion.Body>
                                     </Accordion.Item>
                                 </Accordion>

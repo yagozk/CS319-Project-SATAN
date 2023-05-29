@@ -12,11 +12,12 @@ public class StudentRequest {
     String assignedSupervisorId;
     int reportVersionCS299;
     int reportVersionCS399;
+    String[] coursesTaken;
 
     public StudentRequest() {
     }
 
-    public StudentRequest(String userName, String userPassword, String studentName, String studentSurname, String studentEmail, String assignedEvaluatorId, String assignedTaId, String assignedSupervisorId) {
+    public StudentRequest(String userName, String userPassword, String studentName, String studentSurname, String studentEmail, String assignedEvaluatorId, String assignedTaId, String assignedSupervisorId, String[] coursesTaken) {
         this.userName = userName;
         this.userPassword = userPassword;
         this.studentName = studentName;
@@ -25,6 +26,7 @@ public class StudentRequest {
         this.assignedEvaluatorId = assignedEvaluatorId;
         this.assignedTaId = assignedTaId;
         this.assignedSupervisorId = assignedSupervisorId;
+        this.coursesTaken = coursesTaken;
     }
 
     public String getUserName() {
@@ -57,6 +59,10 @@ public class StudentRequest {
 
     public String getAssignedSupervisorId() {
         return assignedSupervisorId;
+    }
+
+    public String[] getCoursesTaken() {
+        return coursesTaken;
     }
 
 }
