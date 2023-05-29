@@ -27,6 +27,12 @@ public class SupervisorController {
         return supervisorService.findByStudentId(id);
     }
 
+    @ResponseBody
+    @GetMapping(value = "/direct/{id}")
+    public Supervisor getSupervisor(@PathVariable("id") String id) {
+        return supervisorService.findById(id);
+    }
+
     @PostMapping(value = "/{id}")
     public ResponseEntity<String> uploadSupervisorInfo(@PathVariable("id") String id,
             @RequestBody Supervisor supervisor) {

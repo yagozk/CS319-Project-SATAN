@@ -5,27 +5,21 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useState } from "react";
 import { useEffect } from "react";
 
-async function fetchUserSupervisor(axiosInstance, auth, setSupervisor) {
+async function fetchSupervisor(axiosPrivate, auth, setSupervisor) {
     try {
-    console.log(auth.user);
-        let x = auth.user.substring(2, 4).concat(auth.user.substring(0, 2),auth.user.substring(4));
-    const response = await axiosInstance.get(`/supervisors/` +x);
-    setSupervisor(response.data);
-    console.log(response.data);
-    console.log("c");
-
-    } catch (error) {
-        console.error(error);
+        const response = await axiosPrivate.get('/supervisors/direct/' + auth.user);
+        setSupervisor(response.data);
+    } catch (err) {
+        console.error(err);
     }
 }
 
 export default function SupervisorProfile() {
-    console.log("a");
     const { auth } = useAuth();
     const [supervisor, setSupervisor] = useState({});
     const axiosPrivate = useAxiosPrivate();
 
-    useEffect(() => { fetchUserSupervisor(axiosPrivate, auth, setSupervisor); }, []);
+    useEffect(() => { fetchSupervisor(axiosPrivate, auth, setSupervisor); }, []);
 
     return (
         <div style={{ marginLeft: '250px', padding: '20px' }}>
