@@ -1,4 +1,4 @@
-import { Card, Container, Row, Col, Tab, Tabs, CloseButton, Spinner } from "react-bootstrap";
+import { Card, Container, Row, Col, Tab, Tabs, CloseButton, Spinner, Alert } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 import { Form, Button, Stack } from "react-bootstrap";
 import { useEffect, useState } from "react";
@@ -36,6 +36,7 @@ function SingularStudentInfo(props) {
     const { auth } = useAuth();
     // const [student, setStudent] = useState({});
     const axiosPrivate = useAxiosPrivate();
+    const [studentNewEvalSubmitted, setStudentNewEvalSubmitted] = useState(false);
 
     // async function fetchStudent(axiosPrivate, setStudent) {
     //     try {
@@ -103,6 +104,9 @@ function SingularStudentInfo(props) {
                     }
                     <br />
                     <Button variant="warning" onClick={handleSubmitChange} disabled={evaluatorToAssign.evaluatorId == props.student.assignedEvaluatorId}>Submit Change</Button>
+                    {studentNewEvalSubmitted && <div className="mt-4">
+                        <Alert variant="warning" dismissible>Student is succesfully assigned to new evaluator. Refresh the page to see the changes.</Alert>
+                    </div>}
                 </Card.Body>
             </Card>
         );
@@ -119,6 +123,7 @@ function SingularStudentInfo(props) {
             try {
                 const response = await axiosPrivate.get('/evaluators/assign/' + evaluatorToAssign.evaluatorId + "/" + props.student.studentId);
                 console.log(response.data);
+                setStudentNewEvalSubmitted(true);
                 
             } catch (err) {
                 console.error(err);
