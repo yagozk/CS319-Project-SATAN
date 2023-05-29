@@ -93,4 +93,10 @@ code {
   left: -9999px;
 }
 
+.out-of-limit{
+  color: white;
+  font-weight: bold;
+  background-color: rgba(196, 0, 0, 0.464) !important;
+}
+
 

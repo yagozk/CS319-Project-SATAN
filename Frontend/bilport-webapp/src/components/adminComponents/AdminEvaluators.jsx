@@ -97,7 +97,9 @@ export default function AdminEvaluators(props) {
                             <tr class="clickRow" key={evaluator.userName} onClick={() => props.onRowClick(evaluator.userName)} >
                                 <td>{evaluator.evaluatorName} {evaluator.evaluatorSurname}</td>
                                 <td>{evaluator.studentLimit}</td>
-                                <td>{evaluator.assignedStudents.length}</td>
+                                <td className={evaluator.assignedStudents.length > evaluator.studentLimit ? 'out-of-limit' : ''}>
+                                    {evaluator.assignedStudents.length}
+                                </td>
                             </tr>)
                     }
                 </tbody>
