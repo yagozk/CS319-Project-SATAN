@@ -93,7 +93,8 @@ public class SuperadminController {
                         if (row.getCell(0).getStringCellValue().isEmpty() 
                         || row.getCell(1).getStringCellValue().isEmpty()
                         || row.getCell(2).getStringCellValue().isEmpty()
-                        || row.getCell(3).getStringCellValue().isEmpty()) {
+                        || row.getCell(3).getStringCellValue().isEmpty()
+                        || row.getCell(4).getStringCellValue().isEmpty()) {
                             return new ResponseEntity<>("An empty cell is found, check the file", HttpStatus.OK);
                         }
                         Student student = new Student();
@@ -112,15 +113,15 @@ public class SuperadminController {
                         student.setReports399(null);
 
             
-                        if (row.getCell(3).getStringCellValue().length() == 11) {
+                        if (row.getCell(4).getStringCellValue().length() == 11) {
                             String[] takenCourses = new String[2];
-                            takenCourses[0] = row.getCell(5).getStringCellValue().substring(0, 5);
-                            takenCourses[1] = row.getCell(5).getStringCellValue().substring(6);
+                            takenCourses[0] = row.getCell(4).getStringCellValue().substring(0, 5);
+                            takenCourses[1] = row.getCell(4).getStringCellValue().substring(6);
                             student.setCoursesTaken(takenCourses);
                         }
-                        else if (row.getCell(3).getStringCellValue().length() == 5) {
+                        else if (row.getCell(4).getStringCellValue().length() == 5) {
                             String[] takenCourses = new String[1];
-                            takenCourses[0] = row.getCell(5).getStringCellValue().substring(0);
+                            takenCourses[0] = row.getCell(4).getStringCellValue().substring(0);
                             student.setCoursesTaken(takenCourses);
                         }
                         
