@@ -40,7 +40,6 @@ export default function CourseTAInfo(props){
                             <Col lg = {10}><div class = "text-secondary">{ta299.taEmail}</div></Col>
                         </Row>
                         <br/>
-                        <Button variant="warning">Copy Email</Button>
                     </Container>
                 </Card.Body>
             </Card>

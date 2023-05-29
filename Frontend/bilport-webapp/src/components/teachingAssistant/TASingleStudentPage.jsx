@@ -29,7 +29,6 @@ export default function TASingleStudentPage(props) {
         <div style={{ marginLeft: '250px', padding: '20px' }}>
             <TASingleStudentInfo student={assignedStudent} ta={props.ta} report={report}/>
             <TASingleStudentReport student={assignedStudent} ta={props.ta} />
-            <TASingleStudentSupervisorStamp />
         </div>
     )
 

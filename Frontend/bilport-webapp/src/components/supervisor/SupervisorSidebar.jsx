@@ -21,10 +21,6 @@ export default function SupervisorSidebar(){
                 <Link to="/supervisor" class = "sidebar-link">Evaluation Form</Link>
               </li>
               <li class ="sidebar-item">
-              <i class="fa-solid fa-pen-nib fa-lg"></i>
-                <Link to="/supervisor/seal_stamp" class = "sidebar-link">Seal/Stamp</Link>
-              </li>
-              <li class ="sidebar-item">
               <i class="fa-solid fa-circle-user fa-lg"></i>
                 <Link to="/supervisor/profile" class = "sidebar-link">Profile</Link>
               </li>

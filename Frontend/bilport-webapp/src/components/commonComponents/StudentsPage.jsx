@@ -22,9 +22,7 @@ export default function StudentsPage(props) {
 
     const sortingOptions = [
         { name: "Sort by name (ascending)", key: "Name" },
-        { name: "Sort by name (descending)", key: "Name (Desc)" },
-        { name: "Sort by last submission date (ascending)", key: "Date" },
-        { name: "Sort by last submission date (descending)", key: "Date (Desc)" }
+        { name: "Sort by name (descending)", key: "Name (Desc)" }
     ];
 
     function handleSearch(searchQuery) {
@@ -112,7 +110,6 @@ export default function StudentsPage(props) {
                         <div className="vr" />
                         <SortDropdown onSelect={handleSort} dropdownItems={sortingOptions} />
                         <div className="vr" />
-                        <Button variant="outline-secondary">Filter</Button> {/* this will be properly implemented */}
                     </Stack>
                     <br />
                     {(() => {

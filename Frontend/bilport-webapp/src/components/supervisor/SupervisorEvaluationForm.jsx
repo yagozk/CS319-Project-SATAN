@@ -6,7 +6,7 @@ import useAuth from '../../hooks/useAuth';
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 
-async function fetchSupervisorForm(axiosInstance, auth, setForm) {
+async function fetchSupervisorForm(axiosInstance, auth, setForm, setQ1, setQ2, setQ3, setQ4, setQ5, setQ6, setQ7, setQ8, setComment, setInternshipStartDate, setInternshipEndDate) {
     try {
         console.log("a");
         const response = await axiosInstance.get(`/supervisorForms/direct/` + auth.user);
@@ -38,8 +38,24 @@ export default function SupervisorEvaluationForm() {
     const [form, setForm] = useState([]);
 
 
-    useEffect(() => { fetchSupervisorForm(axiosPrivate, auth, setForm); }, []);
-        console.log(form);
+    useEffect(() => {     
+        fetchSupervisorForm(
+        axiosPrivate,
+        auth,
+        setForm,
+        setQ1,
+        setQ2,
+        setQ3,
+        setQ4,
+        setQ5,
+        setQ6,
+        setQ7,
+        setQ8,
+        setComment,
+        setInternshipStartDate,
+        setInternshipEndDate); 
+        console.log(form);}, []);
+        
 
     useEffect(() => {
             console.log(form);
