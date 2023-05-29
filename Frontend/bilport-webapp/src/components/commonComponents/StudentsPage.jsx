@@ -8,9 +8,9 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 export default function StudentsPage(props) {
 
     //const [students, setStudents] = useState(props.students)
-
+    const [isCourseChecked, setIsCourseChecked] = useState(false);
     const [displayedStudents, setDisplayedStudents] = useState(props.students);
-
+    const [isNewStudentSubmitted, setIsNewStudentSubmitted] = useState(false);
     const [newStudent, setNewStudent] = useState({ assignedSupervisorId: "" });
     const axiosPrivate = useAxiosPrivate();
 
@@ -82,15 +82,14 @@ export default function StudentsPage(props) {
 
         if(checkBox299.checked == true)
             courses.push("CS299");
-        else
-            courses.pop("CS299");
 
         if(checkBox399.checked == true)
             courses.push("CS399");
-        else
-            courses.pop("CS399");
+
+        console.log(courses);
 
         setNewStudent({ ...newStudent, coursesTaken: courses});
+        setIsCourseChecked(courses.length > 0);
     }
 
     return (
@@ -124,21 +123,25 @@ export default function StudentsPage(props) {
                                         <Accordion.Header>Add a new Student</Accordion.Header>
                                         <Accordion.Body>
                                             <Form.Group controlId="formFileLg" className="mb-3">
-                                                <Form.Label> Student ID:</Form.Label>
+                                                <Form.Label className="mt-2"> Student ID:</Form.Label>
                                                 <Form.Control id="formReportName" type="text" placeholder="Enter the ID of the student" onChange={(e) => setNewStudent({ ...newStudent, userName: e.target.value })} />
 
-                                                <Form.Label> Student Name:</Form.Label>
+                                                <Form.Label className="mt-2"> Student Name:</Form.Label>
                                                 <Form.Control id="formReportName" type="text" placeholder="Enter the name of the student" onChange={(e) => setNewStudent({ ...newStudent, studentName: e.target.value })} />
 
-                                                <Form.Label> Student Surname:</Form.Label>
+                                                <Form.Label className="mt-2"> Student Surname:</Form.Label>
                                                 <Form.Control id="formReportName" type="text" placeholder="Enter the surname of the student" onChange={(e) => setNewStudent({ ...newStudent, studentSurname: e.target.value })} />
 
-                                                <Form.Label> Student Email:</Form.Label>
+                                                <Form.Label className="mt-2"> Student Email:</Form.Label>
                                                 <Form.Control id="formReportName" type="text" placeholder="Enter the email of the student" onChange={(e) => setNewStudent({ ...newStudent, studentEmail: e.target.value })} />
 
-                                                <Form.Label> Student Temporary Password:</Form.Label>
+                                                <Form.Label className="mt-2"> Student Temporary Password:</Form.Label>
                                                 <Form.Control id="formReportName" type="text" placeholder="Enter the temporary password of the student" onChange={(e) => setNewStudent({ ...newStudent, userPassword: e.target.value })} />
 
+                                                <Form.Label className="mt-2">Set Courses Taken by Student:</Form.Label>
+                                                {!isCourseChecked && 
+                                                <Form.Text className="text-danger m-2">Choose at least one course in order to proceed</Form.Text>}
+                                                <br/>
                                                 <Form.Check inline
                                                     type="checkbox"
                                                     name="group1"
@@ -158,8 +161,9 @@ export default function StudentsPage(props) {
                                                     onChange={() => handleChange()}
                                                 />
                                             </Form.Group>
+                                            { isNewStudentSubmitted && <Alert dismissible>New student succesfully submitted</Alert>}
 
-                                            <Button variant="outline-primary" onClick={() => fetchNewStudent(axiosPrivate, newStudent)}> Add New Student </Button>
+                                            <Button disabled = {!isCourseChecked }variant="primary" onClick={() => {fetchNewStudent(axiosPrivate, newStudent); setIsNewStudentSubmitted(true);}}> Add New Student </Button>
                                         </Accordion.Body>
                                     </Accordion.Item>
                                 </Accordion>
