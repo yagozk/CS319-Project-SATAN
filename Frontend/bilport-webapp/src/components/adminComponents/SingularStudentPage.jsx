@@ -89,7 +89,11 @@ function SingularStudentInfo(props) {
                                 id="assign-evaluator-radio"
                                 name="assign-evaluator-radio-group"
                                 value={evaluator.userName}
-                                label={`${evaluator.evaluatorName + " " + evaluator.evaluatorSurname} (Remaining Quota: ${evaluator.studentLimit - evaluator.assignedStudents.length})`}
+                                label={
+                                    <span className={evaluator.studentLimit - evaluator.assignedStudents.length < 0 ? 'text-danger' : ''}>
+                                      {`${evaluator.evaluatorName} ${evaluator.evaluatorSurname} (Remaining Quota: ${evaluator.studentLimit - evaluator.assignedStudents.length})`}
+                                    </span>
+                                  }
                                 onChange={(e) => {
                                     if (e.target.checked) { 
                                         setEvaluatorToAssign({ evaluatorId: e.target.value });

@@ -46,9 +46,6 @@ const { auth } = useAuth();
   }, [student.assignedEvaluatorId, axiosPrivate]);
 
 
-
-    {/* Evaluator and TA's info will be taken from database and inserted here*/}
-    {/* Consider adding a "You don't have an assigned evaluator/TA yet" functionality if the student doesn't have one.*/}
     return(
         <div style={{ marginLeft: '250px', padding: '20px' }}>
             <h1 className = "bigPageTitle"> Evaluator / TA Information </h1>
