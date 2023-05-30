@@ -106,10 +106,12 @@ function AssignedStudentReport(props) {
     const [studentId, setStudentId] = useState({});
     const [showLoading, setShowLoading] = useState(false);
     const [showErrorAlert, setShowErrorAlert] = useState(false);
-    const [form, setForm] = useState([]);
+    //const [form, setForm] = useState([]);
     const [reports, setReports] = useState([]);
     const [supervisorForms, setSupervisorForms] = useState({});
     const [report, setReport] = useState({});
+    const [form, setForm] = useState({studentId: props.student.reportOwner, course: props.student.course});
+
 
     async function fetchReportsWithCourse(axiosPrivate, auth, course, setReports) {
         try {
@@ -156,20 +158,23 @@ function AssignedStudentReport(props) {
         let [partA1, setPartA1] = useState({});
         let [partA2, setPartA2] = useState({});
         let [partA3, setPartA3] = useState({});
+        let [newForm, setNewForm] = useState(form);
+
         console.log("b");
-
         console.log(props.form);
-
+/*
         const handlepartASubmission = (id) => {
             if (Object.keys(partA1) == null || Object.keys(partA2) == null ||
                 Object.keys(partA3) == null) {
                 setShowErrorAlert(true);
                 setShowLoading(false);
                 return;
-            }
+            }*/
 
-            const submitPartA = async () => {
+            function submitPartA(axiosPrivate, newForm){
                 try {
+                    const response = axiosPrivate.post('/evaluatorForms/' + props.student.reportOwner, newForm);
+/*
                     const response = await axiosPrivate.post(('/evaluatorForms/' + props.student.reportOwner),
                         {
                             studentId: props.student.reportOwner,
@@ -177,7 +182,7 @@ function AssignedStudentReport(props) {
                             partA1: partA1,
                             partA2: partA2,
                             partA3: partA3,
-                        });
+                        });*/
                     setShowLoading(false);
                     setShowErrorAlert(false);
 
@@ -187,32 +192,32 @@ function AssignedStudentReport(props) {
                     setShowErrorAlert(true);
                     setShowLoading(false);
                 }
-            };
-
+            }
+/*
             if (props != undefined) {
                 submitPartA(id);
                 console.log(studentId);
             }
-        }
+        }*/
 
 
         return (
             <div class="standaloneCard">
                 <Form>
                     <Card.Title>Average of the grades on the summer training evaluation form: </Card.Title>
-                    <Form.Control onChange={(e) => setPartA1(e.target.value)} size="sm" style={{ width: "100px" }} defaultValue={form.partA1}></Form.Control>
+                    <Form.Control onChange={(e) => setNewForm({ ...newForm, partA1: e.target.value })} size="sm" style={{ width: "100px" }} defaultValue={form.partA1}></Form.Control>
                 </Form>
                 <hr />
                 <Form>
                     <Card.Title>Is the work done related to computer engineering?</Card.Title>
-                    <Form.Check inline label="Yes" onChange={(e) => setPartA2(true)} name="inline-radio-1" type="radio" id="inline-radio-yes1" />
-                    <Form.Check inline label="No" onChange={(e) => setPartA2(false)} name="inline-radio-1" type="radio" id="inline-radio-no1" />
+                    <Form.Check inline label = "Yes" onChange={(e) => setNewForm({ ...newForm, partA2: true })} name = "inline-radio-1" type = "radio" id = "inline-radio-yes1"/>
+                    <Form.Check inline label = "No" onChange={(e) => setNewForm({ ...newForm, partA2: false })} name = "inline-radio-1" type = "radio" id = "inline-radio-no1"/>
                 </Form>
                 <hr />
                 <Form>
                     <Card.Title>Is the supervisor a computer engineer or have a related background?</Card.Title>
-                    <Form.Check inline label="Yes" onChange={(e) => setPartA3(true)} name="inline-radio-2" type="radio" id="inline-radio-yes2" />
-                    <Form.Check inline label="No" onChange={(e) => setPartA3(false)} name="inline-radio-2" type="radio" id="inline-radio-no2" />
+                    <Form.Check inline label = "Yes" onChange={(e) => setNewForm({ ...newForm, partA3: true })} name = "inline-radio-2" type = "radio" id = "inline-radio-yes2"/>
+                    <Form.Check inline label = "No" onChange={(e) => setNewForm({ ...newForm, partA3: false })} name = "inline-radio-2" type = "radio" id = "inline-radio-no2"/>
                 </Form>
                 <div>
                     {showLoading &&
@@ -226,7 +231,7 @@ function AssignedStudentReport(props) {
                     }
                 </div>
                 <br />
-                <div className="d-grid gap-2"><Button size="lg" onClick={handlepartASubmission}>Submit</Button></div>
+                <div className="d-grid gap-2"><Button size="lg" onClick={() => submitPartA(axiosPrivate, newForm)}>Submit</Button></div>
             </div>
         );
     }
@@ -240,6 +245,7 @@ function AssignedStudentReport(props) {
         const [satisfactory, setSatisfactory] = useState(false);
         const [showLoading, setShowLoading] = useState(false);
         const [showErrorAlert, setShowErrorAlert] = useState(false);
+        let [newForm, setNewForm] = useState(form);
 
         const axiosPrivate = useAxiosPrivate();
 
@@ -327,43 +333,47 @@ function AssignedStudentReport(props) {
         function handleSatisfactoryCheck(e) {
             setSatisfactory(e.target.id !== "inline-satisfactory-radio")
         }
-
+/*
         const handlePartBSubmission = () => {
             if (Object.keys(partB1) == null) {
                 setShowErrorAlert(true);
                 setShowLoading(false);
                 return;
-            }
+            }*/
 
 
-            const submitPartB = async () => {
+            function submitPartB(axiosPrivate, newForm){
                 try {
+                        setNewForm({ ...newForm, studentId: props.student.reportOwner });
+                    setNewForm({ ...newForm, course: props.student.course});
+                        const response =  axiosPrivate.post('/evaluatorForms/' + props.student.reportOwner, newForm);
+                    setForm(newForm);
+                        /*
+                        const response = await axiosPrivate.post(('/evaluatorForms/' + props.student.reportOwner),
+                            {
+                                studentId: props.student.reportOwner,
+                                course: props.student.course,
+                                partB1: partB1,
+                                partB2: partB2,
+                            });*/
+                        setShowLoading(false);
+                        setShowErrorAlert(false);
 
-                    const response = await axiosPrivate.post(('/evaluatorForms/' + props.student.studentId),
-                        {
-                            studentId: props.student.studentId,
-                            course: props.student.course,
-                            partB1: partB1,
-                            partB2: partB2,
-                        });
-                    setShowLoading(false);
-                    setShowErrorAlert(false);
 
-
-                } catch (err) {
-                    console.error(err);
-                    setShowErrorAlert(true);
-                    setShowLoading(false);
+                    } catch (err) {
+                        console.error(err);
+                        setShowErrorAlert(true);
+                        setShowLoading(false);
+                    }
                 }
-            };
-
+/*
             if (props != undefined) {
                 submitPartB(props.student.studentId);
                 //uploadSupervisorInfo();
                 //console.log(studentId);
                 //document.getElementById("formReportName").value = "";
             }
-        }
+        }*/
 
         return (
             <div class="standaloneCard">
@@ -383,10 +393,10 @@ function AssignedStudentReport(props) {
                 </Stack>
                 <hr />
                 <Form>
-                    <Form.Check inline label="Satisfactory" type="radio" name="inline-satisfactory-radio" id="inline-satisfactory-radio"
-                        onChange={(e) => setPartB1(true)} />
-                    <Form.Check inline label="Unsatisfactory" type="radio" name="inline-satisfactory-radio" id="inline-unsatisfactory-radio"
-                        onChange={(e) => setPartB1(false)} />
+                     <Form.Check inline label = "Satisfactory" type = "radio" name = "inline-satisfactory-radio" id ="inline-satisfactory-radio"
+                    onChange={(e) => setNewForm({ ...newForm, partB1: true })}/>
+                    <Form.Check inline label = "Unsatisfactory" type = "radio" name = "inline-satisfactory-radio" id ="inline-unsatisfactory-radio"
+                    onChange={(e) => setNewForm({ ...newForm, partB1: false })}/>
                 </Form>
                 <br />
                 <div id="uploadFeedbackDiv">
@@ -404,11 +414,11 @@ function AssignedStudentReport(props) {
 
                     <Stack direction="horizontal" gap={5}>
                         <label>Due date for the resubmission: </label>
-                        <input type="date" onChange={(e) => setPartB2(e.target.value)} />
+                        <input type="date" onChange={(e) => setNewForm({ ...newForm, partB2: e.target.value })} />
                     </Stack>
                 </form>
                 <br />
-                <div className="d-grid gap-2"><Button size="lg" onClick={handlePartBSubmission}>Submit</Button></div>
+                <div className="d-grid gap-2"><Button size = "lg" onClick={() => submitPartB(axiosPrivate, newForm)}>Submit</Button></div>
             </div>
         );
     }
@@ -417,27 +427,33 @@ function AssignedStudentReport(props) {
         const [partC1, setPartC1] = useState({});
         const [partC2, setPartC2] = useState({});
         const [partC3, setPartC3] = useState({});
+        let [newForm, setNewForm] = useState(form);
         const [showLoading, setShowLoading] = useState(false);
         const [showErrorAlert, setShowErrorAlert] = useState(false);
-
+/*
         const handlepartCSubmission = (id) => {
             if (Object.keys(partC1) == null || Object.keys(partC2) == null ||
                 Object.keys(partC3) == null) {
                 setShowErrorAlert(true);
                 setShowLoading(false);
                 return;
-            }
+            }*/
 
-            const submitPartC = async () => {
+            function submitPartC(axiosPrivate, newForm){
                 try {
-                    const response = await axiosPrivate.post(('/evaluatorForms/' + props.student.reportOwner),
+                    setNewForm({ ...newForm, studentId: props.student.reportOwner });
+                    setNewForm({ ...newForm, course: props.student.course});
+                    const response =  axiosPrivate.post('/evaluatorForms/' + props.student.studentId, newForm);
+                    setForm(newForm);
+/*
+                    const response = await axiosPrivate.post(('/evaluatorForms/' + props.student.reportOwner ),
                         {
                             studentId: props.student.reportOwner,
                             course: props.student.course,
                             partC1: partC1,
                             partC2: partC2,
                             partC3: partC3,
-                        });
+                        });*/
                     setShowLoading(false);
                     setShowErrorAlert(false);
 
@@ -447,37 +463,36 @@ function AssignedStudentReport(props) {
                     setShowErrorAlert(true);
                     setShowLoading(false);
                 }
-            };
-
+/*
             if (props != undefined) {
                 submitPartC(props.student.reportOwner);
-            }
+            }*/
         }
 
         return (
-            <div class="standaloneCard">
+            <div class = "standaloneCard">
                 <Card.Title>Based on the final version of the report, as evaluated
-                    on the Confidential Summer Training Evaluation Form </Card.Title>
-                <hr />
-                <Stack direction="horizontal" gap={3}>
+                on the Confidential Summer Training Evaluation Form </Card.Title>
+                <hr/>
+                <Stack direction="horizontal" gap = {3}>
                     <Form>
                         <Form.Label>Assessment/quality score of evaluation of work - item (1) </Form.Label>
-                        <Form.Control onChange={(e) => setPartC1(e.target.value)} />
+                        <Form.Control onChange={(e) => setNewForm({ ...newForm, partC1: e.target.value })}/>
                         <Form.Text className="text-muted">To be satisfactory, the score must be at least 7/10</Form.Text>
                     </Form>
                     <Form>
                         <Form.Label>Sum of the assessment/quality scores of evaluation of work - items (2)-(7)</Form.Label>
-                        <Form.Control onChange={(e) => setPartC2(e.target.value)} />
+                        <Form.Control onChange={(e) => setNewForm({ ...newForm, partC2: e.target.value })}/>
                         <Form.Text className="text-muted">To be satisfactory, the sum most be at least 30/60</Form.Text>
                     </Form>
                     <Form>
                         <Form.Label>The assessment/quality score of evaluation of the report </Form.Label>
-                        <Form.Control onChange={(e) => setPartC3(e.target.value)} />
+                        <Form.Control onChange={(e) => setNewForm({ ...newForm, partC3: e.target.value })}/>
                         <Form.Text className="text-muted">To be satisfactory, the score must be at least 7/10</Form.Text>
                     </Form>
                 </Stack>
-                <br />
-                <div className="d-grid gap-2"><Button size="lg" onClick={handlepartCSubmission}>Submit</Button></div>
+                <br/>
+                <div className="d-grid gap-2"><Button size = "lg" onClick={() => submitPartC(axiosPrivate, newForm)}>Submit</Button></div>
             </div>
         );
     }
